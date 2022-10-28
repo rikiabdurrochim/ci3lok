@@ -1,0 +1,192 @@
+<body class="hold-transition sidebar-mini">
+    <div class="wrapper">
+
+        <!-- Navbar -->
+        <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+            <!-- Left navbar links -->
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+                </li>
+                <!-- <li class="nav-item d-none d-sm-inline-block">
+                    <a href="index3.html" class="nav-link">Home</a>
+                </li>
+                <li class="nav-item d-none d-sm-inline-block">
+                    <a href="#" class="nav-link">Contact</a>
+                </li> -->
+            </ul>
+            <!-- Right navbar links -->
+            <ul class="navbar-nav ml-auto">
+                <!-- Notifications Dropdown Menu -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link" data-toggle="dropdown" href="#">
+                        <i class="far fa-bell"></i>
+                        <span class="badge badge-warning navbar-badge">15</span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                        <span class="dropdown-header">15 Notifications</span>
+                        <div class="dropdown-divider"></div>
+                        <a href="#" class="dropdown-item">
+                            <i class="fas fa-envelope mr-2"></i> 4 new messages
+                            <span class="float-right text-muted text-sm">3 mins</span>
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
+                    </div>
+                </li>
+                <li class="nav-item nav-profile dropdown">
+                    <?php $username = $_SESSION['id_peg'];
+                    $get_foto = $this->db->query("SELECT * FROM pegawai WHERE id_peg='$username'")->result();
+                    foreach ($get_foto as $foto) {
+                    ?>
+                        <a class="nav-link dropdown-toggle" href="#" title="<?php echo $foto->nm_peg ?>" data-toggle="dropdown" id="profileDropdown">
+                            <img src="<?php echo base_url() ?>assets/img/<?php echo $foto->foto ?>" style="width:30px; height:30px; border-radius: 50px;" />
+                            <b> <?php echo $foto->nm_peg; ?></b>
+                        <?php } ?>
+                        </a>
+                        <!--  dropdown-menu-right navbar-dropdown preview-list card card-primary  -->
+                        <div class="dropdown-menu card-primary" aria-labelledby="notificationDropdown">
+                            <div class="card-body box-profile">
+                                <?php $username = $_SESSION['id_peg'];
+                                $get_foto = $this->db->query("SELECT * FROM pegawai WHERE id_peg='$username'")->result();
+                                foreach ($get_foto as $foto) {
+                                ?>
+                                    <div class="text-center">
+                                        <img class="profile-user-img img-fluid img-circle" src="<?php echo base_url() ?>assets/img/<?php echo $foto->foto ?>" alt="User profile picture">
+                                    </div>
+                                    <h3 class="profile-username text-center">
+                                        <?php echo $foto->nm_peg ?></h3>
+                                    <p class="text-center">
+                                        NIK : <?php echo $foto->nik; ?>
+                                        <br>
+                                        Role :
+                                        <?php $username = $_SESSION['id_peg'];
+                                        $koma = 1;
+                                        $get_role = $this->db->query("SELECT * FROM pegawai 
+                                    INNER JOIN dtrole ON pegawai.id_peg = dtrole.id_peg
+                                    INNER JOIN role ON dtrole.id_role = role.id_role 
+                                    WHERE pegawai.id_peg='$username'")->result();
+                                        foreach ($get_role as $role) {
+                                        ?>
+                                            <br> <?php echo $koma++ . ". " ?>
+                                            <?php echo $role->nm_role  ?>
+                                        <?php } ?>
+                                    </p>
+                                    <!-- <p class="text-muted text-center"></p> -->
+                                <?php } ?>
+
+                                <a href="<?= site_url('log/logout') ?>" class="btn btn-primary btn-block" onclick="return confirm('apakah anda ingin logout ?')"><i class="fas fa-sign-out-alt"></i> Log Out</a>
+                            </div>
+                            <!-- </div> -->
+                        </div>
+                </li>
+            </ul>
+        </nav>
+        <!-- /.navbar -->
+
+        <!-- Main Sidebar Container -->
+        <aside class="main-sidebar sidebar-dark-primary elevation-4">
+            <!-- Brand Logo -->
+            <a href="<?= BASEURL ?>Dashboard" class="brand-link">
+                <!-- <img src="<?= BASEURL ?>assets/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8"> -->
+                <center><span class="brand-text font-weight-light">Aplikasi LOKET </span></center>
+            </a>
+
+            <!-- Sidebar -->
+            <div class="sidebar">
+                <!-- Sidebar user panel (optional) -->
+                <!-- <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                    <div class="image">
+                        <img src="<?= BASEURL ?>assets/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+                    </div>
+                    <div class="info">
+                        <a href="#" class="d-block">Alexander Pierce</a>
+                    </div>
+                </div> -->
+
+                <!-- Sidebar Menu -->
+                <nav class="mt-2">
+                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                        <li class="nav-item">
+                            <a href="<?= BASEURL ?>Dashboard" class="nav-link">
+                                <i class="nav-icon fas fa-tachometer-alt"></i>
+                                <p>Dashboard</p>
+                            </a>
+                        </li>
+                        <!-- get menu tanpa treeview -->
+                        <?php $username = $_SESSION['id_peg'];
+                        $menu_tnp_tree = $this->db->query("SELECT * FROM aksesmn 
+                        INNER JOIN menu ON menu.`id_menu`=aksesmn.`id_menu`
+                        INNER JOIN pegawai ON pegawai.`id_peg`=aksesmn.`id_peg`
+                        INNER JOIN treeview ON treeview.`id_treeview`=menu.`id_treeview`
+                        WHERE pegawai.id_peg='$username' AND treeview.`id_treeview`='1' AND menu.status_mn = 'sidebar'")->result();
+                        foreach ($menu_tnp_tree as $tnp_tree) { ?>
+                            <li class="nav-item">
+                                <a href="<?php echo $tnp_tree->link_akses ?>" class="nav-link">
+                                    <i class="<?php echo $tnp_tree->icon_menu ?>"></i>
+                                    <p><?php echo $tnp_tree->nm_menu ?></p>
+                                </a>
+                            </li>
+                        <?php } ?>
+                        <!-- get treeview -->
+                        <?php $username = $_SESSION['id_peg'];
+                        $get_treeview = $this->db->query("SELECT * FROM akses_treeview 
+                        INNER JOIN treeview ON treeview.`id_treeview`=akses_treeview.`id_treeview`
+                        INNER JOIN pegawai ON pegawai.`id_peg`=akses_treeview.`id_peg`
+                        WHERE pegawai.id_peg='$username'")->result();
+                        foreach ($get_treeview as $tree) { ?>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link">
+                                    <i class="<?php echo $tree->treeview_icon ?>"></i>
+                                    <p>
+                                        <?php echo $tree->nama_treeview ?>
+                                        <i class="right fas fa-angle-left"></i>
+                                    </p>
+                                </a>
+                                <ul class="nav nav-treeview">
+                                    <?php $username = $_SESSION['id_peg'];
+                                    $mn_dgn_tree = $this->db->query("SELECT * FROM aksesmn 
+                                    INNER JOIN menu ON menu.`id_menu`=aksesmn.`id_menu`
+                                    INNER JOIN pegawai ON pegawai.`id_peg`=aksesmn.`id_peg`
+                                    INNER JOIN treeview ON treeview.`id_treeview`=menu.`id_treeview`
+                                    WHERE pegawai.id_peg='$username' AND treeview.`id_treeview`='$tree->id_treeview' AND menu.status_mn = 'sidebar'")->result();
+                                    foreach ($mn_dgn_tree as $dgn_tree) { ?>
+                                        <li class="nav-item">
+                                            <a href="<?php echo $dgn_tree->link_akses ?>" class="nav-link">
+                                                <i class="<?php echo $dgn_tree->icon_menu ?>"></i>
+                                                <p><?php echo $dgn_tree->nm_menu ?></p>
+                                            </a>
+                                        </li>
+                                    <?php } ?>
+                                </ul>
+                            </li>
+                        <?php } ?>
+                </nav>
+                <!-- /.sidebar-menu -->
+            </div>
+            <!-- /.sidebar -->
+        </aside>
+
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            <!-- Content Header (Page header) -->
+            <div class="content-header">
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                            <h1 class="m-0"><?= $title ?></h1>
+                        </div><!-- /.col -->
+                        <div class="col-sm-6">
+                            <ol class="breadcrumb float-sm-right">
+                                <li class="breadcrumb-item"><a href="<?= BASEURL ?>Dashboard">Home</a></li>
+                                <li class="breadcrumb-item active"><?= $title ?></li>
+                            </ol>
+                        </div><!-- /.col -->
+                    </div><!-- /.row -->
+                </div><!-- /.container-fluid -->
+            </div>
+            <!-- /.content-header -->
+
+            <!-- Main content -->
+            <div class="content">
+                <div class="container-fluid">
