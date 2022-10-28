@@ -8,7 +8,7 @@ class Menu_model extends CI_Model
 
     public function select_menu()
     {
-        $query = $this->db->query("SELECT * FROM menu");
+        $query = $this->db->query("SELECT * FROM menu ORDER BY id_menu DESC");
         return $query->result_array();
     }
 

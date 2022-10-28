@@ -35,8 +35,8 @@ foreach ($get_ajuan as $ajuan) {
             </div>
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title" id="m_um" style="display: none"><b>METODE PEMBAYARAN SPP</b></h3>
-                    <h3 class="card-title" id="m_spj" style="display: none"><b>METODE PEMBAYARAN SPBY</b></h3>
+                    <h3 class="card-title" id="m_spj" style="display: none"><b>METODE PEMBAYARAN SPP</b></h3>
+                    <h3 class="card-title" id="m_um" style="display: none"><b>METODE PEMBAYARAN SPBY</b></h3>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -94,17 +94,17 @@ foreach ($get_ajuan as $ajuan) {
 
         if (metode == "SPP") {
             $("#form-input1").css("display", "none");
-            $("#m_spj").css("display", "none");
+            $("#m_um").css("display", "none");
             $("#form-input").css("display", "block");
-            $("#m_um").css("display", "block");
+            $("#m_spj").css("display", "block");
             $("#no_spby").val('');
             $("#tgl_spby").val('');
             $("#jml_spby").val('');
         } else {
             $("#form-input").css("display", "none");
-            $("#m_um").css("display", "none");
+            $("#m_spj").css("display", "none");
             $("#form-input1").css("display", "block");
-            $("#m_spj").css("display", "block");
+            $("#m_um").css("display", "block");
             $("#no_spp").val('');
             $("#tgl_spp").val('');
             $("#jml_spp").val('');

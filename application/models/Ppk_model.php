@@ -25,7 +25,7 @@ class Ppk_model extends CI_Model
                 INNER JOIN jenis on jenis.id_jenis = ajuan.jns_ajuan 
             INNER JOIN giat on giat.id_giat = ajuan.kd_giat 
             INNER JOIN akun on akun.id_akun = ajuan.kd_akun
-                WHERE pegawai.`id_peg` = '$username' AND ajuan.`status`!= 'Ditolak Staff PPK' ORDER BY ajuan.id_ajuan DESC
+                WHERE pegawai.`id_peg` = '$username' AND ajuan.`mtd_byr`!= 'BELUM' AND ajuan.`status`= 'Proses SPP/SPBY' OR ajuan.`status`= 'Ditolak PPK' OR ajuan.`status`= 'Proses SPM' OR  ajuan.`status`= 'Ditolak Staff PPSPM' OR ajuan.`status`= 'Ditolak PPSPM' OR ajuan.`status`= 'Kirim KPPN' OR ajuan.`status`= 'Proses Bendahara' OR ajuan.`status`= 'Selesai' ORDER BY ajuan.id_ajuan DESC
                         ");
                 return $query->result_array();
             }

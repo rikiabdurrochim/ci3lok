@@ -26,13 +26,13 @@ class Menu extends CI_Controller
 
 	public function prosesinput()
 	{
-		$id_mnutama = $this->input->post('id_mnutama');
+		$id_treeview = $this->input->post('id_treeview');
 		$nm_menu = $this->input->post('nm_menu');
 		$link_akses = $this->input->post('link_akses');
 		$icon_menu = $this->input->post('icon_menu');
 
 		$data = [
-			'id_mnutama' => $id_mnutama,
+			'id_treeview' => $id_treeview,
 			'nm_menu' => $nm_menu,
 			'link_akses' => $link_akses,
 			'icon_menu' => $icon_menu,
@@ -47,13 +47,13 @@ class Menu extends CI_Controller
 	public function prosesupdate()
 	{
 
-		$id_mnutama = $this->input->post('id_mnutama');
+		$id_treeview = $this->input->post('id_treeview');
 		$nm_menu = $this->input->post('nm_menu');
 		$link_akses = $this->input->post('link_akses');
 		$icon_menu = $this->input->post('icon_menu');
 
 		$data = [
-			'id_mnutama' => $id_mnutama,
+			'id_treeview' => $id_treeview,
 			'nm_menu' => $nm_menu,
 			'link_akses' => $link_akses,
 			'icon_menu' => $icon_menu,

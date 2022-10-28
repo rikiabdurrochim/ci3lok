@@ -39,7 +39,7 @@ class StaffPpk extends CI_Controller
 		$alasan = $this->input->post('alasan');
 		$idajuan = $this->input->post('idajuan');
 
-		$query_ditolak = $this->db->query("UPDATE ajuan SET `catatan` = '$alasan', `status` = 'Ditolak PPK' WHERE `id_ajuan` = '$idajuan'");
+		$query_ditolak = $this->db->query("UPDATE ajuan SET `catatan` = '$alasan', `status` = 'Ditolak Staff PPK' WHERE `id_ajuan` = '$idajuan'");
 		$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Alasan Berhasil disimpan<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
 		redirect(site_url('staffppk'));
 	}
