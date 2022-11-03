@@ -3,7 +3,7 @@
         <div class="info-box">
             <span class="info-box-icon bg-info elevation-1"><i class="fas fa-cog"></i></span>
             <div class="info-box-content">
-                <span class="info-box-text">CPU Traffic</span>
+                <span class="info-box-text">Pengajuan</span>
                 <span class="info-box-number">
                     10
                     <small>%</small>
@@ -18,7 +18,7 @@
         <div class="info-box mb-3">
             <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-thumbs-up"></i></span>
             <div class="info-box-content">
-                <span class="info-box-text">Likes</span>
+                <span class="info-box-text">SPP</span>
                 <span class="info-box-number">41,410</span>
             </div>
             <!-- /.info-box-content -->
@@ -32,7 +32,7 @@
         <div class="info-box mb-3">
             <span class="info-box-icon bg-success elevation-1"><i class="fas fa-shopping-cart"></i></span>
             <div class="info-box-content">
-                <span class="info-box-text">Sales</span>
+                <span class="info-box-text">SPBY</span>
                 <span class="info-box-number">760</span>
             </div>
             <!-- /.info-box-content -->
@@ -44,7 +44,7 @@
         <div class="info-box mb-3">
             <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-users"></i></span>
             <div class="info-box-content">
-                <span class="info-box-text">New Members</span>
+                <span class="info-box-text">Ditolak</span>
                 <span class="info-box-number">2,000</span>
             </div>
             <!-- /.info-box-content -->
@@ -57,65 +57,64 @@
 <div class="card">
     <div class="card-body">
         <div class="table-responsive">
-            <table id="example" class="table table-striped table-bordered text-center" style="width:100%">
+            <table id="example1" class="table table-bordered table-striped" style="width:100%">
                 <thead>
                     <tr>
-                        <th>Name</th>
-                        <th>PositionPosition PositionPosition</th>
-                        <th>Officekjbkbvlkjbiu jkiuihlkbuibh</th>
-                        <th>kjbilblbliubkbiub akjsblkb</th>
-                        <th>OfficeOfficeOffice hbkh</th>
-                        <th>OfficeOfficeOffice bskbaliscb</th>
-                        <th>Age</th>
-                        <th>Start date</th>
-                        <th>Salary</th>
+                        <th style=" text-align: center;  vertical-align: middle;">No.</th>
+                        <th style=" text-align: center;  vertical-align: middle;">No. Ajuan</th>
+                        <th style=" text-align: center;  vertical-align: middle;">Tgl Ajuan</th>
+                        <th style=" text-align: center;  vertical-align: middle;">Jenis</th>
+                        <th style=" text-align: center;  vertical-align: middle;">No.Dokumen</th>
+                        <th style=" text-align: center;  vertical-align: middle;">Tgl Dokumen</th>
+                        <th style=" text-align: center;  vertical-align: middle;">Perihal</th>
+                        <th style=" text-align: center;  vertical-align: middle;">Kode Kegiatan</th>
+                        <th style=" text-align: center;  vertical-align: middle;">Kode Akun</th>
+                        <th style=" text-align: center;  vertical-align: middle;">Jumlah </th>
+                        <th style=" text-align: center;  vertical-align: middle;">Status </th>
+
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>Tiger Nixon</td>
-                        <td>System Architect</td>
-                        <td>System Architect</td>
-                        <td>System Architect</td>
-                        <td>System Architect</td>
-                        <td>Edinburgh</td>
-                        <td>61</td>
-                        <td>2011-04-25</td>
-                        <td>$320,800</td>
-                    </tr>
-                    <tr>
-                        <td>Garrett Winters</td>
-                        <td>Accountant</td>
-                        <td>Accountant</td>
-                        <td>Accountant</td>
-                        <td>Accountant</td>
-                        <td>Tokyo</td>
-                        <td>63</td>
-                        <td>2011-07-25</td>
-                        <td>$170,750</td>
-                    </tr>
-                    <tr>
-                        <td>Ashton Cox</td>
-                        <td>Junior Technical Author</td>
-                        <td>Junior Technical Author</td>
-                        <td>Junior Technical Author</td>
-                        <td>Junior Technical Technical Technical Technical Author</td>
-                        <td>San Francisco</td>
-                        <td>66</td>
-                        <td>2009-01-12</td>
-                        <td>$86,000</td>
-                    </tr>
-                    <tr>
-                        <td>Cedric Kelly</td>
-                        <td>Senior Javascript Developer</td>
-                        <td>Senior Javascript Developer</td>
-                        <td>Senior Javascript Developer</td>
-                        <td>Senior Javascript JavascriptJavascriptJavascriptJavascriptJavascript Developer</td>
-                        <td>Edinburgh</td>
-                        <td>22</td>
-                        <td>2012-03-29</td>
-                        <td>$433,060</td>
-                    </tr>
+                    <?php
+                    $no = 0;
+                    $data_ajuan = $this->db->query("SELECT * FROM ajuan 
+                    INNER JOIN jenis on jenis.id_jenis = ajuan.jns_ajuan 
+                    INNER JOIN giat on giat.id_giat = ajuan.kd_giat 
+                    INNER JOIN akun on akun.id_akun = ajuan.kd_akun 
+                    INNER JOIN pegawai on pegawai.id_peg = ajuan.peg_id 
+                    ORDER BY id_ajuan DESC")->result_array();
+                    foreach ($data_ajuan as $ajuan) :
+                        $catatan = $ajuan['catatan'];
+                        $no++;
+                        $status_ajuan = "<label style='color: orange;'>Belum Diproses</label>";
+                        if ($ajuan['status'] == "Ditolak Loket") $status_ajuan = "<label style='color: red;'>Ditolak Loket</label>";
+                        else if ($ajuan['status'] == "Proses SPP/SPBY") $status_ajuan = "<label style='color: blue;'>Persetujuan SPP/SPBY</label>";
+                        else if ($ajuan['status'] == "Ditolak Staff PPK") $status_ajuan = "<label style='color: red;'>Ditolak PPK</label>";
+                        else if ($ajuan['status'] == "Proses SPM") $status_ajuan = "<label style='color: blue;'>Persetujuan PPSPM</label>";
+                        else if ($ajuan['status'] == "Ditolak PPK") $status_ajuan = "<label style='color: red;'>Ditolak PPK</label>";
+                        else if ($ajuan['status'] == "Ditolak staff PPSPM") $status_ajuan = "<label style='color: red;'>Ditolak PPSPM</label>";
+                        else if ($ajuan['status'] == "Ditolak PPSPM") $status_ajuan = "<label style='color: red;'>Ditolak PPSPM</label>";
+                        else if ($ajuan['status'] == "Kirim KPPN") $status_ajuan = "<label style='color: blue;'>Ditolak PPSPM</label>";
+                        else if ($ajuan['status'] == "Proses Bendahara") $status_ajuan = "<label style='color: blue;'>Proses Bendahara</label>";
+                        else if ($ajuan['status'] == "Selesai") $status_ajuan = "<label style='color: green;'>Selesai</label>";
+                    ?>
+                        <tr>
+                            <td><?= $no; ?></td>
+                            <td><?= $ajuan['no_ajuan']; ?></td>
+                            <td><?= date('d/m/Y   H:i', strtotime($ajuan['tgl_ajuan'])); ?></td>
+                            <td><?= $ajuan['nm_jenis']; ?></td>
+                            <td><?= $ajuan['no_dok']; ?></td>
+                            <td><?= date('d/m/Y', strtotime($ajuan['tgl_dok'])); ?></td>
+                            <td><?= $ajuan['perihal']; ?></td>
+                            <td><?= $ajuan['kegiatan']; ?></td>
+                            <td><?= $ajuan['kroakun']; ?></td>
+                            <td style="text-align: right"><?= number_format($ajuan['jml_ajuan'], 0, ',', '.'); ?></td>
+                            <td style="text-align: center"><?= $status_ajuan ?></td>
+
+
+
+                        </tr>
+                    <?php endforeach; ?>
                 </tbody>
             </table>
         </div>

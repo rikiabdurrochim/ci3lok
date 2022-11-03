@@ -54,12 +54,54 @@ class StaffPpk extends CI_Controller
 		$no_spp = $this->input->post('no_spp');
 		$tgl_spp = $this->input->post('tgl_spp');
 		$jml_spp = $this->input->post('jml_spp');
+		$status = $this->input->post('status');
 
-		if ($metode == "SPP") {
-			$query_setuju = $this->db->query("UPDATE ajuan SET mtd_byr='$metode', no_spp='$no_spp', tgl_spp='$tgl_spp', jml_spp='$jml_spp' WHERE id_ajuan = '$idajuan'");
+		if ($status == "Proses SPP/SPBY") {
+			if ($metode == "SPP") {
+				$query_setuju = $this->db->query("UPDATE ajuan SET mtd_byr='$metode', no_spp='$no_spp', tgl_spp='$tgl_spp', jml_spp='$jml_spp' WHERE id_ajuan = '$idajuan'");
+			} else {
+				$query_setuju = $this->db->query("UPDATE ajuan SET mtd_byr='$metode', no_spby='$no_spby', tgl_spby='$tgl_spby', jml_spby='$jml_spby' WHERE id_ajuan = '$idajuan'");
+			}
+		} else if ($status == "Ditolak Staff PPSPM") {
+			if ($metode == "SPP") {
+				$query_setuju = $this->db->query("UPDATE ajuan SET mtd_byr='$metode', no_spp='$no_spp', tgl_spp='$tgl_spp', jml_spp='$jml_spp', status='Proses SPP/SPBY' WHERE id_ajuan = '$idajuan'");
+			} else {
+				$query_setuju = $this->db->query("UPDATE ajuan SET mtd_byr='$metode', no_spby='$no_spby', tgl_spby='$tgl_spby', jml_spby='$jml_spby', status='Proses SPP/SPBY'  WHERE id_ajuan = '$idajuan'");
+			}
+		} else if ($status == "Ditolak PPK") {
+			if ($metode == "SPP") {
+				$query_setuju = $this->db->query("UPDATE ajuan SET mtd_byr='$metode', no_spp='$no_spp', tgl_spp='$tgl_spp', jml_spp='$jml_spp', status='Proses SPP/SPBY' WHERE id_ajuan = '$idajuan'");
+			} else {
+				$query_setuju = $this->db->query("UPDATE ajuan SET mtd_byr='$metode', no_spby='$no_spby', tgl_spby='$tgl_spby', jml_spby='$jml_spby', status='Proses SPP/SPBY'  WHERE id_ajuan = '$idajuan'");
+			}
 		} else {
-			$query_setuju = $this->db->query("UPDATE ajuan SET mtd_byr='$metode', no_spby='$no_spby', tgl_spby='$tgl_spby', jml_spby='$jml_spby' WHERE id_ajuan = '$idajuan'");
 		}
+
+		$get_ajuan = $this->db->query("SELECT id_ajuan FROM ajuan WHERE id_ajuan='$idajuan'")->result_array();
+		foreach ($get_ajuan as $ajuan_data) :
+			$this->load->library('upload');
+			$dataInfo = array();
+			$files = $_FILES;
+			$jumlahberkas = count($_FILES['nama_file']['name']);
+			for ($i = 0; $i < $jumlahberkas; $i++) {
+				$_FILES['nama_file']['name'] = $files['nama_file']['name'][$i];
+				$_FILES['nama_file']['type'] = $files['nama_file']['type'][$i];
+				$_FILES['nama_file']['tmp_name'] = $files['nama_file']['tmp_name'][$i];
+				$_FILES['nama_file']['error'] = $files['nama_file']['error'][$i];
+				$_FILES['nama_file']['size'] = $files['nama_file']['size'][$i];
+
+				$this->upload->initialize($this->upload_berkas());
+				$this->upload->do_upload('nama_file');
+				$dataInfo[] = $this->upload->data();
+				$data_berkas = array(
+					'id_ajuan' => $ajuan_data['id_ajuan'],
+					'nama_file' => $dataInfo[$i]['file_name'],
+					'status_file' => 'staff ppk',
+				);
+
+				$this->db->insert('file_dukung', $data_berkas);
+			}
+		endforeach;
 
 		$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Berhasil disetujui<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
 		redirect(site_url('staffppk'));
@@ -86,5 +128,15 @@ class StaffPpk extends CI_Controller
 				redirect('log');
 			}
 		endforeach;
+	}
+
+
+
+	function upload_berkas()
+	{
+		$config = array();
+		$config['upload_path'] = './assets/file_dukung';
+		$config['allowed_types'] = 'pdf|xlsx|xls';
+		return $config;
 	}
 }

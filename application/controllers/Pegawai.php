@@ -31,18 +31,9 @@ class Pegawai extends CI_Controller
 			}
 		endforeach;
 	}
-	public function tambah()
-	{
-		$data['title'] = 'Input Data';
-		$this->load->view('template/header', $data);
-		$this->load->view('template/sidebar', $data);
-		$this->load->view('pegawai/forminput', $data);
-		$this->load->view('template/footer');
-	}
 
 	public function prosesinput()
 	{
-
 		$username = $this->input->post('username');
 		$password = $this->input->post('password');
 		$email = $this->input->post('email');
@@ -94,42 +85,6 @@ class Pegawai extends CI_Controller
 			}
 		} else {
 		}
-	}
-
-
-
-	//untuk tampil data ke form edit
-	public function update($id)
-	{
-		$title = 'Update Pegawai';
-		$data_pegawai = $this->db->query("SELECT * FROM pegawai WHERE id_peg ='$id'")->result();
-		foreach ($data_pegawai as $row) :
-
-			if ($row) {
-				$data = array(
-					'title' => $title,
-					'username' => set_value('username', $row->username),
-					'password' => set_value('password', $row->password),
-					'email' => set_value('email', $row->email),
-					'id_peg' => set_value('id_peg', $row->id_peg),
-					'nm_peg' => set_value('nm_peg', $row->nm_peg),
-					'alamat_peg' => set_value('alamat_peg', $row->alamat_peg),
-					'nik' => set_value('nik', $row->nik),
-					'pangkat' => set_value('pangkat', $row->pangkat),
-					'gol' => set_value('gol', $row->gol),
-					'jabatan' => set_value('jabatan', $row->jabatan),
-					'unit' => set_value('unit', $row->unit),
-					'jk' => set_value('jk', $row->jk),
-				);
-
-				$this->load->view('template/header', $data);
-				$this->load->view('template/sidebar', $data);
-				$this->load->view('pegawai/formedit', $data);
-				$this->load->view('template/footer');
-			} else {
-				redirect(site_url('pegawai'));
-			}
-		endforeach;
 	}
 
 	//save data ke database

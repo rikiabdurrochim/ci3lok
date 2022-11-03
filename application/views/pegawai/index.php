@@ -86,7 +86,7 @@
                     </div>
                     <div class="form-group">
                         <label>NIK </label>
-                        <input type="text" maxlength="8" class="form-control" placeholder="NIK" name="nik">
+                        <input type="text" maxlength="8" minlength="8" class="form-control" placeholder="NIK" name="nik">
                     </div>
                     <div class="form-group">
                         <label>Pangkat </label>

@@ -13,6 +13,7 @@
                         <th>Nama Menu</th>
                         <th>Link Akses</th>
                         <th>Icon Menu</th>
+                        <th>Status Menu</th>
                         <th>Opsi</th>
                     </tr>
                 </thead>
@@ -27,6 +28,7 @@
                             <td><?= $menu['nm_menu']; ?></td>
                             <td><?= $menu['link_akses']; ?></td>
                             <td><?= $menu['icon_menu']; ?></td>
+                            <td><?= $menu['status_mn']; ?></td>
                             <td style="width: 70px;">
                                 <a href="#" data-toggle="modal" data-target="#modal-edit<?php echo ($menu['id_menu']); ?>" data-popup="tooltip" data-placement="top" title="Ubah Data"><i class="fa fa-edit" style="color:blue;"></i></a>
                                 <a href="<?= site_url('menu/delete/' . $menu['id_menu']) ?>"><i class="fa fa-trash" style="color:red;"></i></a>
@@ -52,8 +54,15 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <label>treeview</label>
-                        <input type="text" class="form-control" placeholder="id_treeview" name="id_treeview">
+                        <label>Treeview</label>
+                        <select class="form-control" name="id_treeview" id="id_treeview">
+                            <option value="">--Pilih--</option>
+                            <?php
+                            $get_treeview = $this->db->query("SELECT * FROM treeview")->result();
+                            foreach ($get_treeview as $treeview) { ?>
+                                <option value="<?= $treeview->id_treeview ?>"><?= $treeview->nama_treeview ?></option>
+                            <?php } ?>
+                        </select>
                     </div>
                     <div class="form-group">
                         <label>Nama Menu</label>
@@ -67,6 +76,14 @@
                         <label>Icon Menu</label>
                         <input type="text" class="form-control" placeholder="icon menu" name="icon_menu">
                     </div>
+                    <div class="form-group">
+                        <label>Status Menu</label>
+                        <select class="form-control" name="status_mn" id="status_mn">
+                            <option value="">--Pilih--</option>
+                            <option value="sidebar">SIDEBAR</option>
+                            <option value="aksi">AKSI</option>
+                        </select>
+                    </div>
                 </div>
                 <div class="modal-footer justify-content-between">
                     <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
@@ -78,10 +95,13 @@
     </div>
     <!-- /.modal-dialog -->
 </div>
+
 <!-- edit modal -->
 <?php
 $no = 0;
 foreach ($data_menu as $menu) :
+    $id_treeview = $menu['id_treeview'];
+    $status_mn = $menu['status_mn'];
     $no++;
 ?>
     <div class="modal fade" id="modal-edit<?php echo ($menu['id_menu']); ?>">
@@ -95,10 +115,19 @@ foreach ($data_menu as $menu) :
                         </button>
                     </div>
                     <div class="modal-body">
+                        <input type="hidden" name="id_menu" id="id_menu" value="<?php echo $menu['id_menu']; ?>">
                         <div class="form-group">
-                            <input type="hidden" class="form-control" placeholder="id_menu" name="id_menu" value="<?php echo $menu['id_menu'] ?>">
-                            <label>Menu Utama</label>
-                            <input type="text" class="form-control" placeholder="id_treeview" name="id_treeview" value="<?php echo $menu['id_treeview'] ?>">
+                            <label>Treeview</label>
+                            <select class="form-control" name="id_treeview" id="id_treeview">
+                                <option value="">--Pilih--</option>
+                                <?php
+                                $get_treeview = $this->db->query("SELECT * FROM treeview")->result();
+                                foreach ($get_treeview as $treeview) { ?>
+                                    <option value="<?= $treeview->id_treeview ?>" <?php if ($id_treeview == $treeview->id_treeview) {
+                                                                                        echo 'selected';
+                                                                                    } ?>><?= $treeview->nama_treeview ?></option>
+                                <?php } ?>
+                            </select>
                         </div>
                         <div class="form-group">
                             <label">Nama Menu </label>
@@ -111,6 +140,18 @@ foreach ($data_menu as $menu) :
                         <div class="form-group">
                             <label>Icon Menu </label>
                             <input type="text" class="form-control" placeholder="Icon Menu " name="icon_menu" value="<?php echo $menu['icon_menu'] ?>">
+                        </div>
+                        <div class="form-group">
+                            <label>Status Menu</label>
+                            <select class="form-control" name="status_mn" id="status_mn">
+                                <option value="">--Pilih--</option>
+                                <option value="sidebar" <?php if ($status_mn == 'sidebar') {
+                                                            echo 'selected';
+                                                        } ?>>SIDEBAR</option>
+                                <option value="aksi" <?php if ($status_mn == 'aksi') {
+                                                            echo 'selected';
+                                                        } ?>>AKSI</option>
+                            </select>
                         </div>
                     </div>
                     <div class="modal-footer justify-content-between">

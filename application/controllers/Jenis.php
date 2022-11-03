@@ -12,28 +12,36 @@ class Jenis extends CI_Controller
 	public function index()
 	{
 		$username = $_SESSION['id_peg'];
-		if ($username != "") {
-			$data['title'] = 'Data Detail Jenis';
-			$data['data_jenis'] = $this->Jenis_model->select_jenis();
+		$cek_data = $this->db->query("SELECT COUNT(id_aksesmn) AS ada_tidak FROM aksesmn 
+		INNER JOIN menu ON menu.`id_menu`=aksesmn.`id_menu`
+		INNER JOIN pegawai ON pegawai.`id_peg`=aksesmn.`id_peg` WHERE pegawai.id_peg='$username' 
+		AND menu.`id_menu`='23'")->result();
+		foreach ($cek_data as $ck_data) :
+			if ($username != "" && $ck_data->ada_tidak != "0") {
+				$data['title'] = 'Data Detail Jenis';
+				$data['data_jenis'] = $this->Jenis_model->select_jenis();
 
-			$this->load->view('template/header', $data);
-			$this->load->view('template/sidebar', $data);
-			$this->load->view('jenis/index', $data);
-			$this->load->view('template/footer');
-		} else {
-			redirect('log');
-		}
+				$this->load->view('template/header', $data);
+				$this->load->view('template/sidebar', $data);
+				$this->load->view('jenis/index', $data);
+				$this->load->view('template/footer');
+			} else if ($username != "" && $ck_data->ada_tidak == "0") {
+				$this->load->view('errors/error_404');
+			} else {
+				redirect('log');
+			}
+		endforeach;
 	}
 
 
 	public function prosesinput()
 	{
 
-		$kd_jenis = $this->input->post('kd_jenis');
+
 		$nm_jenis = $this->input->post('nm_jenis');
 
 		$data = [
-			'kd_jenis' => $kd_jenis,
+
 			'nm_jenis' => $nm_jenis,
 		];
 
@@ -46,11 +54,11 @@ class Jenis extends CI_Controller
 	public function prosesupdate()
 	{
 
-		$kd_jenis = $this->input->post('kd_jenis');
+
 		$nm_jenis = $this->input->post('nm_jenis');
 
 		$data = [
-			'kd_jenis' => $kd_jenis,
+
 			'nm_jenis' => $nm_jenis,
 		];
 

@@ -30,14 +30,14 @@
                         $no++;
                         $status_ajuan = "<label style='color: orange;'>Belum Diproses</label>";
                         if ($ajuan['status'] == "Ditolak Staff PPK" && $ajuan['mtd_byr'] == "BELUM") $status_ajuan = "<label style='color: red;'>Ditolak PPK</label>";
-                        else if ($ajuan['status'] == "Proses SPP/SPBY" && $ajuan['mtd_byr'] != "BELUM") $status_ajuan = "<label style='color: blue;'>Persetujuan PPK</label>";
+                        else if ($ajuan['status'] == "Proses SPP/SPBY" && $ajuan['mtd_byr'] != "BELUM") $status_ajuan = "<label style='color: blue;'>Proses SPP/SPBY</label>";
                         else if ($ajuan['status'] == "Ditolak PPK" && $ajuan['mtd_byr'] != "BELUM") $status_ajuan = "<label style='color: red;'>Ditolak PPK</label>";
-                        else if ($ajuan['status'] == "Proses SPM" && $ajuan['mtd_byr'] != "BELUM") $status_ajuan = "<label style='color: green;'>Proses SPM</label>";
-                        else if ($ajuan['status'] == "Ditolak Staff PPSPM" && $ajuan['mtd_byr'] != "BELUM") $status_ajuan = "<label style='color: blue;'>Ditolak Staff PPSPM</label>";
+                        else if ($ajuan['status'] == "Proses SPM" && $ajuan['mtd_byr'] != "BELUM") $status_ajuan = "<label style='color: blue;'>Proses PPSPM</label>";
+                        else if ($ajuan['status'] == "Ditolak Staff PPSPM" && $ajuan['mtd_byr'] != "BELUM") $status_ajuan = "<label style='color: red;'>Ditolak PPSPM</label>";
                         else if ($ajuan['status'] == "Ditolak PPSPM" && $ajuan['mtd_byr'] != "BELUM") $status_ajuan = "<label style='color: red;'>Ditolak PPSPM</label>";
-                        else if ($ajuan['status'] == "Kirim KPPN" && $ajuan['mtd_byr'] != "BELUM") $status_ajuan = "<label style='color: red;'>Kirim KPPN</label>";
-                        else if ($ajuan['status'] == "Proses Bendahara" && $ajuan['mtd_byr'] != "BELUM") $status_ajuan = "<label style='color: red;'>Proses Bendahara</label>";
-                        else if ($ajuan['status'] == "Selesai" && $ajuan['mtd_byr'] != "BELUM") $status_ajuan = "<label style='color: red;'>Selesai</label>";
+                        else if ($ajuan['status'] == "Kirim KPPN" && $ajuan['mtd_byr'] != "BELUM") $status_ajuan = "<label style='color: blue;'>Kirim KPPN</label>";
+                        else if ($ajuan['status'] == "Proses Bendahara" && $ajuan['mtd_byr'] != "BELUM") $status_ajuan = "<label style='color: blue;'>Proses Bendahara</label>";
+                        else if ($ajuan['status'] == "Selesai" && $ajuan['mtd_byr'] != "BELUM") $status_ajuan = "<label style='color: green;'>Selesai</label>";
                     ?>
                         <tr>
                             <td><?= $no; ?></td>
@@ -67,8 +67,28 @@
                                             </svg>
                                         </div>
                                         <div class="dropdown-menu dropdown-menu-left">
-                                            <a href="#" data-toggle="modal" data-target="#modal-ditolak<?= ($ajuan['id_ajuan']); ?>" data-popup="tooltip" data-placement="top" title="Alasan ditolak" class="btn btn-danger">Tolak</a>
-                                            <a href="<?= site_url('staffppk/spp_spby/' . $ajuan['id_ajuan']) ?>"><button class="btn btn-success">Metode Bayar</button></a>
+                                            <center>
+                                                <a href="#" data-toggle="modal" data-target="#modal-ditolak<?= ($ajuan['id_ajuan']); ?>" data-popup="tooltip" data-placement="top" title="Alasan ditolak" class="btn btn-danger">Tolak</a>
+                                                <a href="<?= site_url('staffppk/spp_spby/' . $ajuan['id_ajuan']) ?>"><button class="btn btn-success">Metode Bayar</button></a>
+                                            </center>
+                                        </div>
+                                    </div>
+                                <?php } else if ($ajuan['status'] == "Ditolak Staff PPSPM" && $ajuan['mtd_byr'] != "BELUM" or $ajuan['status'] == "Ditolak PPK") { ?>
+                                    <div class=" ml-auto text-left">
+                                        <div class="btn-link" data-toggle="dropdown">
+                                            <svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                    <rect x="0" y="0" width="24" height="24"></rect>
+                                                    <circle fill="#000000" cx="5" cy="12" r="2"></circle>
+                                                    <circle fill="#000000" cx="12" cy="12" r="2"></circle>
+                                                    <circle fill="#000000" cx="19" cy="12" r="2"></circle>
+                                                </g>
+                                            </svg>
+                                        </div>
+                                        <div class="dropdown-menu dropdown-menu-left">
+                                            <center>
+                                                <a href="<?= site_url('staffppk/spp_spby/' . $ajuan['id_ajuan']) ?>"><button class="btn btn-success">Metode Bayar</button></a>
+                                            </center>
                                         </div>
                                     </div>
                                 <?php } else {
@@ -160,8 +180,6 @@ foreach ($data_ajuan as $ajuan) :
                                         </tr>
                                     </tbody>
                                 </table>
-
-
                             </div>
                         </div>
                     </div>
@@ -202,6 +220,7 @@ foreach ($data_ajuan as $ajuan) :
                                         <tr>
                                             <th>No.</th>
                                             <th>Nama File</th>
+                                            <th>Status File</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -214,7 +233,7 @@ foreach ($data_ajuan as $ajuan) :
                                             <tr>
                                                 <td><?= $no_files++; ?></td>
                                                 <td><a href="<?= BASEURL ?>assets/file_dukung/<?php echo $a['nama_file']; ?>" target="_blank"><?php echo $a['nama_file']; ?></a></td>
-
+                                                <td><?= $a['status_file'] ?></td>
                                             </tr>
                                         <?php endforeach; ?>
                                     </tbody>

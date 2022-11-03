@@ -20,7 +20,6 @@ class Unit extends CI_Controller
 			if ($username != "" && $ck_data->ada_tidak != "0") {
 				$data['title'] = 'Data Unit';
 				$data['data_unit'] = $this->Unit_model->select_unit();
-
 				$this->load->view('template/header', $data);
 				$this->load->view('template/sidebar', $data);
 				$this->load->view('unit/index', $data);

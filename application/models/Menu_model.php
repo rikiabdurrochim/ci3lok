@@ -8,7 +8,7 @@ class Menu_model extends CI_Model
 
     public function select_menu()
     {
-        $query = $this->db->query("SELECT * FROM menu ORDER BY id_menu DESC");
+        $query = $this->db->query("SELECT * FROM menu INNER JOIN treeview ON treeview.id_treeview = menu.id_treeview ORDER BY id_menu DESC");
         return $query->result_array();
     }
 

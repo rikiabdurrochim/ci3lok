@@ -29,13 +29,13 @@
                         $no++;
                         $status_ajuan = "<label style='color: orange;'>Belum Diproses</label>";
                         if ($ajuan['status'] == "Ditolak Loket") $status_ajuan = "<label style='color: red;'>Ditolak Loket</label>";
-                        else if ($ajuan['status'] == "Proses SPP/SPBY") $status_ajuan = "<label style='color: blue;'>Persetujuan SPP/SPBY</label>";
+                        else if ($ajuan['status'] == "Proses SPP/SPBY") $status_ajuan = "<label style='color: blue;'>Proses SPP/SPBY</label>";
                         else if ($ajuan['status'] == "Ditolak Staff PPK") $status_ajuan = "<label style='color: red;'>Ditolak PPK</label>";
-                        else if ($ajuan['status'] == "Proses SPM") $status_ajuan = "<label style='color: blue;'>Persetujuan PPSPM</label>";
+                        else if ($ajuan['status'] == "Proses SPM") $status_ajuan = "<label style='color: blue;'>Proses PPSPM</label>";
                         else if ($ajuan['status'] == "Ditolak PPK") $status_ajuan = "<label style='color: red;'>Ditolak PPK</label>";
                         else if ($ajuan['status'] == "Ditolak staff PPSPM") $status_ajuan = "<label style='color: red;'>Ditolak PPSPM</label>";
                         else if ($ajuan['status'] == "Ditolak PPSPM") $status_ajuan = "<label style='color: red;'>Ditolak PPSPM</label>";
-                        else if ($ajuan['status'] == "Kirim KPPN") $status_ajuan = "<label style='color: blue;'>Ditolak PPSPM</label>";
+                        else if ($ajuan['status'] == "Kirim KPPN") $status_ajuan = "<label style='color: red;'>Ditolak PPSPM</label>";
                         else if ($ajuan['status'] == "Proses Bendahara") $status_ajuan = "<label style='color: blue;'>Proses Bendahara</label>";
                         else if ($ajuan['status'] == "Selesai") $status_ajuan = "<label style='color: green;'>Selesai</label>";
                     ?>
@@ -192,7 +192,7 @@ foreach ($data_ajuan as $ajuan) :
                                             <?php
                                             $no_files = 1;
                                             $id_ajuan = $ajuan['id_ajuan'];
-                                            $get_files = $this->db->query("SELECT * FROM file_dukung WHERE id_ajuan = '$id_ajuan'")->result_array();
+                                            $get_files = $this->db->query("SELECT * FROM file_dukung WHERE id_ajuan = '$id_ajuan' AND status_file = 'user'")->result_array();
                                             foreach ($get_files as $a) :
                                             ?>
                                                 <tr>

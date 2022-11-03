@@ -113,6 +113,7 @@ class Ajuan extends CI_Controller
 				$data_berkas = array(
 					'id_ajuan' => $ajuan_data['id_ajuan'],
 					'nama_file' => $dataInfo[$i]['file_name'],
+					'status_file' => 'user',
 				);
 
 				$this->db->insert('file_dukung', $data_berkas);
@@ -247,6 +248,7 @@ class Ajuan extends CI_Controller
 				$data_berkas = array(
 					'id_ajuan' => $ajuan_data['id_ajuan'],
 					'nama_file' => $dataInfo[$i]['file_name'],
+					'status_file' => 'user',
 				);
 
 				$this->db->insert('file_dukung', $data_berkas);

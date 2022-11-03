@@ -29,13 +29,10 @@
                         $catatan = $ajuan['catatan'];
                         $no++;
                         $status_ajuan = "<label style='color: orange;'>Belum Diproses</label>";
-                        if ($ajuan['status'] == "Ditolak PPK" && $ajuan['mtd_byr'] != "BELUM") $status_ajuan = "<label style='color: red;'>Ditolak PPK</label>";
-                        else if ($ajuan['status'] == "Proses SPM" && $ajuan['mtd_byr'] != "BELUM") $status_ajuan = "<label style='color: blue;'>Proses PPSPM</label>";
-                        else if ($ajuan['status'] == "Ditolak Staff PPSPM" && $ajuan['mtd_byr'] != "BELUM") $status_ajuan = "<label style='color: red;'>Ditolak PPSPM</label>";
-                        else if ($ajuan['status'] == "Ditolak PPSPM" && $ajuan['mtd_byr'] != "BELUM") $status_ajuan = "<label style='color: red;'>Ditolak PPSPM</label>";
-                        else if ($ajuan['status'] == "Kirim KPPN" && $ajuan['mtd_byr'] != "BELUM") $status_ajuan = "<label style='color: blue;'>Kirim KPPN</label>";
-                        else if ($ajuan['status'] == "Proses Bendahara" && $ajuan['mtd_byr'] != "BELUM") $status_ajuan = "<label style='color: blue;'>Proses Bendahara</label>";
-                        else if ($ajuan['status'] == "Selesai" && $ajuan['mtd_byr'] != "BELUM") $status_ajuan = "<label style='color: green;'>Selesai</label>";
+                        if ($ajuan['status'] == "Ditolak PPSPM" && $ajuan['no_spm'] != "") $status_ajuan = "<label style='color: red;'>Ditolak PPSPM</label>";
+                        else if ($ajuan['status'] == "Kirim KPPN" && $ajuan['no_spm'] != "") $status_ajuan = "<label style='color: blue;'>Kirim KPPN</label>";
+                        else if ($ajuan['status'] == "Proses Bendahara" && $ajuan['no_spm'] != "") $status_ajuan = "<label style='color: blue;'>Proses Bendahara</label>";
+                        else if ($ajuan['status'] == "Selesai" && $ajuan['no_spm'] != "") $status_ajuan = "<label style='color: green;'>Selesai</label>";
                     ?>
                         <tr>
                             <td><?= $no; ?></td>
@@ -52,7 +49,8 @@
                             <td>
                                 <a href="#" data-toggle="modal" data-target="#modal-lihat<?= ($ajuan['id_ajuan']); ?>" data-popup="tooltip" data-placement="top" title="Lihat Data"><i class="fa fa-eye" style="color:green"></i></a>
                                 <a href="#" data-toggle="modal" data-target="#modal-download<?= ($ajuan['id_ajuan']); ?>" data-popup="tooltip" data-placement="top" title="Download Data"><i class="fa fa-download" style="color:orange"></i></a>
-                                <?php if ($ajuan['status'] == "Proses SPP/SPBY" && $ajuan['mtd_byr'] != "BELUM") { ?>
+                                <a href="#" data-toggle="modal" data-target="#modal-edit<?= ($ajuan['id_ajuan']); ?>" data-popup="tooltip" data-placement="top" title="Edit Data"><i class="fa fa-edit" style="color:blue"></i></a>
+                                <?php if ($ajuan['status'] == "Proses SPM" && $ajuan['no_spm'] != "") { ?>
                                     <div class=" ml-auto text-left">
                                         <div class="btn-link" data-toggle="dropdown">
                                             <svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
@@ -64,9 +62,11 @@
                                                 </g>
                                             </svg>
                                         </div>
-                                        <div class="dropdown-menu dropdown-menu-left">
-                                            <a href="#" data-toggle="modal" data-target="#modal-ditolak<?= ($ajuan['id_ajuan']); ?>" data-popup="tooltip" data-placement="top" title="Alasan ditolak" class="btn btn-danger">Tolak</a>
-                                            <a href="<?= site_url('ppk/setujui/' . $ajuan['id_ajuan']) ?>"><button class="btn btn-success">Setujui</button></a>
+                                        <div class="dropdown-menu">
+                                            <center>
+                                                <a href="#" data-toggle="modal" data-target="#modal-ditolak<?= ($ajuan['id_ajuan']); ?>" data-popup="tooltip" data-placement="top" title="Alasan ditolak" class="btn btn-danger">Tolak</a>
+                                                <a href="<?= site_url('Ppspm/terima/' . $ajuan['id_ajuan']) ?>" class="btn btn-success">Terima</a>
+                                            </center>
                                         </div>
                                     </div>
                                 <?php } else {
@@ -134,6 +134,8 @@ foreach ($data_ajuan as $ajuan) :
                                                 <th>TGL SPBY</th>
                                                 <th>Jumlah SPBY</th>";
                                             } ?>
+                                            <th>No. SPM</th>
+                                            <th>Tanggal SPM</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -155,11 +157,11 @@ foreach ($data_ajuan as $ajuan) :
                                                 <td><?= date('d/m/Y', strtotime($ajuan['tgl_spby'])); ?></td>
                                                 <td><?= 'Rp ' . number_format($ajuan['jml_spby'], 0, ',', '.'); ?></td>
                                             <?php } ?>
+                                            <td><?= $ajuan['no_spm']; ?></td>
+                                            <td><?= date('d/m/Y', strtotime($ajuan['tgl_spm'])); ?></td>
                                         </tr>
                                     </tbody>
                                 </table>
-
-
                             </div>
                         </div>
                     </div>
@@ -173,7 +175,6 @@ foreach ($data_ajuan as $ajuan) :
         <!-- /.modal-dialog -->
     </div>
 <?php endforeach; ?>
-
 
 <!-- Download modal -->
 <?php
@@ -200,7 +201,6 @@ foreach ($data_ajuan as $ajuan) :
                                         <tr>
                                             <th>No.</th>
                                             <th>Nama File</th>
-                                            <th>Status File</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -213,7 +213,7 @@ foreach ($data_ajuan as $ajuan) :
                                             <tr>
                                                 <td><?= $no_files++; ?></td>
                                                 <td><a href="<?= BASEURL ?>assets/file_dukung/<?php echo $a['nama_file']; ?>" target="_blank"><?php echo $a['nama_file']; ?></a></td>
-                                                <td><?= $a['status_file'] ?></td>
+
                                             </tr>
                                         <?php endforeach; ?>
                                     </tbody>
@@ -240,7 +240,7 @@ foreach ($data_ajuan as $ajuan) :
 ?>
     <div class="modal fade" id="modal-ditolak<?= ($ajuan['id_ajuan']); ?>">
         <div class="modal-dialog modal-lg">
-            <form enctype="multipart/form-data" action="<?php echo site_url('ppk/ditolak') ?>" method="post">
+            <form enctype="multipart/form-data" action="<?php echo site_url('Ppspm/ditolak') ?>" method="post">
                 <div class="modal-content">
                     <div class="modal-header bg-primary">
                         <h4 class="modal-title">Masukan Alasan</h4>
@@ -267,7 +267,6 @@ foreach ($data_ajuan as $ajuan) :
                                                     <textarea id="alasan" name="alasan" class="form-control" placeholder="Berikan Alasan!" rows="4" required></textarea>
                                                 </td>
                                             </tr>
-
                                         </tbody>
                                     </table>
                                 </div>
@@ -325,6 +324,134 @@ foreach ($data_ajuan as $ajuan) :
                     <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                 </div>
             </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+<?php endforeach; ?>
+
+
+
+<!-- modal setuju -->
+<?php
+$no = 0;
+foreach ($data_ajuan as $ajuan) :
+    $no++;
+?>
+    <div class="modal fade" id="modal-diterima<?= ($ajuan['id_ajuan']); ?>">
+        <div class="modal-dialog modal-lg">
+            <form enctype="multipart/form-data" action="<?php echo site_url('staffPpspm/terima') ?>" method="post">
+                <div class="modal-content">
+                    <div class="modal-header bg-primary">
+                        <h4 class="modal-title">Diterima</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="card">
+                            <!-- /.card-header -->
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table id="example1" class="table table-bordered table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>No. Ajuan : <?= $ajuan['no_ajuan']; ?></th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <input type="hidden" name="idajuan" id="idajuan" value="<?php echo $ajuan['id_ajuan']; ?>">
+
+                                                    <label>No. SPM </label>
+                                                    <input type="text" class="form-control" placeholder="No. SPM" name="no_spm">
+                                                    <label>Tanggal SPM </label>
+                                                    <input type="date" class="form-control" placeholder="Tanggal SPM" name="tgl_spm">
+
+                                                </td>
+
+                                            </tr>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer justify-content-between">
+                        <button type="submit" class="btn btn-info">Simpan</button>
+                    </div>
+                </div>
+            </form>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+<?php endforeach; ?>
+
+
+<!-- modal edit -->
+<?php
+$no = 0;
+foreach ($data_ajuan as $ajuan) :
+    $no++;
+?>
+    <div class="modal fade" id="modal-edit<?= ($ajuan['id_ajuan']); ?>">
+        <div class="modal-dialog modal-lg">
+            <form enctype="multipart/form-data" action="<?php echo site_url('Ppspm/edit') ?>" method="post">
+                <div class="modal-content">
+                    <div class="modal-header bg-primary">
+                        <h4 class="modal-title">Edit Kode Akun</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="card">
+                            <!-- /.card-header -->
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table id="example1" class="table table-bordered table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>No. Ajuan</th>
+                                                <th><?= $ajuan['no_ajuan']; ?></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Kode Akun</td>
+                                                <td>
+                                                    <input type="hidden" name="idajuan" id="idajuan" value="<?php echo $ajuan['id_ajuan']; ?>">
+                                                    <select class="form-control" name="kd_akun">
+                                                        <option value="">--Pilih--</option>
+                                                        <?php
+                                                        $kegiatan = $ajuan['kd_giat'];
+                                                        $get_giat = $this->db->query("SELECT * FROM giat WHERE kd_giat = '$kegiatan' ")->result();
+                                                        foreach ($get_giat as $giat) {
+                                                            $get_akun = $this->db->query("SELECT * FROM akun WHERE kd_giat= '$giat->kd_giat' ")->result();
+                                                            foreach ($get_akun as $akun) {
+                                                        ?> <option value="<?= $akun->id_akun ?>" <?php if ($ajuan['kd_akun'] == $akun->kd_akun) {
+                                                                                                        echo 'selected';
+                                                                                                    } ?>><?= $akun->kroakun ?></option>
+                                                        <?php }
+                                                        } ?>
+                                                    </select>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer justify-content-between">
+                        <button type="submit" class="btn btn-info">Simpan</button>
+                    </div>
+                </div>
+            </form>
             <!-- /.modal-content -->
         </div>
         <!-- /.modal-dialog -->

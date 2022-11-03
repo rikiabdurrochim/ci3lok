@@ -10,7 +10,6 @@
                 <thead>
                     <tr>
                         <th>No.</th>
-                        <th>Kode Jenis</th>
                         <th>Nama Jenis</th>
                         <th>Opsi</th>
                     </tr>
@@ -23,7 +22,6 @@
                     ?>
                         <tr>
                             <td><?= $no; ?></td>
-                            <td><?= $jenis['kd_jenis']; ?></td>
                             <td><?= $jenis['nm_jenis']; ?></td>
                             <td style="width: 70px;">
                                 <a href="#" data-toggle="modal" data-target="#modal-edit<?php echo ($jenis['id_jenis']); ?>" data-popup="tooltip" data-placement="top" title="Ubah Data"><i class="fa fa-edit" style="color:blue;"></i></a>
@@ -49,10 +47,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <div class="form-group">
-                        <label>Kode Jenis</label>
-                        <input type="text" class="form-control" placeholder="kode jenis" name="kd_jenis">
-                    </div>
+
                     <div class="form-group">
                         <label>Nama Jenis</label>
                         <input type="text" class="form-control" placeholder="nama jenis" name="nm_jenis">
@@ -87,11 +82,6 @@ foreach ($data_jenis as $jenis) :
                     <div class="modal-body">
                         <div class="form-group">
                             <input type="hidden" class="form-control" placeholder="id_jenis" name="id_jenis" value="<?php echo $jenis['id_jenis'] ?>">
-                            <label">Kode Jenis </label>
-                                <input type="text" class="form-control" placeholder="Kode jenis" name="kd_jenis" value="<?php echo $jenis['kd_jenis'] ?>">
-                        </div>
-                        <div class="form-group">
-                            <label>Nama Jenis </label>
                             <label>Nama Jenis </label>
                             <input type="text" class="form-control" placeholder="Nama jenis" name="nm_jenis" value="<?php echo $jenis['nm_jenis'] ?>">
                         </div>

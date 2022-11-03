@@ -30,12 +30,14 @@ class Menu extends CI_Controller
 		$nm_menu = $this->input->post('nm_menu');
 		$link_akses = $this->input->post('link_akses');
 		$icon_menu = $this->input->post('icon_menu');
+		$status_mn = $this->input->post('status_mn');
 
 		$data = [
 			'id_treeview' => $id_treeview,
 			'nm_menu' => $nm_menu,
 			'link_akses' => $link_akses,
 			'icon_menu' => $icon_menu,
+			'status_mn' => $status_mn,
 		];
 
 		$this->Menu_model->input($data);
@@ -51,18 +53,22 @@ class Menu extends CI_Controller
 		$nm_menu = $this->input->post('nm_menu');
 		$link_akses = $this->input->post('link_akses');
 		$icon_menu = $this->input->post('icon_menu');
+		$status_mn = $this->input->post('status_mn');
+
 
 		$data = [
 			'id_treeview' => $id_treeview,
 			'nm_menu' => $nm_menu,
 			'link_akses' => $link_akses,
 			'icon_menu' => $icon_menu,
+			'status_mn' => $status_mn,
 		];
 
 		$this->Menu_model->update($this->input->post('id_menu'), $data);
 		$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Data Berhasil diubah<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
 		redirect(site_url('menu'));
 	}
+
 
 	public function delete($id)
 	{

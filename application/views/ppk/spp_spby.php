@@ -4,6 +4,8 @@ foreach ($get_ajuan as $ajuan) {
     $id_giat = $ajuan['kd_giat'];
 ?>
     <div class="body">
+
+        <body onload="tampilkan_metode()"></body>
         <form class="form-horizontal" enctype="multipart/form-data" action="<?php echo site_url('staffppk/setuju') ?>" method="post">
             <div class="card">
                 <!-- /.card-header -->
@@ -19,15 +21,28 @@ foreach ($get_ajuan as $ajuan) {
                             <tbody>
                                 <tr>
                                     <td>Pilih Metode</td>
-                                    <td><input type="hidden" name="idajuan" id="idajuan" value="<?php echo $ajuan['id_ajuan']; ?>">
+                                    <td><input type="hidden" name="idajuan" id="idajuan" value="<?php echo $ajuan['id_ajuan']; ?>" readonly>
+                                        <input type="hidden" name="status" id="status" value="<?php echo $ajuan['status']; ?>" readonly>
                                         <select class="form-control" name="metode" id="metode" onchange="tampilkan_metode()">
                                             <option value="">--Pilih--</option>
-                                            <option value="SPP">SPP</option>
-                                            <option value="SPBY">SPBY</option>
+                                            <option value="SPP" <?php if ($ajuan['mtd_byr'] == "SPP") {
+                                                                    echo 'selected';
+                                                                } ?>>SPP</option>
+                                            <option value="SPBY" <?php if ($ajuan['mtd_byr'] == "SPBY") {
+                                                                        echo 'selected';
+                                                                    } ?>>SPBY</option>
                                         </select>
                                     </td>
                                 </tr>
-
+                                <tr>
+                                    <td>
+                                        Upload File
+                                    </td>
+                                    <td>
+                                        <input type="file" class="form-control" id="nama_file" name="nama_file[]" multiple accept=".pdf,.xls" onchange="check_file()">
+                                        <small>File type : pdf<br>Max size : 2MB</small>
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -44,17 +59,17 @@ foreach ($get_ajuan as $ajuan) {
                             <div id="form-input" style="display: none">
                                 <p style="margin-left: 50px;">NO SPP</p>
                                 <p style="margin-left: 50px;">
-                                    <input type="text" class="form-control" style="width: 250px" name="no_spp" id="no_spp" placeholder="NO SPP" />
+                                    <input type="text" class="form-control" minlength="6" maxlength="6" style="width: 250px" name="no_spp" id="no_spp" placeholder="NO SPP" value="<?php echo $ajuan['no_spp']; ?>" />
                                 </p>
                                 <br>
                                 <p style="margin-left: 50px;">TGL SPP</p>
                                 <p style="margin-left: 50px;">
-                                    <input type="date" class="form-control" style="width: 250px" name="tgl_spp" id="tgl_spp" placeholder="TGL SPP" />
+                                    <input type="date" class="form-control" style="width: 250px" name="tgl_spp" id="tgl_spp" placeholder="TGL SPP" value="<?php echo $ajuan['tgl_spp']; ?>" />
                                 </p>
                                 <br>
                                 <p style="margin-left: 50px;">Jumlah SPP</p>
                                 <p style="margin-left: 50px;">
-                                    <span id="spp"></span><input type="text" class="form-control" style="width: 250px" name="jml_spp" id="jml_spp" placeholder="Jumlah SPP" onkeyup="document.getElementById('spp').innerHTML = formatCurrency(this.value);" />
+                                    <span id="spp"></span><input type="text" class="form-control" style="width: 250px" name="jml_spp" id="jml_spp" value="<?php echo $ajuan['jml_spp']; ?>" placeholder="Jumlah SPP" onkeyup="document.getElementById('spp').innerHTML = formatCurrency(this.value);" />
                                 </p>
                                 <br>
                             </div>
@@ -62,19 +77,20 @@ foreach ($get_ajuan as $ajuan) {
                             <div id="form-input1" style="display: none">
                                 <p style="margin-left: 50px;">NO SPBY</p>
                                 <p style="margin-left: 50px;">
-                                    <input type="text" class="form-control" style="width: 250px" name="no_spby" id="no_spby" placeholder="NO SPBY" />
+                                    <input type="text" class="form-control" minlength="6" maxlength="6" style="width: 250px" name="no_spby" id="no_spby" placeholder="NO SPBY" value="<?php echo $ajuan['no_spby']; ?>" />
                                 </p>
                                 <br>
                                 <p style="margin-left: 50px;">TGL SPBY</p>
                                 <p style="margin-left: 50px;">
-                                    <span id="pajak"></span><input type="date" class="form-control" style="width: 250px" name="tgl_spby" id="tgl_spby" placeholder="TGL SPBY" />
+                                    <span id="pajak"></span><input type="date" class="form-control" style="width: 250px" name="tgl_spby" id="tgl_spby" placeholder="TGL SPBY" value="<?php echo $ajuan['tgl_spby']; ?>" />
                                 </p>
                                 <br>
                                 <p style="margin-left: 50px;">Jumlah SPBY</p>
                                 <p style="margin-left: 50px;">
-                                    <span id="spm"></span><input type="text" class="form-control" style="width: 250px" name="jml_spby" id="jml_spby" placeholder="Jumlah SPBY" onkeyup="document.getElementById('spm').innerHTML = formatCurrency(this.value);" />
+                                    <span id="spm"></span><input type="text" class="form-control" style="width: 250px" name="jml_spby" id="jml_spby" placeholder="Jumlah SPBY" onkeyup="document.getElementById('spm').innerHTML = formatCurrency(this.value);" value="<?php echo $ajuan['jml_spby']; ?>" />
                                 </p>
                             </div>
+
                         </table>
                     </div>
                 </div>
@@ -100,7 +116,7 @@ foreach ($get_ajuan as $ajuan) {
             $("#no_spby").val('');
             $("#tgl_spby").val('');
             $("#jml_spby").val('');
-        } else {
+        } else if (metode == "SPBY") {
             $("#form-input").css("display", "none");
             $("#m_spj").css("display", "none");
             $("#form-input1").css("display", "block");
@@ -108,7 +124,7 @@ foreach ($get_ajuan as $ajuan) {
             $("#no_spp").val('');
             $("#tgl_spp").val('');
             $("#jml_spp").val('');
-        }
+        } else {}
     }
 
     function formatCurrency(nilai) {
@@ -126,5 +142,19 @@ foreach ($get_ajuan as $ajuan) {
             nilai = nilai.substring(0, nilai.length - (4 * i + 3)) + '.' +
             nilai.substring(nilai.length - (4 * i + 3));
         return (((sign) ? '' : '-') + 'Rp.' + nilai + ',' + cents);
+    }
+
+    function check_file() {
+        var file_nama = document.getElementById('nama_file');
+        var file_count = file_nama.files.length;
+        for (var i = 0; i < file_count; i++) {
+            var fileSize = file_nama.files[i].size;
+            var fileNama = file_nama.files[i].name;
+            if (fileSize > 2000000) { // 2 MB
+                alert(fileNama + ': File terlalu besar!');
+                alert("Maksimal size 2MB, Silahkan pilih ulang!");
+                $("#nama_file").val('');
+            } else {}
+        }
     }
 </script>
