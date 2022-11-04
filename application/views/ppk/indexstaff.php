@@ -29,15 +29,15 @@
                         $catatan = $ajuan['catatan'];
                         $no++;
                         $status_ajuan = "<label style='color: orange;'>Belum Diproses</label>";
-                        if ($ajuan['status'] == "Ditolak Staff PPK" && $ajuan['mtd_byr'] == "BELUM") $status_ajuan = "<label style='color: red;'>Ditolak PPK</label>";
-                        else if ($ajuan['status'] == "Proses SPP/SPBY" && $ajuan['mtd_byr'] != "BELUM") $status_ajuan = "<label style='color: blue;'>Proses SPP/SPBY</label>";
-                        else if ($ajuan['status'] == "Ditolak PPK" && $ajuan['mtd_byr'] != "BELUM") $status_ajuan = "<label style='color: red;'>Ditolak PPK</label>";
-                        else if ($ajuan['status'] == "Proses SPM" && $ajuan['mtd_byr'] != "BELUM") $status_ajuan = "<label style='color: blue;'>Proses PPSPM</label>";
-                        else if ($ajuan['status'] == "Ditolak Staff PPSPM" && $ajuan['mtd_byr'] != "BELUM") $status_ajuan = "<label style='color: red;'>Ditolak PPSPM</label>";
-                        else if ($ajuan['status'] == "Ditolak PPSPM" && $ajuan['mtd_byr'] != "BELUM") $status_ajuan = "<label style='color: red;'>Ditolak PPSPM</label>";
-                        else if ($ajuan['status'] == "Kirim KPPN" && $ajuan['mtd_byr'] != "BELUM") $status_ajuan = "<label style='color: blue;'>Kirim KPPN</label>";
-                        else if ($ajuan['status'] == "Proses Bendahara" && $ajuan['mtd_byr'] != "BELUM") $status_ajuan = "<label style='color: blue;'>Proses Bendahara</label>";
-                        else if ($ajuan['status'] == "Selesai" && $ajuan['mtd_byr'] != "BELUM") $status_ajuan = "<label style='color: green;'>Selesai</label>";
+                        if ($ajuan['status'] == "Ditolak Staff PPK" && $ajuan['mtd_byr'] != "BELUM" && $ajuan['no_spp'] == "" && $ajuan['no_spby'] == "") $status_ajuan = "<label style='color: red;'>Ditolak PPK</label>";
+                        else if ($ajuan['status'] == "Ditolak PPK" && $ajuan['mtd_byr'] != "BELUM" && $ajuan['no_spp'] != "" || $ajuan['no_spby'] != "") $status_ajuan = "<label style='color: red;'>Ditolak PPK</label>";
+                        else if ($ajuan['status'] == "Proses SPP/SPBY" && $ajuan['mtd_byr'] != "BELUM" && $ajuan['no_spp'] != "" || $ajuan['no_spby'] != "") $status_ajuan = "<label style='color: blue;'>Proses SPP/SPBY</label>";
+                        else if ($ajuan['status'] == "Proses SPM" && $ajuan['mtd_byr'] != "BELUM" && $ajuan['no_spp'] != "" || $ajuan['no_spby'] != "") $status_ajuan = "<label style='color: blue;'>Proses PPSPM</label>";
+                        else if ($ajuan['status'] == "Ditolak Staff PPSPM" && $ajuan['mtd_byr'] != "BELUM" && $ajuan['no_spp'] != "" || $ajuan['no_spby'] != "") $status_ajuan = "<label style='color: red;'>Ditolak PPSPM</label>";
+                        else if ($ajuan['status'] == "Ditolak PPSPM" && $ajuan['mtd_byr'] != "BELUM" && $ajuan['no_spp'] != "" || $ajuan['no_spby'] != "") $status_ajuan = "<label style='color: red;'>Ditolak PPSPM</label>";
+                        else if ($ajuan['status'] == "Kirim KPPN" && $ajuan['mtd_byr'] != "BELUM" && $ajuan['no_spp'] != "" || $ajuan['no_spby'] != "") $status_ajuan = "<label style='color: blue;'>Kirim KPPN</label>";
+                        else if ($ajuan['status'] == "Proses Bendahara" && $ajuan['mtd_byr'] && "BELUM" or $ajuan['no_spp'] != "" || $ajuan['no_spby'] != "") $status_ajuan = "<label style='color: blue;'>Proses Bendahara</label>";
+                        else if ($ajuan['status'] == "Selesai" && $ajuan['mtd_byr'] != "BELUM" && $ajuan['no_spp'] != "" || $ajuan['no_spby'] != "") $status_ajuan = "<label style='color: green;'>Selesai</label>";
                     ?>
                         <tr>
                             <td><?= $no; ?></td>
@@ -54,7 +54,7 @@
                             <td>
                                 <a href="#" data-toggle="modal" data-target="#modal-lihat<?= ($ajuan['id_ajuan']); ?>" data-popup="tooltip" data-placement="top" title="Lihat Data"><i class="fa fa-eye" style="color:green"></i></a>
                                 <a href="#" data-toggle="modal" data-target="#modal-download<?= ($ajuan['id_ajuan']); ?>" data-popup="tooltip" data-placement="top" title="Download Data"><i class="fa fa-download" style="color:orange"></i></a>
-                                <?php if ($ajuan['status'] == "Proses SPP/SPBY" && $ajuan['mtd_byr'] == "BELUM") { ?>
+                                <?php if ($ajuan['status'] == "Proses SPP/SPBY" && $ajuan['mtd_byr'] != "BELUM"  && $ajuan['no_spp'] == "" && $ajuan['no_spby'] == "") { ?>
                                     <div class=" ml-auto text-left">
                                         <div class="btn-link" data-toggle="dropdown">
                                             <svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1">

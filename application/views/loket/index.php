@@ -70,7 +70,7 @@
                                         </div>
                                         <div class="dropdown-menu dropdown-menu-left">
                                             <a href="#" data-toggle="modal" data-target="#modal-ditolak<?= ($ajuan['id_ajuan']); ?>" data-popup="tooltip" data-placement="top" title="Alasan ditolak" class="btn btn-danger">Tolak</a>
-                                            <a href="<?= site_url('loket/pilih_staffppk/' . $ajuan['id_ajuan']) ?>"><button class="btn btn-success">Setujui</button></a>
+                                            <a href="<?= site_url('loket/setujui/' . $ajuan['id_ajuan']) ?>"><button class="btn btn-success">Setujui</button></a>
                                         </div>
                                     </div>
                                 <?php } else {

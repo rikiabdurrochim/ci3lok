@@ -29,13 +29,16 @@
                         $catatan = $ajuan['catatan'];
                         $no++;
                         $status_ajuan = "<label style='color: orange;'>Belum Diproses</label>";
-                        if ($ajuan['status'] == "Ditolak PPK" && $ajuan['mtd_byr'] != "BELUM") $status_ajuan = "<label style='color: red;'>Ditolak PPK</label>";
-                        else if ($ajuan['status'] == "Proses SPM" && $ajuan['mtd_byr'] != "BELUM") $status_ajuan = "<label style='color: blue;'>Proses PPSPM</label>";
-                        else if ($ajuan['status'] == "Ditolak Staff PPSPM" && $ajuan['mtd_byr'] != "BELUM") $status_ajuan = "<label style='color: red;'>Ditolak PPSPM</label>";
-                        else if ($ajuan['status'] == "Ditolak PPSPM" && $ajuan['mtd_byr'] != "BELUM") $status_ajuan = "<label style='color: red;'>Ditolak PPSPM</label>";
-                        else if ($ajuan['status'] == "Kirim KPPN" && $ajuan['mtd_byr'] != "BELUM") $status_ajuan = "<label style='color: blue;'>Kirim KPPN</label>";
-                        else if ($ajuan['status'] == "Proses Bendahara" && $ajuan['mtd_byr'] != "BELUM") $status_ajuan = "<label style='color: blue;'>Proses Bendahara</label>";
-                        else if ($ajuan['status'] == "Selesai" && $ajuan['mtd_byr'] != "BELUM") $status_ajuan = "<label style='color: green;'>Selesai</label>";
+                        if ($ajuan['status'] == "Ditolak PPK" && $ajuan['mtd_byr'] != "BELUM" && $ajuan['no_spp'] != "" || $ajuan['no_spby'] != "") $status_ajuan = "<label style='color: red;'>Ditolak PPK</label>";
+                        else if ($ajuan['status'] == "Ditolak PPK" && $ajuan['mtd_byr'] == "BELUM" && $ajuan['no_spp'] == "" && $ajuan['no_spby'] == "") $status_ajuan = "<label style='color: red;'>Ditolak PPK</label>";
+                        else if ($ajuan['status'] == "Proses SPP/SPBY" && $ajuan['mtd_byr'] != "BELUM" && $ajuan['no_spp'] == "" && $ajuan['no_spby'] == "") $status_ajuan = "<label style='color: blue;'>Proses SPP/SPBY</label>";
+                        else if ($ajuan['status'] == "Proses SPP/SPBY" && $ajuan['mtd_byr'] != "BELUM" && $ajuan['no_spp'] != "" && $ajuan['no_spby'] != "") $status_ajuan = "<label style='color: orange;'>Belum Diproses</label>";
+                        else if ($ajuan['status'] == "Proses SPM" && $ajuan['mtd_byr'] != "BELUM" && $ajuan['no_spp'] != "" || $ajuan['no_spby'] != "") $status_ajuan = "<label style='color: blue;'>Proses PPSPM</label>";
+                        else if ($ajuan['status'] == "Ditolak Staff PPSPM" && $ajuan['mtd_byr'] != "BELUM" && $ajuan['no_spp'] != "" || $ajuan['no_spby'] != "") $status_ajuan = "<label style='color: red;'>Ditolak PPSPM</label>";
+                        else if ($ajuan['status'] == "Ditolak PPSPM" && $ajuan['mtd_byr'] != "BELUM" && $ajuan['no_spp'] != "" || $ajuan['no_spby'] != "") $status_ajuan = "<label style='color: red;'>Ditolak PPSPM</label>";
+                        else if ($ajuan['status'] == "Kirim KPPN" && $ajuan['mtd_byr'] != "BELUM" && $ajuan['no_spp'] != "" || $ajuan['no_spby'] != "") $status_ajuan = "<label style='color: blue;'>Kirim KPPN</label>";
+                        else if ($ajuan['status'] == "Proses Bendahara" && $ajuan['mtd_byr'] != "BELUM" && $ajuan['no_spp'] != "" || $ajuan['no_spby'] != "") $status_ajuan = "<label style='color: blue;'>Proses Bendahara</label>";
+                        else if ($ajuan['status'] == "Selesai" && $ajuan['mtd_byr'] != "BELUM" && $ajuan['no_spp'] != "" || $ajuan['no_spby'] != "") $status_ajuan = "<label style='color: green;'>Selesai</label>";
                     ?>
                         <tr>
                             <td><?= $no; ?></td>
@@ -52,7 +55,7 @@
                             <td>
                                 <a href="#" data-toggle="modal" data-target="#modal-lihat<?= ($ajuan['id_ajuan']); ?>" data-popup="tooltip" data-placement="top" title="Lihat Data"><i class="fa fa-eye" style="color:green"></i></a>
                                 <a href="#" data-toggle="modal" data-target="#modal-download<?= ($ajuan['id_ajuan']); ?>" data-popup="tooltip" data-placement="top" title="Download Data"><i class="fa fa-download" style="color:orange"></i></a>
-                                <?php if ($ajuan['status'] == "Proses SPP/SPBY" && $ajuan['mtd_byr'] != "BELUM") { ?>
+                                <?php if ($ajuan['status'] == "Proses SPP/SPBY" && $ajuan['mtd_byr'] == "BELUM" && $ajuan['no_spp'] == "" && $ajuan['no_spby'] == "") { ?>
                                     <div class=" ml-auto text-left">
                                         <div class="btn-link" data-toggle="dropdown">
                                             <svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
@@ -65,8 +68,29 @@
                                             </svg>
                                         </div>
                                         <div class="dropdown-menu dropdown-menu-left">
-                                            <a href="#" data-toggle="modal" data-target="#modal-ditolak<?= ($ajuan['id_ajuan']); ?>" data-popup="tooltip" data-placement="top" title="Alasan ditolak" class="btn btn-danger">Tolak</a>
-                                            <a href="<?= site_url('ppk/setujui/' . $ajuan['id_ajuan']) ?>"><button class="btn btn-success">Setujui</button></a>
+                                            <center>
+                                                <a href="#" data-toggle="modal" data-target="#modal-ditolak<?= ($ajuan['id_ajuan']); ?>" data-popup="tooltip" data-placement="top" title="Alasan ditolak" class="btn btn-danger">Tolak</a>
+                                                <a href="<?= site_url('ppk/pilih_staffppk/' . $ajuan['id_ajuan']) ?>"><button class="btn btn-success">Pilih Staff PPK</button></a>
+                                            </center>
+                                        </div>
+                                    </div>
+                                <?php } else if ($ajuan['status'] == "Proses SPP/SPBY" && $ajuan['mtd_byr'] != "BELUM" && $ajuan['no_spp'] != "" || $ajuan['no_spby'] != "") { ?>
+                                    <div class=" ml-auto text-left">
+                                        <div class="btn-link" data-toggle="dropdown">
+                                            <svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                    <rect x="0" y="0" width="24" height="24"></rect>
+                                                    <circle fill="#000000" cx="5" cy="12" r="2"></circle>
+                                                    <circle fill="#000000" cx="12" cy="12" r="2"></circle>
+                                                    <circle fill="#000000" cx="19" cy="12" r="2"></circle>
+                                                </g>
+                                            </svg>
+                                        </div>
+                                        <div class="dropdown-menu dropdown-menu-left">
+                                            <center>
+                                                <a href="#" data-toggle="modal" data-target="#modal-ditolak<?= ($ajuan['id_ajuan']); ?>" data-popup="tooltip" data-placement="top" title="Alasan ditolak" class="btn btn-danger">Tolak</a>
+                                                <a href="<?= site_url('ppk/setuju/' . $ajuan['id_ajuan']) ?>"><button class="btn btn-success">Setuju</button></a>
+                                            </center>
                                         </div>
                                     </div>
                                 <?php } else {
@@ -94,6 +118,13 @@
 <!-- lihat modal -->
 <?php
 $no = 0;
+$data_ajuan = $this->db->query("SELECT * FROM ajuan 
+INNER JOIN jenis on jenis.id_jenis = ajuan.jns_ajuan 
+INNER JOIN giat on giat.id_giat = ajuan.kd_giat 
+INNER JOIN akun on akun.id_akun = ajuan.kd_akun 
+INNER JOIN pegawai on pegawai.id_peg = ajuan.peg_id 
+ORDER BY id_ajuan DESC")->result_array();
+
 foreach ($data_ajuan as $ajuan) :
     $no++;
     $tgl_jln = strtotime($ajuan['tgl_jln']);
@@ -158,8 +189,6 @@ foreach ($data_ajuan as $ajuan) :
                                         </tr>
                                     </tbody>
                                 </table>
-
-
                             </div>
                         </div>
                     </div>

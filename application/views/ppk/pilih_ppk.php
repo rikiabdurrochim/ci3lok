@@ -4,7 +4,7 @@ foreach ($get_ajuan as $ajuan) {
     $id_giat = $ajuan['kd_giat'];
 ?>
     <div class="body">
-        <form class="form-horizontal" enctype="multipart/form-data" action="<?php echo site_url('loket/setujui') ?>" method="post">
+        <form class="form-horizontal" enctype="multipart/form-data" action="<?php echo site_url('ppk/setujui') ?>" method="post">
             <div class="card">
                 <!-- /.card-header -->
                 <div class="card-body">
@@ -30,12 +30,24 @@ foreach ($get_ajuan as $ajuan) {
                                                 <?php } ?>
                                             </select>
                                             <div class="input-btn-group">
-
                                             </div>
                                         </div>
                                     </td>
                                 </tr>
-
+                                <tr>
+                                    <td>Metode Pembayaran</td>
+                                    <td>
+                                        <select class="form-control" name="metode" id="metode">
+                                            <option value="">--Pilih--</option>
+                                            <option value="SPP" <?php if ($ajuan['mtd_byr'] == "SPP") {
+                                                                    echo 'selected';
+                                                                } ?>>SPP</option>
+                                            <option value="SPBY" <?php if ($ajuan['mtd_byr'] == "SPBY") {
+                                                                        echo 'selected';
+                                                                    } ?>>SPBY</option>
+                                        </select>
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -48,12 +60,11 @@ foreach ($get_ajuan as $ajuan) {
                             <table class="table table-bordered table-striped">
                                 <thead>
                                     <tr>
+                                        <input type="hidden" name="nomor" id="nomor" placeholder="0" class="form-control" readonly value="0">
                                         <th>Staf PPK</th>
-
+                                        <th>Opsi</th>
                                     </tr>
                                 </thead>
-
-
                             </table>
                         </div>
                     </div>
@@ -71,15 +82,14 @@ foreach ($get_ajuan as $ajuan) {
 <script type="text/javascript">
     function add_data(idajuan) {
         var id_staffppk = $("#id_staffppk" + idajuan).val();
-
+        var no = $("#nomor").val();
         $.ajax({
-            url: "<?php echo base_url() ?>index.php/loket/tampilkan_ppk",
-            data: "&id_staffppk=" + id_staffppk,
+            url: "<?php echo base_url() ?>index.php/ppk/tampilkan_ppk",
+            data: "&id_staffppk=" + id_staffppk + "&no=" + no,
             success: function(html) {
                 $("#data_ppk").append(html);
                 reset_form_input(idajuan);
-
-
+                $('#nomor').val(no * 1 + 1 * 1);
             }
         });
 
@@ -87,5 +97,9 @@ foreach ($get_ajuan as $ajuan) {
 
     function reset_form_input(idajuan) {
         var id_staffppk = $('#id_staffppk' + idajuan).val('');
+    }
+
+    function hapus(id_staffppk) {
+        $('.row-keranjang' + id_staffppk).closest('.row-keranjang' + id_staffppk).remove();
     }
 </script>
