@@ -17,6 +17,7 @@ class StaffPpspm_model extends CI_Model
                         AND ajuan.`status`!= 'Belum Diproses' 
                         AND ajuan.`status`!= 'Ditolak Staff PPK' 
                         AND ajuan.`status`!= 'Ditolak PPK' 
+                        AND ajuan.`mtd_byr`!= 'SPBY'
                         AND ajuan.`status`!= 'Proses SPP/SPBY'
             ORDER BY id_ajuan DESC");
         return $query->result_array();

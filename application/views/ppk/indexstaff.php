@@ -69,7 +69,7 @@
                                         <div class="dropdown-menu dropdown-menu-left">
                                             <center>
                                                 <a href="#" data-toggle="modal" data-target="#modal-ditolak<?= ($ajuan['id_ajuan']); ?>" data-popup="tooltip" data-placement="top" title="Alasan ditolak" class="btn btn-danger">Tolak</a>
-                                                <a href="<?= site_url('staffppk/spp_spby/' . $ajuan['id_ajuan']) ?>"><button class="btn btn-success">Metode Bayar</button></a>
+                                                <a href="<?= site_url('staffppk/spp_spby/' . $ajuan['id_ajuan']) ?>"><button class="btn btn-success">Proses</button></a>
                                             </center>
                                         </div>
                                     </div>

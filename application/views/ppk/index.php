@@ -67,7 +67,7 @@
                                                 </g>
                                             </svg>
                                         </div>
-                                        <div class="dropdown-menu dropdown-menu-left">
+                                        <div class="dropdown-menu dropdown-menu-left" style="width: 200px;">
                                             <center>
                                                 <a href="#" data-toggle="modal" data-target="#modal-ditolak<?= ($ajuan['id_ajuan']); ?>" data-popup="tooltip" data-placement="top" title="Alasan ditolak" class="btn btn-danger">Tolak</a>
                                                 <a href="<?= site_url('ppk/pilih_staffppk/' . $ajuan['id_ajuan']) ?>"><button class="btn btn-success">Pilih Staff PPK</button></a>
