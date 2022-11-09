@@ -1,24 +1,42 @@
 <div class="card card-primary align-center" style=" display:flex; justify-content:center;">
     <div class="card-header">
         <h3 class="card-title">Update Data Ajuan</h3>
-        <a href="<?= BASEURL ?>ajuan" class="close" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </a>
+        <?php $username = $_SESSION['id_peg'];
+        $check_peg = $this->db->query("SELECT * FROM pegawai INNER JOIN dtrole ON dtrole.id_peg = pegawai.id_peg
+        INNER JOIN role ON role.id_role = dtrole.id_role WHERE pegawai.id_peg = '$username' ")->result();
+        foreach ($check_peg as $peg) {
+            if ($peg->nm_role == "User") {
+        ?>
+                <a href="<?= BASEURL ?>ajuan" class="close" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </a>
+            <?php } else if ($peg->nm_role == "Staf PPK 1" or $peg->nm_role == "Staf PPK 2" or $peg->nm_role == "Staf PPK 3" or $peg->nm_role == "Staf PPK 4" or $peg->nm_role == "Staf PPK 5") {
+            ?>
+                <a href="<?= BASEURL ?>StaffPpk" class="close" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </a>
+            <?php } else if ($peg->nm_role == "PPK 1" or $peg->nm_role == "PPK 2" or $peg->nm_role == "PPK 3" or $peg->nm_role == "PPK 4" or $peg->nm_role == "PPK 5") {
+            ?>
+                <a href="<?= BASEURL ?>Ppk" class="close" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </a>
+        <?php }
+        } ?>
     </div>
     <form class="form-horizontal" enctype="multipart/form-data" action="<?php echo site_url('ajuan/prosesupdate') ?>" method="post">
         <div class="card-body col-md">
             <div class="form-group row">
                 <input type="hidden" class="form-control" placeholder="id_ajuan" name="id_ajuan" value="<?php echo $id_ajuan ?>">
                 <label>No Ajuan </label>
-                <input type="text" class="form-control" placeholder="No Ajuan" name="no_ajuan" value="<?php echo $no_ajuan ?>" readonly>
+                <input type="text" class="form-control" placeholder="No Ajuan" name="no_ajuan" readonly value="<?php echo $no_ajuan ?>">
             </div>
             <div class="form-group row">
                 <label>Tanggal Ajuan </label>
-                <input type="datetime" class="form-control" placeholder="tgl ajuan" name="tgl_ajuan" value="<?php echo $tgl_ajuan ?>" readonly>
+                <input type="datetime" class="form-control" placeholder="tgl ajuan" name="tgl_ajuan" readonly value="<?php echo $tgl_ajuan ?>">
             </div>
             <div class="form-group row">
                 <label>Jenis Ajuan </label>
-                <select class="form-control" name="jns_ajuan" id="jns_ajuan" onchange="get_dt_dukung()">
+                <select class="form-control" name="jns_ajuan" id="jns_ajuan" onchange="get_dt_dukung()" style="pointer-events: none;">
                     <option value="">--Pilih--</option>
                     <?php $get_ajuan = $this->db->query("SELECT * FROM jenis")->result();
                     foreach ($get_ajuan as $ajuan) {
@@ -31,19 +49,19 @@
             </div>
             <div class="form-group row">
                 <label>No Dok </label>
-                <input type="text" class="form-control" placeholder="No Dok" name="no_dok" value="<?php echo $no_dok ?>">
+                <input type="text" class="form-control" placeholder="No Dok" name="no_dok" value="<?php echo $no_dok ?>" readonly>
             </div>
             <div class="form-group row">
                 <label>Tanggal Dok </label>
-                <input type="date" class="form-control" placeholder="tanggal dokumen" name="tgl_dok" value="<?php echo $tgl_dok ?>">
+                <input type="date" class="form-control" placeholder="tanggal dokumen" name="tgl_dok" value="<?php echo $tgl_dok ?>" readonly>
             </div>
             <div class="form-group row">
                 <label>Perihal </label>
-                <input type="text" class="form-control" placeholder="Perihal" name="perihal" value="<?php echo $perihal ?>">
+                <input type="text" class="form-control" placeholder="Perihal" name="perihal" value="<?php echo $perihal ?>" readonly>
             </div>
             <div class="form-group row">
                 <label>Kode Kegiatan </label>
-                <select class="form-control" name="kd_giat" id="kd_giat" onchange="get_akun()">
+                <select class="form-control" name="kd_giat" id="kd_giat" onchange="get_akun()" style="pointer-events: none;">
                     <option value="">--Pilih--</option>
                     <?php $get_giat = $this->db->query("SELECT * FROM giat")->result();
                     foreach ($get_giat as $giat) {
@@ -55,7 +73,7 @@
             </div>
             <div class="form-group row" id="akun">
                 <label>Kd Akun </label>
-                <select class="form-control" name="kd_akun">
+                <select class="form-control" name="kd_akun" style="pointer-events: none;">
                     <option value="">--Pilih--</option>
                     <?php $get_akun = $this->db->query("SELECT * FROM akun")->result();
                     foreach ($get_akun as $akun) {
@@ -67,15 +85,15 @@
             </div>
             <div class="form-group row">
                 <label> Kota</label>
-                <input type="text" class="form-control" placeholder="Kota" name="kota" value="<?php echo $kota ?>">
+                <input type="text" class="form-control" placeholder="Kota" name="kota" value="<?php echo $kota ?>" readonly>
             </div>
             <div class="form-group row">
                 <label> Tanggal Mulai</label>
-                <input type="date" class="form-control" name="tgl_jln" value="<?php echo $tgl_jln ?>">
+                <input type="date" class="form-control" name="tgl_jln" value="<?php echo $tgl_jln ?>" readonly>
             </div>
             <div class="form-group row">
                 <label> Tanggal Selesai</label>
-                <input type="date" class="form-control" name="tgl_plg" value="<?php echo $tgl_plg ?>">
+                <input type="date" class="form-control" name="tgl_plg" value="<?php echo $tgl_plg ?>" readonly>
             </div>
             <div class="form-group row" id="jenis">
                 <label> Data Dukung</label>
@@ -94,17 +112,17 @@
             <div class="form-group row">
                 <label> Jumlah Ajuan</label>/
                 <label id="format_rupiah"></label>
-                <input type="text" class="form-control" placeholder="Jumlah Ajuan" name="jml_ajuan" id="jml_ajuan" onkeyup="document.getElementById('format_rupiah').innerHTML = formatCurrency(this.value);" value="<?php echo $jml_ajuan ?>">
+                <input type="text" class="form-control" placeholder="Jumlah Ajuan" name="jml_ajuan" id="jml_ajuan" onkeyup="document.getElementById('format_rupiah').innerHTML = formatCurrency(this.value);" value="<?php echo $jml_ajuan ?>" readonly>
             </div>
             <div class="form-group row">
                 <label> Upload Data </label>
                 <div class="input-group">
-                    <input type="file" class="form-control" id="nama_file" name="nama_file[]" multiple accept=".pdf" onchange="check_file()">
+                    <input type="file" class="form-control" id="nama_file" name="nama_file[]" multiple accept=".pdf, .xls, .xlsx" onchange="check_file()">
                     <div class="input-group-btn">
                         <a href="#" class="btn btn-success" data-toggle="modal" data-target="#modal-download<?= $id_ajuan ?>" data-popup="tooltip" data-placement="top" title="Download Data">Lihat File </a>
                     </div>
                 </div>
-                <small>File type : pdf<br>Max size : 2MB</small>
+                <small>File type : .pdf, .xls, .xlsx<br>Max size : 2MB</small>
             </div>
         </div>
         <div class="card-footer">

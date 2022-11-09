@@ -58,9 +58,11 @@
                                     if ($username == $ajuan['peg_id']) { ?>
                                         <a href="#" data-toggle="modal" data-target="#modal-lihat<?= ($ajuan['id_ajuan']); ?>" data-popup="tooltip" data-placement="top" title="Lihat Data"><i class="fa fa-eye" style="color:green"></i></a>
                                         <a href="#" data-toggle="modal" data-target="#modal-download<?= ($ajuan['id_ajuan']); ?>" data-popup="tooltip" data-placement="top" title="Download Data"><i class="fa fa-download" style="color:orange"></i></a>
+                                        <a href="<?= BASEURL ?>Ajuan/update/<?= $ajuan['id_ajuan']; ?>"><i class="fa fa-edit" style="color:blue;"></i></a>
                                     <?php } else if ($admin->id_role == 1) { ?>
                                         <a href="#" data-toggle="modal" data-target="#modal-lihat<?= ($ajuan['id_ajuan']); ?>" data-popup="tooltip" data-placement="top" title="Lihat Data"><i class="fa fa-eye" style="color:green"></i></a>
                                         <a href="#" data-toggle="modal" data-target="#modal-download<?= ($ajuan['id_ajuan']); ?>" data-popup="tooltip" data-placement="top" title="Download Data"><i class="fa fa-download" style="color:orange"></i></a>
+                                        <a href="<?= BASEURL ?>Ajuan/update/<?= $ajuan['id_ajuan']; ?>"><i class="fa fa-edit" style="color:blue;"></i></a>
                                 <?php } else {
                                     }
                                 endforeach; ?><br>

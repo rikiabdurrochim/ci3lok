@@ -129,7 +129,7 @@ class Ajuan extends CI_Controller
 	{
 		$config = array();
 		$config['upload_path'] = './assets/file_dukung';
-		$config['allowed_types'] = 'pdf';
+		$config['allowed_types'] = 'pdf|xls|xlsx';
 
 		return $config;
 	}
@@ -141,9 +141,7 @@ class Ajuan extends CI_Controller
 		$username = $_SESSION['id_peg'];
 		$cek_data = $this->db->query("SELECT COUNT(id_aksesmn) AS ada_tidak FROM aksesmn 
 		INNER JOIN menu ON menu.`id_menu`=aksesmn.`id_menu`
-		INNER JOIN role ON role.`id_role`=aksesmn.`id_role`
-		INNER JOIN dtrole ON dtrole.`id_role`=role.`id_role`
-		INNER JOIN pegawai ON pegawai.`id_peg`=dtrole.`id_peg` WHERE pegawai.id_peg='$username' 
+		INNER JOIN pegawai ON pegawai.`id_peg`=aksesmn.`id_peg` WHERE pegawai.id_peg='$username' 
 		AND menu.`id_menu`='14'")->result();
 		foreach ($cek_data as $ck_data) :
 
@@ -248,7 +246,6 @@ class Ajuan extends CI_Controller
 				$data_berkas = array(
 					'id_ajuan' => $ajuan_data['id_ajuan'],
 					'nama_file' => $dataInfo[$i]['file_name'],
-					'status_file' => 'user',
 				);
 
 				$this->db->insert('file_dukung', $data_berkas);
@@ -258,6 +255,8 @@ class Ajuan extends CI_Controller
 		$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Data Berhasil disimpan<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
 		redirect(site_url('ajuan'));
 	}
+
+
 
 	public function delete($id)
 	{

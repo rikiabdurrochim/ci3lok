@@ -93,8 +93,8 @@
             </div>
             <div class="form-group row">
                 <label> Upload Data</label>
-                <input type="file" class="form-control" id="nama_file" name="nama_file[]" multiple accept=".pdf" onchange="check_file()">
-                <small>File type : pdf<br>Max size : 2MB</small>
+                <input type="file" class="form-control" id="nama_file" name="nama_file[]" multiple accept=".pdf, .xls, .xlsx" onchange="check_file()">
+                <small>File type : pdf, .xls, .xlsx<br>Max size : 2MB</small>
             </div>
         </div>
         <!-- /.card-body -->
