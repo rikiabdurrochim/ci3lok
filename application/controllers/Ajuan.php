@@ -123,8 +123,6 @@ class Ajuan extends CI_Controller
 		redirect(site_url('ajuan'));
 	}
 
-
-
 	function upload_berkas()
 	{
 		$config = array();
@@ -136,7 +134,7 @@ class Ajuan extends CI_Controller
 
 
 	//untuk tampil data ke form edit
-	public function update($id)
+	public function update($id, $dari)
 	{
 		$username = $_SESSION['id_peg'];
 		$cek_data = $this->db->query("SELECT COUNT(id_aksesmn) AS ada_tidak FROM aksesmn 
@@ -172,6 +170,7 @@ class Ajuan extends CI_Controller
 							'jml_ajuan' => set_value('jml_ajuan', $row->jml_ajuan),
 
 						);
+						$data['dari'] = $dari;
 
 						$this->load->view('template/header', $data);
 						$this->load->view('template/sidebar', $data);
@@ -256,6 +255,12 @@ class Ajuan extends CI_Controller
 		redirect(site_url('ajuan'));
 	}
 
+	function ck_dokumen()
+	{
+		$no_dok = $_POST['no_dok'];
+		$get_dok = $this->db->query("SELECT count(no_dok) as ada_tidak FROM ajuan WHERE no_dok='$no_dok'")->row_array();
+		echo json_encode($get_dok);
+	}
 
 
 	public function delete($id)

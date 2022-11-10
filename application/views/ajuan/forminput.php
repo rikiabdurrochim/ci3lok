@@ -32,7 +32,7 @@
             </div>
             <div class="form-group row">
                 <label>No Dok </label>
-                <input type="text" class="form-control" placeholder="No Dok" name="no_dok">
+                <input type="text" class="form-control" id="no_dok" onkeyup="setTimeout(cek_dokumen, 3000);" placeholder="No Dok" name="no_dok">
             </div>
             <div class="form-group row">
                 <label>Tanggal Dok </label>
@@ -156,5 +156,23 @@
                 $("#nama_file").val('');
             } else {}
         }
+    }
+
+    function cek_dokumen() {
+        var no_dok = $("#no_dok").val();
+        $.ajax({
+            url: "<?php echo base_url() ?>index.php/ajuan/ck_dokumen",
+            data: "no_dok=" + no_dok,
+            method: 'post',
+            dataType: 'json',
+            success: function(data) {
+                if (data.ada_tidak == 1) {
+                    alert("Nomor dokumen sudah ada!");
+                    $("#no_dok").val('');
+                } else {
+
+                }
+            }
+        });
     }
 </script>

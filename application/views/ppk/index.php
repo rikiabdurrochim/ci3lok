@@ -55,7 +55,8 @@
                             <td>
                                 <a href="#" data-toggle="modal" data-target="#modal-lihat<?= ($ajuan['id_ajuan']); ?>" data-popup="tooltip" data-placement="top" title="Lihat Data"><i class="fa fa-eye" style="color:green"></i></a>
                                 <a href="#" data-toggle="modal" data-target="#modal-download<?= ($ajuan['id_ajuan']); ?>" data-popup="tooltip" data-placement="top" title="Download Data"><i class="fa fa-download" style="color:orange"></i></a>
-                                <a href="<?= BASEURL ?>Ajuan/update/<?= $ajuan['id_ajuan']; ?>"><i class="fa fa-edit" style="color:blue;"></i></a>
+                                <a href="<?= site_url('ajuan/update/' . $ajuan['id_ajuan'] . '/' . 'ppk') ?>"><i class="fa fa-edit" style="color:blue;" title="Edit Data"></i></a>
+                                <a href="<?= site_url('staffppk/spp_spby/' . $ajuan['id_ajuan'] . '/' . 'ppk') ?>"><i class="fa fa-folder" style="color:brown;" title="SPP/SPBY"></i></a>
 
                                 <?php if ($ajuan['status'] == "Proses SPP/SPBY" && $ajuan['mtd_byr'] == "BELUM" && $ajuan['no_spp'] == "" && $ajuan['no_spby'] == "") { ?>
                                     <div class=" ml-auto text-left">

@@ -96,7 +96,14 @@ foreach ($get_ajuan as $ajuan) {
                 </div>
                 <div class="modal-footer justify-content-between">
                     <button type="submit" class="btn btn-info">Simpan</button>
-                    <a class="btn btn-danger" href="<?php echo site_url('staffPpk') ?>">Close</a>
+                    <?php if ($dari == "staffppk") {
+                    ?>
+                        <a class="btn btn-danger" href="<?php echo site_url('staffPpk') ?>">Close</a>
+                    <?php } else if ($dari == "ppk") {
+                    ?>
+                        <a class="btn btn-danger" href="<?php echo site_url('Ppk') ?>">Close</a>
+                    <?php } else {
+                    } ?>
                 </div>
             </div>
         </form>

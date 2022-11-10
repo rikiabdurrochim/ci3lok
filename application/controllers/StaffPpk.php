@@ -107,7 +107,7 @@ class StaffPpk extends CI_Controller
 		redirect(site_url('staffppk'));
 	}
 
-	public function spp_spby($id)
+	public function spp_spby($id, $dari)
 	{
 		$username = $_SESSION['id_peg'];
 		$cek_data = $this->db->query("SELECT COUNT(id_aksesmn) AS ada_tidak FROM aksesmn 
@@ -117,6 +117,7 @@ class StaffPpk extends CI_Controller
 		foreach ($cek_data as $ck_data) :
 			if ($username != "" && $ck_data->ada_tidak != "0") {
 				$data['title'] = 'SPP/SPBY';
+				$data['dari'] = $dari;
 				$data['sql'] = "SELECT * FROM ajuan WHERE id_ajuan='$id'";
 				$this->load->view('template/header', $data);
 				$this->load->view('template/sidebar', $data);

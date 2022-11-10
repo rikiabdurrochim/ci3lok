@@ -49,7 +49,10 @@
                             <td>
                                 <a href="#" data-toggle="modal" data-target="#modal-lihat<?= ($ajuan['id_ajuan']); ?>" data-popup="tooltip" data-placement="top" title="Lihat Data"><i class="fa fa-eye" style="color:green"></i></a>
                                 <a href="#" data-toggle="modal" data-target="#modal-download<?= ($ajuan['id_ajuan']); ?>" data-popup="tooltip" data-placement="top" title="Download Data"><i class="fa fa-download" style="color:orange"></i></a>
-                                <a href="#" data-toggle="modal" data-target="#modal-edit<?= ($ajuan['id_ajuan']); ?>" data-popup="tooltip" data-placement="top" title="Edit Data"><i class="fa fa-edit" style="color:blue"></i></a>
+                                <!-- <a href="#" data-toggle="modal" data-target="#modal-edit<?= ($ajuan['id_ajuan']); ?>" data-popup="tooltip" data-placement="top" title="Edit Data"><i class="fa fa-edit" style="color:blue"></i></a> -->
+
+                                <a href="#" data-toggle="modal" data-target="#modal-diterima<?= ($ajuan['id_ajuan']); ?>" data-popup="tooltip" data-placement="top" title="spm"><i class="fa fa-folder" style="color:purple"></i></a>
+                                <a href="#" data-toggle="modal" data-target="#modal-sp2d<?= ($ajuan['id_ajuan']); ?>" data-popup="tooltip" data-placement="top" title="sp2d"><i class="fa fa-folder" style="color:brown"></i></a>
                                 <?php if ($ajuan['status'] == "Proses SPM" && $ajuan['no_spm'] != "") { ?>
                                     <div class=" ml-auto text-left">
                                         <div class="btn-link" data-toggle="dropdown">
@@ -357,23 +360,18 @@ foreach ($data_ajuan as $ajuan) :
                                         <thead>
                                             <tr>
                                                 <th>No. Ajuan : <?= $ajuan['no_ajuan']; ?></th>
-
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <tr>
                                                 <td>
                                                     <input type="hidden" name="idajuan" id="idajuan" value="<?php echo $ajuan['id_ajuan']; ?>">
-
                                                     <label>No. SPM </label>
-                                                    <input type="text" class="form-control" placeholder="No. SPM" name="no_spm">
+                                                    <input type="text" class="form-control" placeholder="No. SPM" name="no_spm" value="<?php echo $ajuan['no_spm']; ?>">
                                                     <label>Tanggal SPM </label>
-                                                    <input type="date" class="form-control" placeholder="Tanggal SPM" name="tgl_spm">
-
+                                                    <input type="date" class="form-control" placeholder="Tanggal SPM" name="tgl_spm" value="<?php echo $ajuan['tgl_spm']; ?>">
                                                 </td>
-
                                             </tr>
-
                                         </tbody>
                                     </table>
                                 </div>
@@ -391,19 +389,18 @@ foreach ($data_ajuan as $ajuan) :
     </div>
 <?php endforeach; ?>
 
-
-<!-- modal edit -->
+<!-- modal sp2d -->
 <?php
 $no = 0;
 foreach ($data_ajuan as $ajuan) :
     $no++;
 ?>
-    <div class="modal fade" id="modal-edit<?= ($ajuan['id_ajuan']); ?>">
+    <div class="modal fade" id="modal-sp2d<?= ($ajuan['id_ajuan']); ?>">
         <div class="modal-dialog modal-lg">
-            <form enctype="multipart/form-data" action="<?php echo site_url('Ppspm/edit') ?>" method="post">
+            <form enctype="multipart/form-data" action="<?php echo site_url('staffPpspm/sp2d') ?>" method="post">
                 <div class="modal-content">
                     <div class="modal-header bg-primary">
-                        <h4 class="modal-title">Edit Kode Akun</h4>
+                        <h4 class="modal-title">SP2D</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -416,29 +413,17 @@ foreach ($data_ajuan as $ajuan) :
                                     <table id="example1" class="table table-bordered table-striped">
                                         <thead>
                                             <tr>
-                                                <th>No. Ajuan</th>
-                                                <th><?= $ajuan['no_ajuan']; ?></th>
+                                                <th>No. Ajuan : <?= $ajuan['no_ajuan']; ?></th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <tr>
-                                                <td>Kode Akun</td>
                                                 <td>
                                                     <input type="hidden" name="idajuan" id="idajuan" value="<?php echo $ajuan['id_ajuan']; ?>">
-                                                    <select class="form-control" name="kd_akun">
-                                                        <option value="">--Pilih--</option>
-                                                        <?php
-                                                        $kegiatan = $ajuan['kd_giat'];
-                                                        $get_giat = $this->db->query("SELECT * FROM giat WHERE kd_giat = '$kegiatan' ")->result();
-                                                        foreach ($get_giat as $giat) {
-                                                            $get_akun = $this->db->query("SELECT * FROM akun WHERE kd_giat= '$giat->kd_giat' ")->result();
-                                                            foreach ($get_akun as $akun) {
-                                                        ?> <option value="<?= $akun->id_akun ?>" <?php if ($ajuan['kd_akun'] == $akun->kd_akun) {
-                                                                                                        echo 'selected';
-                                                                                                    } ?>><?= $akun->kroakun ?></option>
-                                                        <?php }
-                                                        } ?>
-                                                    </select>
+                                                    <label>No. SP2D </label>
+                                                    <input type="text" class="form-control" placeholder="No. SP2D" name="no_sp2d" value="<?php echo $ajuan['no_sp2d']; ?>">
+                                                    <label>Tanggal SP2D </label>
+                                                    <input type="date" class="form-control" placeholder="Tanggal SP2D" name="tgl_sp2d" value="<?php echo $ajuan['tgl_sp2d']; ?>">
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -452,8 +437,6 @@ foreach ($data_ajuan as $ajuan) :
                     </div>
                 </div>
             </form>
-            <!-- /.modal-content -->
         </div>
-        <!-- /.modal-dialog -->
     </div>
 <?php endforeach; ?>

@@ -88,6 +88,24 @@
                                             </center>
                                         </div>
                                     </div>
+                                <?php } else if ($ajuan['status'] == "Ditolak PPSPM" && $ajuan['no_spm'] != "") { ?>
+                                    <div class=" ml-auto text-left">
+                                        <div class="btn-link" data-toggle="dropdown">
+                                            <svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                    <rect x="0" y="0" width="24" height="24"></rect>
+                                                    <circle fill="#000000" cx="5" cy="12" r="2"></circle>
+                                                    <circle fill="#000000" cx="12" cy="12" r="2"></circle>
+                                                    <circle fill="#000000" cx="19" cy="12" r="2"></circle>
+                                                </g>
+                                            </svg>
+                                        </div>
+                                        <div class="dropdown-menu dropdown-menu-left">
+                                            <center>
+                                                <a href="#" data-toggle="modal" data-target="#modal-diterima<?= ($ajuan['id_ajuan']); ?>" data-popup="tooltip" data-placement="top" title="Diterima" class="btn btn-primary">Edit SPM</a>
+                                            </center>
+                                        </div>
+                                    </div>
                                 <?php } else {
                                 } ?>
                                 <br>
@@ -379,23 +397,18 @@ foreach ($data_ajuan as $ajuan) :
                                         <thead>
                                             <tr>
                                                 <th>No. Ajuan : <?= $ajuan['no_ajuan']; ?></th>
-
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <tr>
                                                 <td>
                                                     <input type="hidden" name="idajuan" id="idajuan" value="<?php echo $ajuan['id_ajuan']; ?>">
-
                                                     <label>No. SPM </label>
-                                                    <input type="text" class="form-control" placeholder="No. SPM" name="no_spm">
+                                                    <input type="text" class="form-control" placeholder="No. SPM" name="no_spm" value="<?php echo $ajuan['no_spm']; ?>">
                                                     <label>Tanggal SPM </label>
-                                                    <input type="date" class="form-control" placeholder="Tanggal SPM" name="tgl_spm">
-
+                                                    <input type="date" class="form-control" placeholder="Tanggal SPM" name="tgl_spm" value="<?php echo $ajuan['tgl_spm']; ?>">
                                                 </td>
-
                                             </tr>
-
                                         </tbody>
                                     </table>
                                 </div>
@@ -439,23 +452,18 @@ foreach ($data_ajuan as $ajuan) :
                                         <thead>
                                             <tr>
                                                 <th>No. Ajuan : <?= $ajuan['no_ajuan']; ?></th>
-
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <tr>
                                                 <td>
                                                     <input type="hidden" name="idajuan" id="idajuan" value="<?php echo $ajuan['id_ajuan']; ?>">
-
                                                     <label>No. SP2D </label>
-                                                    <input type="text" class="form-control" placeholder="No. SP2D" name="no_sp2d">
+                                                    <input type="text" class="form-control" placeholder="No. SP2D" name="no_sp2d" value="<?php echo $ajuan['no_sp2d']; ?>">
                                                     <label>Tanggal SP2D </label>
-                                                    <input type="date" class="form-control" placeholder="Tanggal SP2D" name="tgl_sp2d">
-
+                                                    <input type="date" class="form-control" placeholder="Tanggal SP2D" name="tgl_sp2d" value="<?php echo $ajuan['tgl_sp2d']; ?>">
                                                 </td>
-
                                             </tr>
-
                                         </tbody>
                                     </table>
                                 </div>

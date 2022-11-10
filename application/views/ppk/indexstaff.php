@@ -54,7 +54,7 @@
                             <td>
                                 <a href="#" data-toggle="modal" data-target="#modal-lihat<?= ($ajuan['id_ajuan']); ?>" data-popup="tooltip" data-placement="top" title="Lihat Data"><i class="fa fa-eye" style="color:green"></i></a>
                                 <a href="#" data-toggle="modal" data-target="#modal-download<?= ($ajuan['id_ajuan']); ?>" data-popup="tooltip" data-placement="top" title="Download Data"><i class="fa fa-download" style="color:orange"></i></a>
-                                <a href="<?= BASEURL ?>Ajuan/update/<?= $ajuan['id_ajuan']; ?>"><i class="fa fa-edit" style="color:blue;"></i></a>
+                                <a href="<?= site_url('ajuan/update/' . $ajuan['id_ajuan'] . '/' . 'staffppk') ?>"><i class="fa fa-edit" style="color:blue;"></i></a>
 
                                 <?php if ($ajuan['status'] == "Proses SPP/SPBY" && $ajuan['mtd_byr'] != "BELUM"  && $ajuan['no_spp'] == "" && $ajuan['no_spby'] == "") { ?>
                                     <div class=" ml-auto text-left">
@@ -71,7 +71,7 @@
                                         <div class="dropdown-menu dropdown-menu-left">
                                             <center>
                                                 <a href="#" data-toggle="modal" data-target="#modal-ditolak<?= ($ajuan['id_ajuan']); ?>" data-popup="tooltip" data-placement="top" title="Alasan ditolak" class="btn btn-danger">Tolak</a>
-                                                <a href="<?= site_url('staffppk/spp_spby/' . $ajuan['id_ajuan']) ?>"><button class="btn btn-success">Proses</button></a>
+                                                <a href="<?= site_url('staffppk/spp_spby/' . $ajuan['id_ajuan'] . '/' . 'staffppk') ?>"><button class="btn btn-success">Proses</button></a>
                                             </center>
                                         </div>
                                     </div>
@@ -89,7 +89,7 @@
                                         </div>
                                         <div class="dropdown-menu dropdown-menu-left">
                                             <center>
-                                                <a href="<?= site_url('staffppk/spp_spby/' . $ajuan['id_ajuan']) ?>"><button class="btn btn-success">Metode Bayar</button></a>
+                                                <a href="<?= site_url('staffppk/spp_spby/' . $ajuan['id_ajuan'] . '/' . 'staffppk') ?>"><button class="btn btn-success">Metode Bayar</button></a>
                                             </center>
                                         </div>
                                     </div>

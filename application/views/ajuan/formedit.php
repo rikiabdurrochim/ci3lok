@@ -1,27 +1,22 @@
 <div class="card card-primary align-center" style=" display:flex; justify-content:center;">
     <div class="card-header">
         <h3 class="card-title">Update Data Ajuan</h3>
-        <?php $username = $_SESSION['id_peg'];
-        $check_peg = $this->db->query("SELECT * FROM pegawai INNER JOIN dtrole ON dtrole.id_peg = pegawai.id_peg
-        INNER JOIN role ON role.id_role = dtrole.id_role WHERE pegawai.id_peg = '$username' ")->result();
-        foreach ($check_peg as $peg) {
-            if ($peg->nm_role == "User") {
+        <?php
+        if ($dari == "user") {
         ?>
-                <a href="<?= BASEURL ?>ajuan" class="close" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </a>
-            <?php } else if ($peg->nm_role == "Staf PPK 1" or $peg->nm_role == "Staf PPK 2" or $peg->nm_role == "Staf PPK 3" or $peg->nm_role == "Staf PPK 4" or $peg->nm_role == "Staf PPK 5") {
-            ?>
-                <a href="<?= BASEURL ?>StaffPpk" class="close" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </a>
-            <?php } else if ($peg->nm_role == "PPK 1" or $peg->nm_role == "PPK 2" or $peg->nm_role == "PPK 3" or $peg->nm_role == "PPK 4" or $peg->nm_role == "PPK 5") {
-            ?>
-                <a href="<?= BASEURL ?>Ppk" class="close" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </a>
-        <?php }
-        } ?>
+            <a href="<?= BASEURL ?>ajuan" class="close" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </a>
+        <?php } else if ($dari == "staffppk") { ?>
+            <a href="<?= BASEURL ?>StaffPpk" class="close" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </a>
+        <?php } else if ($dari == "ppk") {
+        ?>
+            <a href="<?= BASEURL ?>Ppk" class="close" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </a>
+        <?php } ?>
     </div>
     <form class="form-horizontal" enctype="multipart/form-data" action="<?php echo site_url('ajuan/prosesupdate') ?>" method="post">
         <div class="card-body col-md">
@@ -73,7 +68,7 @@
             </div>
             <div class="form-group row" id="akun">
                 <label>Kd Akun </label>
-                <select class="form-control" name="kd_akun" style="pointer-events: none;">
+                <select class="form-control" name="kd_akun">
                     <option value="">--Pilih--</option>
                     <?php $get_akun = $this->db->query("SELECT * FROM akun")->result();
                     foreach ($get_akun as $akun) {
