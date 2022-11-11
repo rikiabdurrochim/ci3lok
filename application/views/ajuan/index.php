@@ -17,6 +17,7 @@
                         <th style=" text-align: center;  vertical-align: middle;">Kode Akun</th>
                         <th style=" text-align: center;  vertical-align: middle;">Jumlah </th>
                         <th style=" text-align: center;  vertical-align: middle;">Status </th>
+                        <th style=" text-align: center;  vertical-align: middle;">Pengaju </th>
                         <th style=" text-align: center;  vertical-align: middle;">Opsi </th>
                     </tr>
                 </thead>
@@ -26,6 +27,7 @@
                     $username = $_SESSION['id_peg'];
                     foreach ($data_ajuan as $ajuan) :
                         $catatan = $ajuan['catatan'];
+                        $peg_id = $ajuan['peg_id'];
                         $no++;
                         $status_ajuan = "<label style='color: orange;'>Belum Diproses</label>";
                         if ($ajuan['status'] == "Ditolak Loket") $status_ajuan = "<label style='color: red;'>Ditolak Loket</label>";
@@ -51,6 +53,10 @@
                             <td><?= $ajuan['kroakun']; ?></td>
                             <td style="text-align: right"><?= number_format($ajuan['jml_ajuan'], 0, ',', '.'); ?></td>
                             <td style="text-align: center"><?= $status_ajuan ?></td>
+                            <td><?php $get_giat = $this->db->query("SELECT * FROM pegawai WHERE id_peg='$peg_id'")->result();
+                                foreach ($get_giat as $giat) {
+                                    echo $giat->nm_peg;
+                                } ?></td>
                             <td>
                                 <?php
                                 $check_admin = $this->db->query("SELECT COUNT(id_role) as id_role FROM dtrole WHERE id_peg='$username' AND id_role='1'")->result();
@@ -75,14 +81,10 @@
                                     ?>
                                         <a href="#" data-toggle="modal" data-target="#lihat-alasan<?= $ajuan['id_ajuan']; ?>" data-popup="tooltip" data-placement="top" title="Alasan Ditolak"><i class="fa fa-info" style="color:purple"></i></a>
                                 <?php
-
                                     } else {
                                     }
                                 endforeach; ?>
-
                             </td>
-
-
                         </tr>
                     <?php endforeach; ?>
                 </tbody>

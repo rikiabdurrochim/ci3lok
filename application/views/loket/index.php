@@ -56,26 +56,30 @@
                                 <a href="#" data-toggle="modal" data-target="#modal-download<?= ($ajuan['id_ajuan']); ?>" data-popup="tooltip" data-placement="top" title="Download Data"><i class="fa fa-download" style="color:orange"></i></a>
                                 <!-- <a href="<?= site_url('ajuan/update/' . $ajuan['id_ajuan']) ?>" title="Edit Data"><i class="fa fa-edit" style="color: blue;"></i></a>
                                     <a onclick="return confirm('Apakah Anda Ingin Menghapus Data ?');" href="<?= site_url('ajuan/delete/' . $ajuan['id_ajuan']) ?>"><i class="fa fa-trash" style="color: red;"></i></a> -->
-                                <?php if ($ajuan['status'] == "Belum Diproses") { ?>
-                                    <div class=" ml-auto text-left">
-                                        <div class="btn-link" data-toggle="dropdown">
-                                            <svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-                                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                                    <rect x="0" y="0" width="24" height="24"></rect>
-                                                    <circle fill="#000000" cx="5" cy="12" r="2"></circle>
-                                                    <circle fill="#000000" cx="12" cy="12" r="2"></circle>
-                                                    <circle fill="#000000" cx="19" cy="12" r="2"></circle>
-                                                </g>
-                                            </svg>
+                                <?php $username = $_SESSION['id_peg'];
+                                $check_pegawai = $this->db->query("SELECT COUNT(pegawai.id_peg) AS id FROM pegawai INNER JOIN dtrole ON dtrole.id_peg=pegawai.id_peg INNER JOIN role ON role.id_role=dtrole.id_role WHERE pegawai.id_peg='$username' AND role.nm_role='Admin'")->result();
+                                foreach ($check_pegawai as $peg) {
+                                    if ($ajuan['status'] == "Belum Diproses" or $peg->id == '1') { ?>
+                                        <div class=" ml-auto text-left">
+                                            <div class="btn-link" data-toggle="dropdown">
+                                                <svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                        <rect x="0" y="0" width="24" height="24"></rect>
+                                                        <circle fill="#000000" cx="5" cy="12" r="2"></circle>
+                                                        <circle fill="#000000" cx="12" cy="12" r="2"></circle>
+                                                        <circle fill="#000000" cx="19" cy="12" r="2"></circle>
+                                                    </g>
+                                                </svg>
+                                            </div>
+                                            <div class="dropdown-menu dropdown-menu-left">
+                                                <center>
+                                                    <a href="#" data-toggle="modal" data-target="#modal-ditolak<?= ($ajuan['id_ajuan']); ?>" data-popup="tooltip" data-placement="top" title="Alasan ditolak" class="btn btn-danger">Tolak</a>
+                                                    <a href="<?= site_url('loket/setujui/' . $ajuan['id_ajuan']) ?>"><button class="btn btn-success">Setujui</button></a>
+                                                </center>
+                                            </div>
                                         </div>
-                                        <div class="dropdown-menu dropdown-menu-left">
-                                            <center>
-                                                <a href="#" data-toggle="modal" data-target="#modal-ditolak<?= ($ajuan['id_ajuan']); ?>" data-popup="tooltip" data-placement="top" title="Alasan ditolak" class="btn btn-danger">Tolak</a>
-                                                <a href="<?= site_url('loket/setujui/' . $ajuan['id_ajuan']) ?>"><button class="btn btn-success">Setujui</button></a>
-                                            </center>
-                                        </div>
-                                    </div>
                                 <?php } else {
+                                    }
                                 } ?>
                                 <br>
                                 <?php

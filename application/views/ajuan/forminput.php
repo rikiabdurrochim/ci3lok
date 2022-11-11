@@ -9,17 +9,18 @@
     <!-- /.card-header -->
     <!-- form start -->
     <form class="form-horizontal" enctype="multipart/form-data" action="<?php echo site_url('ajuan/prosesinput') ?>" method="post">
-        <div class="card-body col-md">
-            <div class="form-group row">
+        <div class="card-body row">
+            <div class="form-group col-6">
                 <label>No Ajuan </label>
                 <input type="text" class="form-control" placeholder="No Ajuan" name="no_ajuan" value="<?php echo kodeAjuanOtomatis() ?>" readonly>
             </div>
-            <div class="form-group row">
+            <div class="form-group col-6">
                 <label>Tanggal Ajuan </label>
                 <input type="datetime" class="form-control" placeholder="tgl ajuan" name="tgl_ajuan" value="<?php date_default_timezone_set('Asia/Jakarta');
                                                                                                             echo date("Y-m-d H:i"); ?>" readonly>
             </div>
-            <div class="form-group row">
+            <hr>
+            <div class="form-group col-4">
                 <label>Jenis Ajuan </label>
                 <select class="form-control" name="jns_ajuan" id="jns_ajuan" onchange="get_dt_dukung()">
                     <option value="">--Pilih--</option>
@@ -30,52 +31,68 @@
                     <?php } ?>
                 </select>
             </div>
-            <div class="form-group row">
+            <div class="form-group col-4">
                 <label>No Dok </label>
-                <input type="text" class="form-control" id="no_dok" onkeyup="setTimeout(cek_dokumen, 3000);" placeholder="No Dok" name="no_dok">
+                <input type="text" class="form-control" id="no_dok" onkeydown="setTimeout(cek_dokumen, 1000);" minlength="5" placeholder="No Dok" name="no_dok">
             </div>
-            <div class="form-group row">
+            <div class="form-group col-4">
                 <label>Tanggal Dok </label>
                 <input type="date" class="form-control" placeholder="tanggal dokumen" name="tgl_dok">
             </div>
-            <div class="form-group row">
+            <div class="form-group col-12">
                 <label>Perihal </label>
-                <input type="text" class="form-control" placeholder="Perihal" name="perihal">
+                <textarea class="form-control" name="perihal" id="perihal" placeholder="Perihal" rows="2"></textarea>
+                <!-- <input type="text" class="form-control" placeholder="Perihal" name="perihal"> -->
             </div>
-            <div class="form-group row">
+            <div class="form-group col-5">
                 <label>Kode Kegiatan </label>
-                <select class="form-control" name="kd_giat" id="kd_giat" onchange="get_akun()">
-                    <option value="">--Pilih--</option>
-                    <?php
-                    $username = $_SESSION['id_peg'];
-                    $check_giat = $this->db->query("SELECT * FROM pegawai WHERE id_peg='$username'")->result();
-                    foreach ($check_giat as $giat) {
-                        $get_giat = $this->db->query("SELECT * FROM unitgiat INNER JOIN giat ON giat.id_giat=unitgiat.id_giat WHERE unitgiat.id_unit='$giat->unit'")->result();
-                        foreach ($get_giat as $giat) {
-                    ?> <option value="<?= $giat->id_giat ?>"><?= $giat->kegiatan ?></option>
-                    <?php }
-                    } ?>
-                </select>
+                <?php $username = $_SESSION['id_peg'];
+                $check_pegawai = $this->db->query("SELECT COUNT(pegawai.id_peg) AS id FROM pegawai INNER JOIN dtrole ON dtrole.id_peg=pegawai.id_peg INNER JOIN role ON role.id_role=dtrole.id_role WHERE pegawai.id_peg='$username' AND role.nm_role='Admin'")->result();
+                foreach ($check_pegawai as $peg) {
+                    if ($peg->id == 0) {
+                ?>
+                        <select class="form-control" name="kd_giat" id="kd_giat" onchange="get_akun()">
+                            <option value="">--Pilih--</option>
+                            <?php
+                            $check_giat = $this->db->query("SELECT * FROM pegawai WHERE id_peg='$username'")->result();
+                            foreach ($check_giat as $giat) {
+                                $get_giat = $this->db->query("SELECT * FROM unitgiat INNER JOIN giat ON giat.id_giat=unitgiat.id_giat WHERE unitgiat.id_unit='$giat->unit'")->result();
+                                foreach ($get_giat as $giat) {
+                            ?> <option value="<?= $giat->id_giat ?>"><?= $giat->kegiatan ?></option>
+                            <?php }
+                            } ?>
+                        </select>
+                    <?php } else { ?>
+                        <select class="form-control" name="kd_giat" id="kd_giat" onchange="get_akun()">
+                            <option value="">--Pilih--</option>
+                            <?php
+                            $get_giat = $this->db->query("SELECT * FROM giat")->result();
+                            foreach ($get_giat as $giat) {
+                            ?> <option value="<?= $giat->id_giat ?>"><?= $giat->kegiatan ?></option>
+                            <?php } ?>
+                        </select>
+                <?php }
+                } ?>
             </div>
-            <div class="form-group row" id="akun">
+            <div class="form-group col-7" id="akun">
                 <label>Kd Akun </label>
                 <select class="form-control" name="kd_akun">
                     <option value="">--Pilih--</option>
                 </select>
             </div>
-            <div class="form-group row">
+            <div class="form-group col-4">
                 <label> Kota</label>
                 <input type="text" class="form-control" placeholder="Kota" name="kota">
             </div>
-            <div class="form-group row">
+            <div class="form-group col-4">
                 <label> Tanggal Mulai</label>
                 <input type="date" class="form-control" name="tgl_jln">
             </div>
-            <div class="form-group row">
+            <div class="form-group col-4">
                 <label> Tanggal Selesai</label>
                 <input type="date" class="form-control" name="tgl_plg">
             </div>
-            <div class="form-group row" id="jenis">
+            <div class="form-group col-12" id="jenis">
                 <label> Data Dukung</label><br>
                 <div class="checkbox">
                     <?php
@@ -86,12 +103,12 @@
                     <?php } ?>
                 </div>
             </div>
-            <div class="form-group row">
+            <div class="form-group col-6">
                 <label> Jumlah Ajuan</label>/
                 <label id="format_rupiah"></label>
                 <input type="text" class="form-control" placeholder="Jumlah Ajuan" name="jml_ajuan" id="jml_ajuan" onkeyup="document.getElementById('format_rupiah').innerHTML = formatCurrency(this.value);">
             </div>
-            <div class="form-group row">
+            <div class="form-group col-6">
                 <label> Upload Data</label>
                 <input type="file" class="form-control" id="nama_file" name="nama_file[]" multiple accept=".pdf, .xls, .xlsx" onchange="check_file()">
                 <small>File type : pdf, .xls, .xlsx<br>Max size : 2MB</small>

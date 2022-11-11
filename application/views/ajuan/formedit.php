@@ -19,17 +19,17 @@
         <?php } ?>
     </div>
     <form class="form-horizontal" enctype="multipart/form-data" action="<?php echo site_url('ajuan/prosesupdate') ?>" method="post">
-        <div class="card-body col-md">
-            <div class="form-group row">
+        <div class="card-body row">
+            <div class="form-group col-6">
                 <input type="hidden" class="form-control" placeholder="id_ajuan" name="id_ajuan" value="<?php echo $id_ajuan ?>">
                 <label>No Ajuan </label>
                 <input type="text" class="form-control" placeholder="No Ajuan" name="no_ajuan" readonly value="<?php echo $no_ajuan ?>">
             </div>
-            <div class="form-group row">
+            <div class="form-group col-6">
                 <label>Tanggal Ajuan </label>
                 <input type="datetime" class="form-control" placeholder="tgl ajuan" name="tgl_ajuan" readonly value="<?php echo $tgl_ajuan ?>">
             </div>
-            <div class="form-group row">
+            <div class="form-group col-4">
                 <label>Jenis Ajuan </label>
                 <select class="form-control" name="jns_ajuan" id="jns_ajuan" onchange="get_dt_dukung()" style="pointer-events: none;">
                     <option value="">--Pilih--</option>
@@ -42,19 +42,20 @@
                     <?php } ?>
                 </select>
             </div>
-            <div class="form-group row">
+            <div class="form-group col-4">
                 <label>No Dok </label>
                 <input type="text" class="form-control" placeholder="No Dok" name="no_dok" value="<?php echo $no_dok ?>" readonly>
             </div>
-            <div class="form-group row">
+            <div class="form-group col-4">
                 <label>Tanggal Dok </label>
                 <input type="date" class="form-control" placeholder="tanggal dokumen" name="tgl_dok" value="<?php echo $tgl_dok ?>" readonly>
             </div>
-            <div class="form-group row">
+            <div class="form-group col-12">
                 <label>Perihal </label>
-                <input type="text" class="form-control" placeholder="Perihal" name="perihal" value="<?php echo $perihal ?>" readonly>
+                <textarea class="form-control" rows="2" placeholder="Perihal" name="perihal" readonly><?php echo $perihal ?></textarea>
+                <!-- <input type="text" class="form-control" placeholder="Perihal" name="perihal" value="<?php echo $perihal ?>" readonly> -->
             </div>
-            <div class="form-group row">
+            <div class="form-group col-5">
                 <label>Kode Kegiatan </label>
                 <select class="form-control" name="kd_giat" id="kd_giat" onchange="get_akun()" style="pointer-events: none;">
                     <option value="">--Pilih--</option>
@@ -66,7 +67,7 @@
                     <?php } ?>
                 </select>
             </div>
-            <div class="form-group row" id="akun">
+            <div class="form-group col-7" id="akun">
                 <label>Kd Akun </label>
                 <select class="form-control" name="kd_akun">
                     <option value="">--Pilih--</option>
@@ -78,19 +79,19 @@
                     <?php } ?>
                 </select>
             </div>
-            <div class="form-group row">
+            <div class="form-group col-4">
                 <label> Kota</label>
                 <input type="text" class="form-control" placeholder="Kota" name="kota" value="<?php echo $kota ?>" readonly>
             </div>
-            <div class="form-group row">
+            <div class="form-group col-4">
                 <label> Tanggal Mulai</label>
                 <input type="date" class="form-control" name="tgl_jln" value="<?php echo $tgl_jln ?>" readonly>
             </div>
-            <div class="form-group row">
+            <div class="form-group col-4">
                 <label> Tanggal Selesai</label>
                 <input type="date" class="form-control" name="tgl_plg" value="<?php echo $tgl_plg ?>" readonly>
             </div>
-            <div class="form-group row" id="jenis">
+            <div class="form-group col-12" id="jenis">
                 <label> Data Dukung</label>
                 <hr>
                 <div class="checkbox">
@@ -104,12 +105,12 @@
                     <?php } ?>
                 </div>
             </div>
-            <div class="form-group row">
+            <div class="form-group col-6">
                 <label> Jumlah Ajuan</label>/
                 <label id="format_rupiah"></label>
                 <input type="text" class="form-control" placeholder="Jumlah Ajuan" name="jml_ajuan" id="jml_ajuan" onkeyup="document.getElementById('format_rupiah').innerHTML = formatCurrency(this.value);" value="<?php echo $jml_ajuan ?>" readonly>
             </div>
-            <div class="form-group row">
+            <div class="form-group col-6">
                 <label> Upload Data </label>
                 <div class="input-group">
                     <input type="file" class="form-control" id="nama_file" name="nama_file[]" multiple accept=".pdf, .xls, .xlsx" onchange="check_file()">
