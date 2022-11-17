@@ -10,6 +10,7 @@
                 <thead>
                     <tr>
                         <th>No.</th>
+                        <th>Username</th>
                         <th>Nama</th>
                         <th>NIK</th>
                         <th>Pangkat</th>
@@ -30,6 +31,7 @@
                     ?>
                         <tr>
                             <td><?= $no; ?></td>
+                            <td><?= $pegawai['username']; ?></td>
                             <td><?= $pegawai['nm_peg']; ?></td>
                             <td><?= $pegawai['nik']; ?></td>
                             <td><?= $pegawai['pangkat']; ?></td>

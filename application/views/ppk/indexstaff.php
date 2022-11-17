@@ -29,16 +29,30 @@
                         $catatan = $ajuan['catatan'];
                         $no++;
                         $status_ajuan = "<label style='color: orange;'>Belum Diproses</label>";
-                        if ($ajuan['status'] == "Ditolak Staff PPK" && $ajuan['mtd_byr'] != "BELUM" && $ajuan['no_spp'] == "" && $ajuan['no_spby'] == "") $status_ajuan = "<label style='color: red;'>Ditolak PPK</label>";
-                        else if ($ajuan['status'] == "Ditolak PPK" && $ajuan['mtd_byr'] != "BELUM" && $ajuan['no_spp'] != "" || $ajuan['no_spby'] != "") $status_ajuan = "<label style='color: red;'>Ditolak PPK</label>";
-                        else if ($ajuan['status'] == "Proses SPP/SPBY" && $ajuan['mtd_byr'] != "BELUM" && $ajuan['no_spp'] != "" || $ajuan['no_spby'] != "") $status_ajuan = "<label style='color: blue;'>Proses SPP/SPBY</label>";
-                        else if ($ajuan['status'] == "Proses SPM" && $ajuan['mtd_byr'] != "BELUM" && $ajuan['no_spp'] != "" || $ajuan['no_spby'] != "") $status_ajuan = "<label style='color: blue;'>Proses PPSPM</label>";
-                        else if ($ajuan['status'] == "Ditolak Staff PPSPM" && $ajuan['mtd_byr'] != "BELUM" && $ajuan['no_spp'] != "" || $ajuan['no_spby'] != "") $status_ajuan = "<label style='color: red;'>Ditolak PPSPM</label>";
-                        else if ($ajuan['status'] == "Ditolak PPSPM" && $ajuan['mtd_byr'] != "BELUM" && $ajuan['no_spp'] != "" || $ajuan['no_spby'] != "") $status_ajuan = "<label style='color: red;'>Ditolak PPSPM</label>";
-                        else if ($ajuan['status'] == "Kirim KPPN" && $ajuan['mtd_byr'] != "BELUM" && $ajuan['no_spp'] != "" || $ajuan['no_spby'] != "") $status_ajuan = "<label style='color: blue;'>Kirim KPPN</label>";
-                        else if ($ajuan['status'] == "Proses Bendahara" && $ajuan['mtd_byr'] && "BELUM" or $ajuan['no_spp'] != "" || $ajuan['no_spby'] != "") $status_ajuan = "<label style='color: blue;'>Proses Bendahara</label>";
-                        else if ($ajuan['status'] == "Selesai" && $ajuan['mtd_byr'] != "BELUM" && $ajuan['no_spp'] != "" || $ajuan['no_spby'] != "") $status_ajuan = "<label style='color: green;'>Selesai</label>";
-                    ?>
+                        if ($ajuan['status'] == "Ditolak Staff PPK" && $ajuan['no_spp'] == "" && $ajuan['no_spby'] == "") $status_ajuan = "<label style='color: red;'>Ditolak PPK</label>";
+                        else if ($ajuan['status'] == "Ditolak PPK" && $ajuan['no_spp'] != "" && $ajuan['no_spby'] == "") $status_ajuan = "<label style='color: red;'>Ditolak PPK</label>";
+                        else if ($ajuan['status'] == "Ditolak PPK" && $ajuan['no_spp'] == "" && $ajuan['no_spby'] != "") $status_ajuan = "<label style='color: red;'>Ditolak PPK</label>";
+
+                        else if ($ajuan['status'] == "Proses SPP/SPBY" && $ajuan['no_spp'] != "" && $ajuan['no_spby'] == "") $status_ajuan = "<label style='color: blue;'>Proses SPP/SPBY</label>";
+                        else if ($ajuan['status'] == "Proses SPP/SPBY" && $ajuan['no_spp'] == "" && $ajuan['no_spby'] != "") $status_ajuan = "<label style='color: blue;'>Proses SPP/SPBY</label>";
+
+                        else if ($ajuan['status'] == "Proses SPM" && $ajuan['no_spp'] != "" && $ajuan['no_spby'] == "") $status_ajuan = "<label style='color: blue;'>Proses PPSPM</label>";
+                        else if ($ajuan['status'] == "Proses SPM" && $ajuan['no_spp'] == "" && $ajuan['no_spby'] != "") $status_ajuan = "<label style='color: blue;'>Proses PPSPM</label>";
+
+                        else if ($ajuan['status'] == "Ditolak Staff PPSPM" && $ajuan['no_spp'] != "" && $ajuan['no_spby'] == "") $status_ajuan = "<label style='color: red;'>Ditolak PPSPM</label>";
+                        else if ($ajuan['status'] == "Ditolak Staff PPSPM" && $ajuan['no_spp'] == "" && $ajuan['no_spby'] != "") $status_ajuan = "<label style='color: red;'>Ditolak PPSPM</label>";
+
+                        else if ($ajuan['status'] == "Ditolak PPSPM" && $ajuan['no_spp'] != "" && $ajuan['no_spby'] == "") $status_ajuan = "<label style='color: red;'>Ditolak PPSPM</label>";
+                        else if ($ajuan['status'] == "Ditolak PPSPM" && $ajuan['no_spp'] == "" && $ajuan['no_spby'] != "") $status_ajuan = "<label style='color: red;'>Ditolak PPSPM</label>";
+
+                        else if ($ajuan['status'] == "Kirim KPPN" && $ajuan['no_spp'] != "" && $ajuan['no_spby'] == "") $status_ajuan = "<label style='color: blue;'>Kirim KPPN</label>";
+                        else if ($ajuan['status'] == "Kirim KPPN" && $ajuan['no_spp'] == "" && $ajuan['no_spby'] != "") $status_ajuan = "<label style='color: blue;'>Kirim KPPN</label>";
+
+                        else if ($ajuan['status'] == "Proses Bendahara" && $ajuan['no_spp'] != "" && $ajuan['no_spby'] == "") $status_ajuan = "<label style='color: blue;'>Proses Bendahara</label>";
+                        else if ($ajuan['status'] == "Proses Bendahara" && $ajuan['no_spp'] == "" && $ajuan['no_spby'] != "") $status_ajuan = "<label style='color: blue;'>Proses Bendahara</label>";
+
+                        else if ($ajuan['status'] == "Selesai" && $ajuan['no_spp'] != "" && $ajuan['no_spby'] == "") $status_ajuan = "<label style='color: green;'>Selesai</label>";
+                        else if ($ajuan['status'] == "Selesai" && $ajuan['no_spp'] == "" && $ajuan['no_spby'] != "") $status_ajuan = "<label style='color: green;'>Selesai</label>"; ?>
                         <tr>
                             <td><?= $no; ?></td>
                             <td><?= $ajuan['no_ajuan']; ?></td>
@@ -55,45 +69,69 @@
                                 <a href="#" data-toggle="modal" data-target="#modal-lihat<?= ($ajuan['id_ajuan']); ?>" data-popup="tooltip" data-placement="top" title="Lihat Data"><i class="fa fa-eye" style="color:green"></i></a>
                                 <a href="#" data-toggle="modal" data-target="#modal-download<?= ($ajuan['id_ajuan']); ?>" data-popup="tooltip" data-placement="top" title="Download Data"><i class="fa fa-download" style="color:orange"></i></a>
                                 <a href="<?= site_url('ajuan/update/' . $ajuan['id_ajuan'] . '/' . 'staffppk') ?>"><i class="fa fa-edit" style="color:blue;"></i></a>
-
-                                <?php if ($ajuan['status'] == "Proses SPP/SPBY" && $ajuan['mtd_byr'] != "BELUM"  && $ajuan['no_spp'] == "" && $ajuan['no_spby'] == "") { ?>
-                                    <div class=" ml-auto text-left">
-                                        <div class="btn-link" data-toggle="dropdown">
-                                            <svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-                                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                                    <rect x="0" y="0" width="24" height="24"></rect>
-                                                    <circle fill="#000000" cx="5" cy="12" r="2"></circle>
-                                                    <circle fill="#000000" cx="12" cy="12" r="2"></circle>
-                                                    <circle fill="#000000" cx="19" cy="12" r="2"></circle>
-                                                </g>
-                                            </svg>
+                                <?php $username = $_SESSION['id_peg'];
+                                $check_pegawai = $this->db->query("SELECT COUNT(pegawai.id_peg) AS id FROM pegawai INNER JOIN dtrole ON dtrole.id_peg=pegawai.id_peg INNER JOIN role ON role.id_role=dtrole.id_role WHERE pegawai.id_peg='$username' AND role.nm_role='Admin'")->result();
+                                foreach ($check_pegawai as $peg) {
+                                    if ($peg->id == 1) { ?>
+                                        <div class=" ml-auto text-left">
+                                            <div class="btn-link" data-toggle="dropdown">
+                                                <svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                        <rect x="0" y="0" width="24" height="24"></rect>
+                                                        <circle fill="#000000" cx="5" cy="12" r="2"></circle>
+                                                        <circle fill="#000000" cx="12" cy="12" r="2"></circle>
+                                                        <circle fill="#000000" cx="19" cy="12" r="2"></circle>
+                                                    </g>
+                                                </svg>
+                                            </div>
+                                            <div class="dropdown-menu dropdown-menu-left">
+                                                <center>
+                                                    <a href="#" data-toggle="modal" data-target="#modal-ditolak<?= ($ajuan['id_ajuan']); ?>" data-popup="tooltip" data-placement="top" title="Alasan ditolak" class="btn btn-danger">Tolak</a>
+                                                    <a href="<?= site_url('staffppk/spp_spby/' . $ajuan['id_ajuan'] . '/' . 'staffppk') ?>"><button class="btn btn-success">Proses</button></a>
+                                                </center>
+                                            </div>
                                         </div>
-                                        <div class="dropdown-menu dropdown-menu-left">
-                                            <center>
-                                                <a href="#" data-toggle="modal" data-target="#modal-ditolak<?= ($ajuan['id_ajuan']); ?>" data-popup="tooltip" data-placement="top" title="Alasan ditolak" class="btn btn-danger">Tolak</a>
-                                                <a href="<?= site_url('staffppk/spp_spby/' . $ajuan['id_ajuan'] . '/' . 'staffppk') ?>"><button class="btn btn-success">Proses</button></a>
-                                            </center>
-                                        </div>
-                                    </div>
-                                <?php } else if ($ajuan['status'] == "Ditolak Staff PPSPM" && $ajuan['mtd_byr'] != "BELUM" or $ajuan['status'] == "Ditolak PPK") { ?>
-                                    <div class=" ml-auto text-left">
-                                        <div class="btn-link" data-toggle="dropdown">
-                                            <svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-                                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                                    <rect x="0" y="0" width="24" height="24"></rect>
-                                                    <circle fill="#000000" cx="5" cy="12" r="2"></circle>
-                                                    <circle fill="#000000" cx="12" cy="12" r="2"></circle>
-                                                    <circle fill="#000000" cx="19" cy="12" r="2"></circle>
-                                                </g>
-                                            </svg>
-                                        </div>
-                                        <div class="dropdown-menu dropdown-menu-left">
-                                            <center>
-                                                <a href="<?= site_url('staffppk/spp_spby/' . $ajuan['id_ajuan'] . '/' . 'staffppk') ?>"><button class="btn btn-success">Metode Bayar</button></a>
-                                            </center>
-                                        </div>
-                                    </div>
+                                    <?php } else { ?>
+                                        <?php if ($ajuan['status'] == "Proses SPP/SPBY" && $ajuan['mtd_byr'] != "BELUM"  && $ajuan['no_spp'] == "" && $ajuan['no_spby'] == "") { ?>
+                                            <div class=" ml-auto text-left">
+                                                <div class="btn-link" data-toggle="dropdown">
+                                                    <svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                            <rect x="0" y="0" width="24" height="24"></rect>
+                                                            <circle fill="#000000" cx="5" cy="12" r="2"></circle>
+                                                            <circle fill="#000000" cx="12" cy="12" r="2"></circle>
+                                                            <circle fill="#000000" cx="19" cy="12" r="2"></circle>
+                                                        </g>
+                                                    </svg>
+                                                </div>
+                                                <div class="dropdown-menu dropdown-menu-left">
+                                                    <center>
+                                                        <a href="#" data-toggle="modal" data-target="#modal-ditolak<?= ($ajuan['id_ajuan']); ?>" data-popup="tooltip" data-placement="top" title="Alasan ditolak" class="btn btn-danger">Tolak</a>
+                                                        <a href="<?= site_url('staffppk/spp_spby/' . $ajuan['id_ajuan'] . '/' . 'staffppk') ?>"><button class="btn btn-success">Proses</button></a>
+                                                    </center>
+                                                </div>
+                                            </div>
+                                        <?php } else if ($ajuan['status'] == "Ditolak Staff PPSPM" && $ajuan['mtd_byr'] != "BELUM" or $ajuan['status'] == "Ditolak PPK") { ?>
+                                            <div class=" ml-auto text-left">
+                                                <div class="btn-link" data-toggle="dropdown">
+                                                    <svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                            <rect x="0" y="0" width="24" height="24"></rect>
+                                                            <circle fill="#000000" cx="5" cy="12" r="2"></circle>
+                                                            <circle fill="#000000" cx="12" cy="12" r="2"></circle>
+                                                            <circle fill="#000000" cx="19" cy="12" r="2"></circle>
+                                                        </g>
+                                                    </svg>
+                                                </div>
+                                                <div class="dropdown-menu dropdown-menu-left">
+                                                    <center>
+                                                        <a href="<?= site_url('staffppk/spp_spby/' . $ajuan['id_ajuan'] . '/' . 'staffppk') ?>"><button class="btn btn-success">Metode Bayar</button></a>
+                                                    </center>
+                                                </div>
+                                            </div>
                                 <?php } else {
+                                        }
+                                    }
                                 } ?>
                                 <br>
                                 <?php

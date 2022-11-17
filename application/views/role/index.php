@@ -2,7 +2,7 @@
     Tambah Data
 </button>
 <?= $this->session->flashdata('message') ?>
-<div class="card">
+<div class="card col-md-4">
     <!-- /.card-header -->
     <div class="card-body">
         <div class="table-responsive">

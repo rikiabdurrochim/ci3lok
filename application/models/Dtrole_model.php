@@ -9,7 +9,7 @@ class Dtrole_model extends CI_Model
     public function select_dtrole()
     {
         $query = $this->db->query("SELECT * FROM dtrole INNER JOIN role on role.id_role = dtrole.id_role
-                                    INNER JOIN pegawai on pegawai.id_peg = dtrole.id_peg ORDER BY dtrole.id_dtrole DESC");
+                                    INNER JOIN pegawai on pegawai.id_peg = dtrole.id_peg ORDER BY dtrole.id_dtrole ASC");
 
         return $query->result_array();
     }

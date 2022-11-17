@@ -56,7 +56,7 @@
             "responsive": false,
         });
     });
-//id=example
+    //id=example
     $(document).ready(function() {
         $('#example').DataTable();
     });

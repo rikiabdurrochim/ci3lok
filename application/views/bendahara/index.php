@@ -49,7 +49,6 @@
                                 <a href="#" data-toggle="modal" data-target="#modal-lihat<?= ($ajuan['id_ajuan']); ?>" data-popup="tooltip" data-placement="top" title="Lihat Data"><i class="fa fa-eye" style="color:green"></i></a>
                                 <a href="#" data-toggle="modal" data-target="#modal-download<?= ($ajuan['id_ajuan']); ?>" data-popup="tooltip" data-placement="top" title="Download Data"><i class="fa fa-download" style="color:orange"></i></a>
                                 <!-- <a href="#" data-toggle="modal" data-target="#modal-edit<?= ($ajuan['id_ajuan']); ?>" data-popup="tooltip" data-placement="top" title="Edit Data"><i class="fa fa-edit" style="color:blue"></i></a> -->
-
                                 <?php
                                 $username = $_SESSION['id_peg'];
                                 $get_login = $this->db->query("SELECT COUNT(pegawai.id_peg) AS id FROM pegawai 

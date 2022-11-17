@@ -62,6 +62,7 @@ class Ajuan extends CI_Controller
 		$no_ajuan = $this->input->post('no_ajuan');
 		$tgl_ajuan = $this->input->post('tgl_ajuan');
 		$jns_ajuan = $this->input->post('jns_ajuan');
+		$dtjenis_id = $this->input->post('dtjenis_id');
 		$no_dok = $this->input->post('no_dok');
 		$tgl_dok = $this->input->post('tgl_dok');
 		$perihal = $this->input->post('perihal');
@@ -78,6 +79,7 @@ class Ajuan extends CI_Controller
 			'no_ajuan' => $no_ajuan,
 			'tgl_ajuan' => $tgl_ajuan,
 			'jns_ajuan' => $jns_ajuan,
+			'dtjenis_id' => $dtjenis_id,
 			'no_dok' => $no_dok,
 			'tgl_dok' => $tgl_dok,
 			'perihal' => $perihal,
@@ -158,6 +160,7 @@ class Ajuan extends CI_Controller
 							'no_ajuan' => set_value('no_ajuan', $row->no_ajuan),
 							'tgl_ajuan' => set_value('tgl_ajuan', $row->tgl_ajuan),
 							'jns_ajuan' => set_value('jns_ajuan', $row->jns_ajuan),
+							'dtjenis_id' => set_value('dtjenis_id', $row->dtjenis_id),
 							'no_dok' => set_value('no_dok', $row->no_dok),
 							'tgl_dok' => set_value('tgl_dok', $row->tgl_dok),
 							'perihal' => set_value('perihal', $row->perihal),
@@ -194,6 +197,7 @@ class Ajuan extends CI_Controller
 		$no_ajuan = $this->input->post('no_ajuan');
 		$tgl_ajuan = $this->input->post('tgl_ajuan');
 		$jns_ajuan = $this->input->post('jns_ajuan');
+		$dtjenis_id = $this->input->post('dtjenis_id');
 		$no_dok = $this->input->post('no_dok');
 		$tgl_dok = $this->input->post('tgl_dok');
 		$perihal = $this->input->post('perihal');
@@ -210,6 +214,7 @@ class Ajuan extends CI_Controller
 			'no_ajuan' => $no_ajuan,
 			'tgl_ajuan' => $tgl_ajuan,
 			'jns_ajuan' => $jns_ajuan,
+			'dtjenis_id' => $dtjenis_id,
 			'no_dok' => $no_dok,
 			'tgl_dok' => $tgl_dok,
 			'perihal' => $perihal,
@@ -302,6 +307,18 @@ class Ajuan extends CI_Controller
 		}
 	}
 
+	function get_dt_jenis()
+	{
+		$jns_ajuan = $this->input->get('jns_ajuan');
+		echo '<label>Detail Jenis</label> <select class ="form-control" name="dtjenis_id">
+		<option value="">--Pilih--</option>';
+		$get_detail = $this->db->query("SELECT * FROM detjenis WHERE id_jenis ='$jns_ajuan'")->result();
+		foreach ($get_detail as $detail) {
+			echo "<option value='" . $detail->id_dtjenis . "'>" . $detail->detail_jns . "</option>";
+		}
+		echo "</select>";
+	}
+
 	function get_dt_dukung()
 	{
 		$jns_ajuan = $this->input->get('jns_ajuan');
@@ -313,6 +330,7 @@ class Ajuan extends CI_Controller
 		}
 		echo "</div>";
 	}
+
 
 	public function delete_file($id)
 	{

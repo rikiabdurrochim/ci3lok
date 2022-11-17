@@ -157,17 +157,14 @@ class Pegawai extends CI_Controller
 		$username = $_SESSION['id_peg'];
 		$cek_data = $this->db->query("SELECT COUNT(id_aksesmn) AS ada_tidak FROM aksesmn 
 		INNER JOIN menu ON menu.`id_menu`=aksesmn.`id_menu`
-		INNER JOIN role ON role.`id_role`=aksesmn.`id_role`
-		INNER JOIN dtrole ON dtrole.`id_role`=role.`id_role`
-		INNER JOIN pegawai ON pegawai.`id_peg`=dtrole.`id_peg` WHERE pegawai.id_peg='$username' 
-		AND menu.`id_menu`='12'")->result();
+		INNER JOIN pegawai ON pegawai.`id_peg`=aksesmn.`id_peg` WHERE pegawai.id_peg='$username' 
+		AND menu.`id_menu`='1'")->result();
 		foreach ($cek_data as $ck_data) :
-
-			if ($username != "" && $ck_data->ada_tidak != "0") {
-				$this->Pegawai_model->delete_data($id);
+			if ($username != "" && $ck_data->ada_tidak != 0) {
+				$this->db->query("UPDATE pegawai SET status_peg = '0' WHERE id_peg = '$id'");
 				$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Data Berhasil dihapus<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
 				redirect(site_url('pegawai'));
-			} else if ($username != "" && $ck_data->ada_tidak == "0") {
+			} else if ($username != "" && $ck_data->ada_tidak == 0) {
 				$this->load->view('errors/error_404');
 			} else {
 				redirect('log');

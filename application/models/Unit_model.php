@@ -8,7 +8,8 @@ class Unit_model extends CI_Model
 
     public function select_unit()
     {
-        $query = $this->db->query("SELECT * FROM unit");
+        // $query = $this->db->query("SELECT * FROM unit");
+        $query = $this->db->get('unit');
         return $query->result_array();
     }
 
@@ -20,7 +21,8 @@ class Unit_model extends CI_Model
 
     function delete_data($id)
     {
-        $this->db->where('id_unit', $id);
-        $this->db->delete('unit');
+        // $this->db->where('id_unit', $id);
+        // $this->db->delete('unit');
+        $this->db->delete('unit', ['id_unit' => $id]);
     }
 }

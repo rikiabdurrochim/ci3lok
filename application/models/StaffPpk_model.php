@@ -18,6 +18,9 @@ class StaffPpk_model extends CI_Model
             INNER JOIN giat on giat.id_giat = ajuan.kd_giat 
             INNER JOIN akun on akun.id_akun = ajuan.kd_akun 
             INNER JOIN pegawai on pegawai.id_peg = ajuan.peg_id 
+            WHERE ajuan.`status`!= 'Ditolak Loket' 
+                        AND ajuan.`mtd_byr`!= 'BELUM' 
+                        AND ajuan.`status`!= 'Belum Diproses'
             ORDER BY id_ajuan DESC");
                 return $query->result_array();
             } else {
@@ -29,8 +32,7 @@ class StaffPpk_model extends CI_Model
                         WHERE pj.`id_peg` = '$username' 
                         AND ajuan.`status`!= 'Ditolak Loket' 
                         AND ajuan.`mtd_byr`!= 'BELUM' 
-                        AND ajuan.`status`!= 'Belum Diproses' 
-                        AND ajuan.`status`!= 'Belum Diproses' 
+                        AND ajuan.`status`!= 'Belum Diproses'  
                         ORDER BY ajuan.id_ajuan DESC
                         ");
                 return $query->result_array();

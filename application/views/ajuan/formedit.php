@@ -20,16 +20,16 @@
     </div>
     <form class="form-horizontal" enctype="multipart/form-data" action="<?php echo site_url('ajuan/prosesupdate') ?>" method="post">
         <div class="card-body row">
-            <div class="form-group col-6">
+            <div class="form-group col-3">
                 <input type="hidden" class="form-control" placeholder="id_ajuan" name="id_ajuan" value="<?php echo $id_ajuan ?>">
                 <label>No Ajuan </label>
                 <input type="text" class="form-control" placeholder="No Ajuan" name="no_ajuan" readonly value="<?php echo $no_ajuan ?>">
             </div>
-            <div class="form-group col-6">
+            <div class="form-group col-3">
                 <label>Tanggal Ajuan </label>
                 <input type="datetime" class="form-control" placeholder="tgl ajuan" name="tgl_ajuan" readonly value="<?php echo $tgl_ajuan ?>">
             </div>
-            <div class="form-group col-4">
+            <div class="form-group col-3">
                 <label>Jenis Ajuan </label>
                 <select class="form-control" name="jns_ajuan" id="jns_ajuan" onchange="get_dt_dukung()" style="pointer-events: none;">
                     <option value="">--Pilih--</option>
@@ -39,6 +39,18 @@
                         <option value="<?= $ajuan->id_jenis ?>" <?php if ($jns_ajuan == $ajuan->id_jenis) {
                                                                     echo 'selected';
                                                                 } ?>><?= $ajuan->nm_jenis ?></option>
+                    <?php } ?>
+                </select>
+            </div>
+            <div class="form-group col-3" id="dt_jenis">
+                <label>Detail Jenis </label>
+                <select class="form-control" name="dtjenis_id" style="pointer-events: none;">
+                    <option value="">--Pilih--</option>
+                    <?php $get_jenis = $this->db->query("SELECT * FROM detjenis")->result();
+                    foreach ($get_jenis as $detail) {
+                    ?> <option value="<?= $detail->id_dtjenis ?>" <?php if ($dtjenis_id == $detail->id_dtjenis) {
+                                                                        echo 'selected';
+                                                                    } ?>><?= $detail->detail_jns ?></option>
                     <?php } ?>
                 </select>
             </div>

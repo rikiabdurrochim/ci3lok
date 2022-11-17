@@ -31,9 +31,15 @@
                     <?php } ?>
                 </select>
             </div>
+            <div class="form-group col-4" id="dt_jenis">
+                <label>Detail Jenis </label>
+                <select class="form-control" name="dtjenis_id" id="dtjenis_id">
+                    <option value="">--Pilih--</option>
+                </select>
+            </div>
             <div class="form-group col-4">
                 <label>No Dok </label>
-                <input type="text" class="form-control" id="no_dok" onkeydown="setTimeout(cek_dokumen, 1000);" minlength="5" placeholder="No Dok" name="no_dok">
+                <input type="text" class="form-control" id="no_dok" onkeydown="setTimeout(cek_dokumen, 500);" minlength="5" placeholder="No Dok" name="no_dok">
             </div>
             <div class="form-group col-4">
                 <label>Tanggal Dok </label>
@@ -136,11 +142,23 @@
 
     function get_dt_dukung() {
         var jns_ajuan = $("#jns_ajuan").val();
+        get_dt_jenis();
         $.ajax({
             url: "<?= base_url() ?>index.php/ajuan/get_dt_dukung",
             data: "jns_ajuan=" + jns_ajuan,
             success: function(html) {
                 $("#jenis").html(html);
+            }
+        });
+    }
+
+    function get_dt_jenis() {
+        var jns_ajuan = $("#jns_ajuan").val();
+        $.ajax({
+            url: "<?= base_url() ?>index.php/ajuan/get_dt_jenis",
+            data: "jns_ajuan=" + jns_ajuan,
+            success: function(html) {
+                $("#dt_jenis").html(html);
             }
         });
     }
