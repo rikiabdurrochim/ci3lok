@@ -2,15 +2,14 @@
     Tambah Data
 </button>
 <?= $this->session->flashdata('message') ?>
-<div class="card col-md-4">
+<div class="card col-md">
     <!-- /.card-header -->
-    <div class="card-body">
+    <div class="card-body col-md-6" style=" padding: 10px 15px;">
         <div class="table-responsive">
             <table id="example1" class="table table-bordered table-striped">
                 <thead>
                     <tr>
                         <th>No.</th>
-
                         <th>Nama Role</th>
                         <th>Opsi</th>
                     </tr>

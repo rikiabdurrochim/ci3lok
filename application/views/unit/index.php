@@ -1,39 +1,44 @@
-<button type="button" class="btn btn-primary mb-3" data-toggle="modal" data-target="#input">
-    Tambah Data
-</button>
-<?= $this->session->flashdata('message') ?>
-<div class="card col-md-6">
-    <!-- /.card-header -->
-    <div class="card-body">
-        <div class="table-responsive">
-            <table id="example1" class="table table-bordered table-striped">
-                <thead>
-                    <tr>
-                        <th>No.</th>
-                        <th>Nama Unit</th>
-                        <th>Opsi</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php
-                    $no = 0;
-                    foreach ($data_unit as $unit) :
-                        $no++;
-                    ?>
+<div class="container">
+    <div class="card-header col-md-6 bg-secondary">
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#input">
+            Tambah Data
+        </button>
+    </div>
+    <?= $this->session->flashdata('message') ?>
+    <div class="card col-md-6">
+        <!-- /.card-header -->
+        <div class="card-body">
+            <div class="table-responsive">
+                <table id="example1" class="table table-bordered table-striped">
+                    <thead>
                         <tr>
-                            <td><?= $no; ?></td>
-                            <td><?= $unit['nm_unit']; ?></td>
-                            <td style="width: 70px;">
-                                <a href="#" data-toggle="modal" data-target="#modal-edit<?php echo ($unit['id_unit']); ?>" data-popup="tooltip" data-placement="top" title="Ubah Data"><i class="fa fa-edit" style="color:blue;"></i></a>
-                                <a href="<?= site_url('unit/delete/' . $unit['id_unit']) ?>"><i class="fa fa-trash" style="color:red;"></i></a>
-                            </td>
+                            <th>No.</th>
+                            <th>Nama Unit</th>
+                            <th>Opsi</th>
                         </tr>
-                    <?php endforeach; ?>
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        <?php
+                        $no = 0;
+                        foreach ($data_unit as $unit) :
+                            $no++;
+                        ?>
+                            <tr>
+                                <td><?= $no; ?></td>
+                                <td><?= $unit['nm_unit']; ?></td>
+                                <td style="width: 70px;">
+                                    <a href="#" data-toggle="modal" data-target="#modal-edit<?php echo ($unit['id_unit']); ?>" data-popup="tooltip" data-placement="top" title="Ubah Data"><i class="fa fa-edit" style="color:blue;"></i></a>
+                                    <a href="<?= site_url('unit/delete/' . $unit['id_unit']) ?>"><i class="fa fa-trash" style="color:red;"></i></a>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>
+
 
 <!-- input modal -->
 <div class="modal fade" id="input">

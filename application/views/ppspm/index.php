@@ -10,6 +10,7 @@
                         <th>No. Ajuan</th>
                         <th>Tgl Ajuan</th>
                         <th>Jenis</th>
+                        <th>Detail Jenis</th>
                         <th>No.Dokumen</th>
                         <th>Tgl Dokumen</th>
                         <th>Perihal</th>
@@ -27,56 +28,44 @@
                     foreach ($data_ajuan as $ajuan) :
                         $no_ajuan = $ajuan['id_ajuan'];
                         $catatan = $ajuan['catatan'];
-                        $no++;
-                        $status_ajuan = "<label style='color: orange;'>Belum Diproses</label>";
-                        if ($ajuan['status'] == "Ditolak PPSPM" && $ajuan['no_spm'] != "") $status_ajuan = "<label style='color: red;'>Ditolak PPSPM</label>";
-                        else if ($ajuan['status'] == "Kirim KPPN" && $ajuan['no_spm'] != "") $status_ajuan = "<label style='color: blue;'>Kirim KPPN</label>";
-                        else if ($ajuan['status'] == "Proses Bendahara" && $ajuan['no_spm'] != "") $status_ajuan = "<label style='color: blue;'>Proses Bendahara</label>";
-                        else if ($ajuan['status'] == "Selesai" && $ajuan['no_spm'] != "") $status_ajuan = "<label style='color: green;'>Selesai</label>";
-                    ?>
-                        <tr>
-                            <td><?= $no; ?></td>
-                            <td><?= $ajuan['no_ajuan']; ?></td>
-                            <td><?= date('d/m/Y H:i', strtotime($ajuan['tgl_ajuan'])); ?></td>
-                            <td><?= $ajuan['nm_jenis']; ?></td>
-                            <td><?= $ajuan['no_dok']; ?></td>
-                            <td><?= date('d/m/Y', strtotime($ajuan['tgl_dok'])); ?></td>
-                            <td><?= $ajuan['perihal']; ?></td>
-                            <td><?= $ajuan['kegiatan']; ?></td>
-                            <td><?= $ajuan['kroakun']; ?></td>
-                            <td><?= 'Rp ' . number_format($ajuan['jml_ajuan'], 0, ',', '.'); ?></td>
-                            <td><?php echo $status_ajuan; ?></td>
-                            <td>
-                                <a href="#" data-toggle="modal" data-target="#modal-lihat<?= ($ajuan['id_ajuan']); ?>" data-popup="tooltip" data-placement="top" title="Lihat Data"><i class="fa fa-eye" style="color:green"></i></a>
-                                <a href="#" data-toggle="modal" data-target="#modal-download<?= ($ajuan['id_ajuan']); ?>" data-popup="tooltip" data-placement="top" title="Download Data"><i class="fa fa-download" style="color:orange"></i></a>
-                                <!-- <a href="#" data-toggle="modal" data-target="#modal-edit<?= ($ajuan['id_ajuan']); ?>" data-popup="tooltip" data-placement="top" title="Edit Data"><i class="fa fa-edit" style="color:blue"></i></a> -->
+                        $get_pjspm = $this->db->query("SELECT COUNT(id_pjspm) AS ada_tidak FROM pjspm WHERE id_ajuan = '$no_ajuan'")->result();
+                        foreach ($get_pjspm as $pjspm) {
+                            $no++;
+                            $status_ajuan = "<label style='color: orange;'>Belum Diproses</label>";
+                            if ($ajuan['status'] == "Ditolak PPSPM" && $ajuan['no_spm'] != "" && $pjspm['ada_tidak'] != "0") $status_ajuan = "<label style='color: red;'>Ditolak PPSPM</label>";
+                            else if ($ajuan['status'] == "Ditolak Staff PPSPM" && $ajuan['no_spm'] != "" && $pjspm['ada_tidak'] != "0") $status_ajuan = "<label style='color: red;'>Ditolak PPSPM</label>";
+                            else if ($ajuan['status'] == "Ditolak PPSPM" && $ajuan['no_spm'] == "" && $pjspm['ada_tidak'] == "0") $status_ajuan = "<label style='color: red;'>Ditolak PPSPM</label>";
+                            else if ($ajuan['status'] == "Proses Bendahara" && $ajuan['no_spm'] != "" && $pjspm['ada_tidak'] != "0") $status_ajuan = "<label style='color: blue;'>Proses Bendahara</label>";
+                            else if ($ajuan['status'] == "Selesai" && $ajuan['no_spm'] != "" && $pjspm['ada_tidak'] != "0") $status_ajuan = "<label style='color: green;'>Selesai</label>";
+                            else if ($ajuan['status'] == "Kirim KPPN" && $ajuan['no_spm'] != "" && $pjspm['ada_tidak'] != "0") $status_ajuan = "<label style='color: blue;'>Kirim KPPN</label>";
+                            else if ($ajuan['status'] == "Proses SPM" && $ajuan['no_spm'] != "" && $pjspm['ada_tidak'] != "0") $status_ajuan = "<label style='color: orange;'>Belum Diproses</label>";
+                            else if ($ajuan['status'] == "Proses SPM" && $ajuan['no_spm'] != "" && $pjspm['ada_tidak'] == "0") $status_ajuan = "<label style='color: blue;'>Proses SPM</label>";
 
-                                <a href="#" data-toggle="modal" data-target="#modal-diterima<?= ($ajuan['id_ajuan']); ?>" data-popup="tooltip" data-placement="top" title="spm"><i class="fa fa-folder" style="color:purple"></i></a>
-                                <a href="#" data-toggle="modal" data-target="#modal-sp2d<?= ($ajuan['id_ajuan']); ?>" data-popup="tooltip" data-placement="top" title="sp2d"><i class="fa fa-folder" style="color:brown"></i></a>
-                                <?php $username = $_SESSION['id_peg'];
-                                $check_pegawai = $this->db->query("SELECT COUNT(pegawai.id_peg) AS id FROM pegawai INNER JOIN dtrole ON dtrole.id_peg=pegawai.id_peg INNER JOIN role ON role.id_role=dtrole.id_role WHERE pegawai.id_peg='$username' AND role.nm_role='Admin'")->result();
-                                foreach ($check_pegawai as $peg) {
-                                    if ($peg->id == 1) { ?>
-                                        <div class=" ml-auto text-left">
-                                            <div class="btn-link" data-toggle="dropdown">
-                                                <svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-                                                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                                        <rect x="0" y="0" width="24" height="24"></rect>
-                                                        <circle fill="#000000" cx="5" cy="12" r="2"></circle>
-                                                        <circle fill="#000000" cx="12" cy="12" r="2"></circle>
-                                                        <circle fill="#000000" cx="19" cy="12" r="2"></circle>
-                                                    </g>
-                                                </svg>
-                                            </div>
-                                            <div class="dropdown-menu">
-                                                <center>
-                                                    <a href="#" data-toggle="modal" data-target="#modal-ditolak<?= ($ajuan['id_ajuan']); ?>" data-popup="tooltip" data-placement="top" title="Alasan ditolak" class="btn btn-danger">Tolak</a>
-                                                    <a href="<?= site_url('Ppspm/terima/' . $ajuan['id_ajuan']) ?>" class="btn btn-success">Terima</a>
-                                                </center>
-                                            </div>
-                                        </div>
-                                    <?php } else { ?>
-                                        <?php if ($ajuan['status'] == "Proses SPM" && $ajuan['no_spm'] != "") { ?>
+                    ?>
+                            <tr>
+                                <td><?= $no; ?></td>
+                                <td><?= $ajuan['no_ajuan']; ?></td>
+                                <td><?= date('d/m/Y H:i', strtotime($ajuan['tgl_ajuan'])); ?></td>
+                                <td><?= $ajuan['nm_jenis']; ?></td>
+                                <td><?= $ajuan['detail_jns']; ?></td>
+                                <td><?= $ajuan['no_dok']; ?></td>
+                                <td><?= date('d/m/Y', strtotime($ajuan['tgl_dok'])); ?></td>
+                                <td><?= $ajuan['perihal']; ?></td>
+                                <td><?= $ajuan['kegiatan']; ?></td>
+                                <td><?= $ajuan['kroakun']; ?></td>
+                                <td><?= 'Rp ' . number_format($ajuan['jml_ajuan'], 0, ',', '.'); ?></td>
+                                <td><?php echo $status_ajuan; ?></td>
+                                <td>
+                                    <a href="#" data-toggle="modal" data-target="#modal-lihat<?= ($ajuan['id_ajuan']); ?>" data-popup="tooltip" data-placement="top" title="Lihat Data"><i class="fa fa-eye" style="color:green"></i></a>
+                                    <a href="#" data-toggle="modal" data-target="#modal-download<?= ($ajuan['id_ajuan']); ?>" data-popup="tooltip" data-placement="top" title="Download Data"><i class="fa fa-download" style="color:orange"></i></a>
+                                    <!-- <a href="#" data-toggle="modal" data-target="#modal-edit<?= ($ajuan['id_ajuan']); ?>" data-popup="tooltip" data-placement="top" title="Edit Data"><i class="fa fa-edit" style="color:blue"></i></a> -->
+
+                                    <a href="#" data-toggle="modal" data-target="#modal-diterima<?= ($ajuan['id_ajuan']); ?>" data-popup="tooltip" data-placement="top" title="spm"><i class="fa fa-folder" style="color:purple"></i></a>
+                                    <a href="#" data-toggle="modal" data-target="#modal-sp2d<?= ($ajuan['id_ajuan']); ?>" data-popup="tooltip" data-placement="top" title="sp2d"><i class="fa fa-folder" style="color:brown"></i></a>
+                                    <?php $username = $_SESSION['id_peg'];
+                                    $check_pegawai = $this->db->query("SELECT COUNT(pegawai.id_peg) AS id FROM pegawai INNER JOIN dtrole ON dtrole.id_peg=pegawai.id_peg INNER JOIN role ON role.id_role=dtrole.id_role WHERE pegawai.id_peg='$username' AND role.nm_role='Admin'")->result();
+                                    foreach ($check_pegawai as $peg) {
+                                        if ($peg->id == 1) { ?>
                                             <div class=" ml-auto text-left">
                                                 <div class="btn-link" data-toggle="dropdown">
                                                     <svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
@@ -91,27 +80,67 @@
                                                 <div class="dropdown-menu">
                                                     <center>
                                                         <a href="#" data-toggle="modal" data-target="#modal-ditolak<?= ($ajuan['id_ajuan']); ?>" data-popup="tooltip" data-placement="top" title="Alasan ditolak" class="btn btn-danger">Tolak</a>
-                                                        <a href="<?= site_url('Ppspm/terima/' . $ajuan['id_ajuan']) ?>" class="btn btn-success">Terima</a>
+                                                        <a href="<?= site_url('ppspm/pilih_staffppspm/' . $ajuan['id_ajuan']) ?>"><button class="btn btn-success">Pilih Staff PPSPM</button></a>
                                                     </center>
                                                 </div>
                                             </div>
-                                <?php } else {
+                                        <?php } else { ?>
+                                            <?php if ($ajuan['status'] == "Proses SPM" && $ajuan['no_spm'] == "") { ?>
+                                                <div class=" ml-auto text-left">
+                                                    <div class="btn-link" data-toggle="dropdown">
+                                                        <svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                                <rect x="0" y="0" width="24" height="24"></rect>
+                                                                <circle fill="#000000" cx="5" cy="12" r="2"></circle>
+                                                                <circle fill="#000000" cx="12" cy="12" r="2"></circle>
+                                                                <circle fill="#000000" cx="19" cy="12" r="2"></circle>
+                                                            </g>
+                                                        </svg>
+                                                    </div>
+                                                    <div class="dropdown-menu">
+                                                        <center>
+                                                            <a href="#" data-toggle="modal" data-target="#modal-ditolak<?= ($ajuan['id_ajuan']); ?>" data-popup="tooltip" data-placement="top" title="Alasan ditolak" class="btn btn-danger">Tolak</a>
+                                                            <a href="<?= site_url('ppspm/pilih_staffppspm/' . $ajuan['id_ajuan']) ?>"><button class="btn btn-success">Pilih Staff PPSPM</button></a>
+                                                        </center>
+                                                    </div>
+                                                </div>
+                                            <?php } else if ($ajuan['status'] == "Proses SPM" && $ajuan['no_spm'] != "") { ?>
+                                                <div class=" ml-auto text-left">
+                                                    <div class="btn-link" data-toggle="dropdown">
+                                                        <svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                                <rect x="0" y="0" width="24" height="24"></rect>
+                                                                <circle fill="#000000" cx="5" cy="12" r="2"></circle>
+                                                                <circle fill="#000000" cx="12" cy="12" r="2"></circle>
+                                                                <circle fill="#000000" cx="19" cy="12" r="2"></circle>
+                                                            </g>
+                                                        </svg>
+                                                    </div>
+                                                    <div class="dropdown-menu">
+                                                        <center>
+                                                            <a href="#" data-toggle="modal" data-target="#modal-ditolak<?= ($ajuan['id_ajuan']); ?>" data-popup="tooltip" data-placement="top" title="Alasan ditolak" class="btn btn-danger">Tolak</a>
+                                                            <a href="<?= site_url('Ppspm/terima/' . $ajuan['id_ajuan']) ?>" class="btn btn-success">Terima</a>
+                                                        </center>
+                                                    </div>
+                                                </div>
+                                    <?php } else {
+                                            }
                                         }
                                     }
-                                }
-                                ?>
-                                <br>
-                                <?php
-                                $check_admin = $this->db->query("SELECT COUNT(id_role) as id_role FROM dtrole WHERE id_peg='$username' AND id_role='1'")->result();
-                                foreach ($check_admin as $admin) :
-                                    if ($catatan != "") { ?>
-                                        <a href="#" data-toggle="modal" data-target="#lihat-alasan<?= $ajuan['id_ajuan']; ?>" data-popup="tooltip" data-placement="top" title="Alasan Ditolak"><i class="fa fa-info" style="color:purple"></i></a>
-                                <?php
-                                    } else {
-                                    }
-                                endforeach; ?>
-                            </td>
-                        </tr>
+                                    ?>
+                                    <br>
+                                    <?php
+                                    $check_admin = $this->db->query("SELECT COUNT(id_role) as id_role FROM dtrole WHERE id_peg='$username' AND id_role='1'")->result();
+                                    foreach ($check_admin as $admin) :
+                                        if ($catatan != "") { ?>
+                                            <a href="#" data-toggle="modal" data-target="#lihat-alasan<?= $ajuan['id_ajuan']; ?>" data-popup="tooltip" data-placement="top" title="Alasan Ditolak"><i class="fa fa-info" style="color:purple"></i></a>
+                                    <?php
+                                        } else {
+                                        }
+                                    endforeach; ?>
+                                </td>
+                            </tr>
+                        <?php } ?>
                     <?php endforeach; ?>
                 </tbody>
             </table>

@@ -10,6 +10,7 @@
                         <th>No. Ajuan</th>
                         <th>Tgl Ajuan</th>
                         <th>Jenis</th>
+                        <th>Detail Jenis</th>
                         <th>No.Dokumen</th>
                         <th>Tgl Dokumen</th>
                         <th>Perihal</th>
@@ -58,6 +59,7 @@
                             <td><?= $ajuan['no_ajuan']; ?></td>
                             <td><?= date('d/m/Y H:i', strtotime($ajuan['tgl_ajuan'])); ?></td>
                             <td><?= $ajuan['nm_jenis']; ?></td>
+                            <td><?= $ajuan['detail_jns']; ?></td>
                             <td><?= $ajuan['no_dok']; ?></td>
                             <td><?= date('d/m/Y', strtotime($ajuan['tgl_dok'])); ?></td>
                             <td><?= $ajuan['perihal']; ?></td>

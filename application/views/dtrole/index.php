@@ -2,8 +2,9 @@
     Tambah Data
 </button>
 <?= $this->session->flashdata('message') ?>
-<div class="card col-md-6">
+<div class="card">
     <!-- /.card-header -->
+
     <div class="card-body">
         <div class="table-responsive">
             <table id="example1" class="table table-bordered table-striped">
@@ -35,6 +36,7 @@
             </table>
         </div>
     </div>
+
 </div>
 
 <!-- input modal -->
