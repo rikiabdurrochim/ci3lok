@@ -94,10 +94,13 @@ class Ajuan extends CI_Controller
 
 		];
 
+
 		$this->Ajuan_model->input($data);
 
-		$get_ajuan = $this->db->query("SELECT id_ajuan FROM ajuan WHERE no_ajuan='$no_ajuan'")->result_array();
+		$get_ajuan = $this->db->query("SELECT id_ajuan FROM ajuan WHERE no_dok='$no_dok'")->result_array();
 		foreach ($get_ajuan as $ajuan_data) :
+			$inputmonitoring = $this->db->query("INSERT INTO monitoring 
+			SET id_ajuan = '" . $ajuan_data['id_ajuan'] . "', id_peg = '$id_peg', status = 'Ajuan pertama dibuat', tgl_monitor = '$tgl_ajuan' ");
 			$this->load->library('upload');
 			$dataInfo = array();
 			$files = $_FILES;
@@ -231,7 +234,7 @@ class Ajuan extends CI_Controller
 
 		$this->Ajuan_model->update($this->input->post('id_ajuan'), $data);
 
-		$get_ajuan = $this->db->query("SELECT id_ajuan FROM ajuan WHERE no_ajuan='$no_ajuan'")->result_array();
+		$get_ajuan = $this->db->query("SELECT id_ajuan FROM ajuan WHERE no_dok='$no_dok'")->result_array();
 		foreach ($get_ajuan as $ajuan_data) :
 			$this->load->library('upload');
 			$dataInfo = array();

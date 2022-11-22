@@ -28,19 +28,18 @@
                     foreach ($data_ajuan as $ajuan) :
                         $no_ajuan = $ajuan['id_ajuan'];
                         $catatan = $ajuan['catatan'];
-                        $get_pjspm = $this->db->query("SELECT COUNT(id_pjspm) AS ada_tidak FROM pjspm WHERE id_ajuan = '$no_ajuan'")->result();
+                        $get_pjspm = $this->db->query("SELECT COUNT(id_pjspm) AS ada_tidak FROM pjspm WHERE id_ajuan = '$no_ajuan'")->result_array();
                         foreach ($get_pjspm as $pjspm) {
                             $no++;
                             $status_ajuan = "<label style='color: orange;'>Belum Diproses</label>";
-                            if ($ajuan['status'] == "Ditolak PPSPM" && $ajuan['no_spm'] != "" && $pjspm['ada_tidak'] != "0") $status_ajuan = "<label style='color: red;'>Ditolak PPSPM</label>";
-                            else if ($ajuan['status'] == "Ditolak Staff PPSPM" && $ajuan['no_spm'] != "" && $pjspm['ada_tidak'] != "0") $status_ajuan = "<label style='color: red;'>Ditolak PPSPM</label>";
-                            else if ($ajuan['status'] == "Ditolak PPSPM" && $ajuan['no_spm'] == "" && $pjspm['ada_tidak'] == "0") $status_ajuan = "<label style='color: red;'>Ditolak PPSPM</label>";
+                            if ($ajuan['status'] == "Ditolak PPSPM" && $ajuan['no_spm'] == "" && $pjspm['ada_tidak'] == "0") $status_ajuan = "<label style='color: red;'>Ditolak PPSPM</label>";
+                            else if ($ajuan['status'] == "Ditolak PPSPM" && $ajuan['no_spm'] != "" && $pjspm['ada_tidak'] != "0") $status_ajuan = "<label style='color: red;'>Ditolak PPSPM</label>";
+                            else if ($ajuan['status'] == "Ditolak Staff PPSPM" && $ajuan['no_spm'] == "" && $pjspm['ada_tidak'] != "0") $status_ajuan = "<label style='color: red;'>Ditolak PPSPM</label>";
                             else if ($ajuan['status'] == "Proses Bendahara" && $ajuan['no_spm'] != "" && $pjspm['ada_tidak'] != "0") $status_ajuan = "<label style='color: blue;'>Proses Bendahara</label>";
                             else if ($ajuan['status'] == "Selesai" && $ajuan['no_spm'] != "" && $pjspm['ada_tidak'] != "0") $status_ajuan = "<label style='color: green;'>Selesai</label>";
                             else if ($ajuan['status'] == "Kirim KPPN" && $ajuan['no_spm'] != "" && $pjspm['ada_tidak'] != "0") $status_ajuan = "<label style='color: blue;'>Kirim KPPN</label>";
                             else if ($ajuan['status'] == "Proses SPM" && $ajuan['no_spm'] != "" && $pjspm['ada_tidak'] != "0") $status_ajuan = "<label style='color: orange;'>Belum Diproses</label>";
-                            else if ($ajuan['status'] == "Proses SPM" && $ajuan['no_spm'] != "" && $pjspm['ada_tidak'] == "0") $status_ajuan = "<label style='color: blue;'>Proses SPM</label>";
-
+                            else if ($ajuan['status'] == "Proses SPM" && $ajuan['no_spm'] == "" && $pjspm['ada_tidak'] != "0") $status_ajuan = "<label style='color: blue;'>Proses SPM</label>";
                     ?>
                             <tr>
                                 <td><?= $no; ?></td>
@@ -85,7 +84,7 @@
                                                 </div>
                                             </div>
                                         <?php } else { ?>
-                                            <?php if ($ajuan['status'] == "Proses SPM" && $ajuan['no_spm'] == "") { ?>
+                                            <?php if ($ajuan['status'] == "Proses SPM" && $ajuan['no_spm'] == "" && $pjspm['ada_tidak'] == "0") { ?>
                                                 <div class=" ml-auto text-left">
                                                     <div class="btn-link" data-toggle="dropdown">
                                                         <svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
@@ -104,7 +103,7 @@
                                                         </center>
                                                     </div>
                                                 </div>
-                                            <?php } else if ($ajuan['status'] == "Proses SPM" && $ajuan['no_spm'] != "") { ?>
+                                            <?php } else if ($ajuan['status'] == "Proses SPM" && $ajuan['no_spm'] != "" && $pjspm['ada_tidak'] != "0") { ?>
                                                 <div class=" ml-auto text-left">
                                                     <div class="btn-link" data-toggle="dropdown">
                                                         <svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
@@ -398,7 +397,7 @@ foreach ($data_ajuan as $ajuan) :
 ?>
     <div class="modal fade" id="modal-diterima<?= ($ajuan['id_ajuan']); ?>">
         <div class="modal-dialog modal-lg">
-            <form enctype="multipart/form-data" action="<?php echo site_url('staffPpspm/terima') ?>" method="post">
+            <form enctype="multipart/form-data" action="<?php echo site_url('Ppspm/ubahspm') ?>" method="post">
                 <div class="modal-content">
                     <div class="modal-header bg-primary">
                         <h4 class="modal-title">Diterima</h4>

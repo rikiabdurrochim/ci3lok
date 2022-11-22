@@ -51,10 +51,13 @@ class StaffPpspm extends CI_Controller
 		$idajuan = $this->input->post('idajuan');
 		$no_spm = $this->input->post('no_spm');
 		$tgl_spm = $this->input->post('tgl_spm');
+		$statusAjuan = $this->input->post('statusAjuan');
 
-
-		$query_setuju = $this->db->query("UPDATE ajuan SET no_spm='$no_spm', tgl_spm='$tgl_spm' WHERE id_ajuan = '$idajuan'");
-
+		if ($statusAjuan == "Ditolak PPSPM") {
+			$query_setuju = $this->db->query("UPDATE ajuan SET no_spm='$no_spm', tgl_spm='$tgl_spm', status='Proses SPM' WHERE id_ajuan = '$idajuan'");
+		} else {
+			$query_setuju = $this->db->query("UPDATE ajuan SET no_spm='$no_spm', tgl_spm='$tgl_spm' WHERE id_ajuan = '$idajuan'");
+		}
 
 		$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Berhasil disetujui<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
 		redirect(site_url('staffppspm'));
@@ -73,6 +76,4 @@ class StaffPpspm extends CI_Controller
 		$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Berhasil disetujui<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
 		redirect(site_url('staffppspm'));
 	}
-
-	
 }

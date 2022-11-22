@@ -38,16 +38,29 @@ class Loket extends CI_Controller
 	{
 		$alasan = $this->input->post('alasan');
 		$idajuan = $this->input->post('idajuan');
+		$id_peg = $_SESSION['id_peg'];
 
 		$query_ditolak = $this->db->query("UPDATE ajuan SET `catatan` = '$alasan', `status` = 'Ditolak Loket' WHERE `id_ajuan` = '$idajuan'");
+		$get_ajuan = $this->db->query("SELECT date_updated FROM ajuan WHERE id_ajuan='$idajuan'")->result();
+		foreach ($get_ajuan as $ajuan_data) :
+			$inputmonitoring = $this->db->query("INSERT INTO monitoring 
+			SET id_ajuan = '$idajuan', id_peg = '$id_peg', status = 'Ajuan Ditolak Loket', tgl_monitor = '$ajuan_data->date_updated' ");
+		endforeach;
 		$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Alasan Berhasil disimpan<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
 		redirect(site_url('loket'));
 	}
 
 	public function setujui($id)
 	{
+		$id_peg = $_SESSION['id_peg'];
 
 		$query_ditolak = $this->db->query("UPDATE ajuan SET `status` = 'Proses SPP/SPBY' WHERE `id_ajuan` = '$id'");
+		$get_ajuan = $this->db->query("SELECT date_updated FROM ajuan WHERE id_ajuan='$id'")->result();
+		foreach ($get_ajuan as $ajuan_data) :
+			$inputmonitoring = $this->db->query("INSERT INTO monitoring 
+			SET id_ajuan = '$id', id_peg = '$id_peg', status = 'Proses SPP/SPBY', tgl_monitor = '$ajuan_data->date_updated' ");
+		endforeach;
+
 		$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Berhasil disetujui<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
 		redirect(site_url('loket'));
 	}

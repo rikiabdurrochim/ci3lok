@@ -20,8 +20,7 @@ class Ppspm_model extends CI_Model
                         AND ajuan.`status`!= 'Ditolak PPK' 
                         AND ajuan.`mtd_byr`!= 'SPBY'
                         AND ajuan.`status`!= 'Proses SPP/SPBY'
-                        AND ajuan.`no_spm`= ''
-            ORDER BY id_ajuan DESC");
+                        ORDER BY id_ajuan DESC");
         return $query->result_array();
     }
 
