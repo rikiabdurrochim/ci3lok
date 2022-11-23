@@ -38,16 +38,23 @@ class StaffPpspm extends CI_Controller
 
 	public function ditolak()
 	{
+		$id_pegawai = $_SESSION['id_peg'];
 		$alasan = $this->input->post('alasan');
 		$idajuan = $this->input->post('idajuan');
 
 		$query_ditolak = $this->db->query("UPDATE ajuan SET `catatan` = '$alasan', `status` = 'Ditolak Staff PPSPM' WHERE `id_ajuan` = '$idajuan'");
+		$get_ajuan = $this->db->query("SELECT date_updated FROM ajuan WHERE id_ajuan='$idajuan'")->result();
+		foreach ($get_ajuan as $ajuan_data) :
+			$inputmonitoring = $this->db->query("INSERT INTO monitoring 
+	SET id_ajuan = '$idajuan', id_peg = '$id_pegawai', status = 'Ditolak PPSPM', tgl_monitor = '$ajuan_data->date_updated' ");
+		endforeach;
 		$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Alasan Berhasil disimpan<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
 		redirect(site_url('staffPpspm'));
 	}
 
 	public function terima()
 	{
+		$id_pegawai = $_SESSION['id_peg'];
 		$idajuan = $this->input->post('idajuan');
 		$no_spm = $this->input->post('no_spm');
 		$tgl_spm = $this->input->post('tgl_spm');
@@ -55,9 +62,20 @@ class StaffPpspm extends CI_Controller
 
 		if ($statusAjuan == "Ditolak PPSPM") {
 			$query_setuju = $this->db->query("UPDATE ajuan SET no_spm='$no_spm', tgl_spm='$tgl_spm', status='Proses SPM' WHERE id_ajuan = '$idajuan'");
+			$get_ajuan = $this->db->query("SELECT date_updated FROM ajuan WHERE id_ajuan='$idajuan'")->result();
+			foreach ($get_ajuan as $ajuan_data) :
+				$inputmonitoring = $this->db->query("INSERT INTO monitoring 
+		SET id_ajuan = '$idajuan', id_peg = '$id_pegawai', status = 'Ajuan diperbaiki Staf PPSPM', tgl_monitor = '$ajuan_data->date_updated' ");
+			endforeach;
 		} else {
 			$query_setuju = $this->db->query("UPDATE ajuan SET no_spm='$no_spm', tgl_spm='$tgl_spm' WHERE id_ajuan = '$idajuan'");
+			$get_ajuan = $this->db->query("SELECT date_updated FROM ajuan WHERE id_ajuan='$idajuan'")->result();
+			foreach ($get_ajuan as $ajuan_data) :
+				$inputmonitoring = $this->db->query("INSERT INTO monitoring 
+		SET id_ajuan = '$idajuan', id_peg = '$id_pegawai', status = 'Ajuan di Staf PPSPM', tgl_monitor = '$ajuan_data->date_updated' ");
+			endforeach;
 		}
+
 
 		$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Berhasil disetujui<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
 		redirect(site_url('staffppspm'));
@@ -65,15 +83,25 @@ class StaffPpspm extends CI_Controller
 
 	public function sp2d()
 	{
+		$id_pegawai = $_SESSION['id_peg'];
 		$idajuan = $this->input->post('idajuan');
 		$no_sp2d = $this->input->post('no_sp2d');
 		$tgl_sp2d = $this->input->post('tgl_sp2d');
-
+		$dari = $this->input->post('dari');
 
 		$query_setuju = $this->db->query("UPDATE ajuan SET no_sp2d='$no_sp2d', tgl_sp2d='$tgl_sp2d', status='Proses Bendahara' WHERE id_ajuan = '$idajuan'");
 
+		$get_ajuan = $this->db->query("SELECT date_updated FROM ajuan WHERE id_ajuan='$idajuan'")->result();
+		foreach ($get_ajuan as $ajuan_data) :
+			$inputmonitoring = $this->db->query("INSERT INTO monitoring 
+	SET id_ajuan = '$idajuan', id_peg = '$id_pegawai', status = 'Proses Bendahara', tgl_monitor = '$ajuan_data->date_updated' ");
+		endforeach;
 
 		$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Berhasil disetujui<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
-		redirect(site_url('staffppspm'));
+		if ($dari == 'Staff PPSPM') {
+			redirect(site_url('staffppspm'));
+		} else {
+			redirect(site_url('ppspm'));
+		}
 	}
 }

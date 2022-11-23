@@ -36,16 +36,23 @@ class StaffPpk extends CI_Controller
 
 	public function ditolak()
 	{
+		$id_pegawai = $_SESSION['id_peg'];
 		$alasan = $this->input->post('alasan');
 		$idajuan = $this->input->post('idajuan');
 
 		$query_ditolak = $this->db->query("UPDATE ajuan SET `catatan` = '$alasan', `status` = 'Ditolak Staff PPK' WHERE `id_ajuan` = '$idajuan'");
+		$get_ajuan = $this->db->query("SELECT date_updated FROM ajuan WHERE id_ajuan='$idajuan'")->result();
+		foreach ($get_ajuan as $ajuan_data) :
+			$inputmonitoring = $this->db->query("INSERT INTO monitoring 
+			SET id_ajuan = '$idajuan', id_peg = '$id_pegawai', status = 'Ditolak PPK', tgl_monitor = '$ajuan_data->date_updated' ");
+		endforeach;
 		$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Alasan Berhasil disimpan<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
 		redirect(site_url('staffppk'));
 	}
 
 	public function setuju()
 	{
+		$id_pegawai = $_SESSION['id_peg'];
 		$idajuan = $this->input->post('idajuan');
 		$metode = $this->input->post('metode');
 		$no_spby = $this->input->post('no_spby');
@@ -55,6 +62,7 @@ class StaffPpk extends CI_Controller
 		$tgl_spp = $this->input->post('tgl_spp');
 		$jml_spp = $this->input->post('jml_spp');
 		$status = $this->input->post('status');
+		$dari = $this->input->post('dari');
 
 		if ($status == "Proses SPP/SPBY") {
 			if ($metode == "SPP") {
@@ -62,6 +70,11 @@ class StaffPpk extends CI_Controller
 			} else {
 				$query_setuju = $this->db->query("UPDATE ajuan SET mtd_byr='$metode', no_spby='$no_spby', tgl_spby='$tgl_spby', jml_spby='$jml_spby' WHERE id_ajuan = '$idajuan'");
 			}
+			$get_ajuan = $this->db->query("SELECT date_updated FROM ajuan WHERE id_ajuan='$idajuan'")->result();
+			foreach ($get_ajuan as $ajuan_data) :
+				$inputmonitoring = $this->db->query("INSERT INTO monitoring 
+			SET id_ajuan = '$idajuan', id_peg = '$id_pegawai', status = 'Ajuan di staf PPK', tgl_monitor = '$ajuan_data->date_updated' ");
+			endforeach;
 		} else if ($status == "Ditolak Staff PPSPM") {
 			if ($metode == "SPP") {
 				$query_setuju = $this->db->query("UPDATE ajuan SET mtd_byr='$metode', no_spp='$no_spp', tgl_spp='$tgl_spp', jml_spp='$jml_spp', status='Proses SPP/SPBY' WHERE id_ajuan = '$idajuan'");
@@ -74,6 +87,11 @@ class StaffPpk extends CI_Controller
 			} else {
 				$query_setuju = $this->db->query("UPDATE ajuan SET mtd_byr='$metode', no_spby='$no_spby', tgl_spby='$tgl_spby', jml_spby='$jml_spby', status='Proses SPP/SPBY'  WHERE id_ajuan = '$idajuan'");
 			}
+			$get_ajuan = $this->db->query("SELECT date_updated FROM ajuan WHERE id_ajuan='$idajuan'")->result();
+			foreach ($get_ajuan as $ajuan_data) :
+				$inputmonitoring = $this->db->query("INSERT INTO monitoring 
+			SET id_ajuan = '$idajuan', id_peg = '$id_pegawai', status = 'Ajuan diperbaiki Staf PPK', tgl_monitor = '$ajuan_data->date_updated' ");
+			endforeach;
 		} else {
 		}
 
@@ -104,7 +122,11 @@ class StaffPpk extends CI_Controller
 		endforeach;
 
 		$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Berhasil disetujui<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
-		redirect(site_url('staffppk'));
+		if ($dari == "staffppk") {
+			redirect(site_url('staffppk'));
+		} else {
+			redirect(site_url('ppk'));
+		}
 	}
 
 	public function spp_spby($id, $dari)

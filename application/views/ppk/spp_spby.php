@@ -23,6 +23,7 @@ foreach ($get_ajuan as $ajuan) {
                                     <td>Pilih Metode</td>
                                     <td><input type="hidden" name="idajuan" id="idajuan" value="<?php echo $ajuan['id_ajuan']; ?>" readonly>
                                         <input type="hidden" name="status" id="status" value="<?php echo $ajuan['status']; ?>" readonly>
+                                        <input type="hidden" name="dari" id="dari" value="<?php echo $dari; ?>" readonly>
                                         <select class="form-control" name="metode" id="metode" onchange="tampilkan_metode()">
                                             <option value="">--Pilih--</option>
                                             <option value="SPP" <?php if ($ajuan['mtd_byr'] == "SPP") {

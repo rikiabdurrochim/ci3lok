@@ -59,7 +59,7 @@ class Ajuan extends CI_Controller
 	public function prosesinput()
 	{
 
-		$no_ajuan = $this->input->post('no_ajuan');
+		$no_ajuan = getAutoNumber('ajuan', 'no_ajuan', 'SPJ', 7);
 		$tgl_ajuan = $this->input->post('tgl_ajuan');
 		$jns_ajuan = $this->input->post('jns_ajuan');
 		$dtjenis_id = $this->input->post('dtjenis_id');
@@ -124,7 +124,7 @@ class Ajuan extends CI_Controller
 				$this->db->insert('file_dukung', $data_berkas);
 			}
 		endforeach;
-		$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Data Berhasil disimpan<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+		$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Data Berhasil disimpan, No Ajuan anda adalah <label style="color: red;">' . $no_ajuan . '</label><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
 		redirect(site_url('ajuan'));
 	}
 
@@ -298,7 +298,7 @@ class Ajuan extends CI_Controller
 	function get_giat()
 	{
 		$kd_giat = $this->input->get('kd_giat');
-		echo '<label>Kd Akun</label> <select class ="form-control" name="kd_akun">
+		echo '<label>Kd Akun</label> <select class ="form-control" name="kd_akun" required>
 		<option value="">--Pilih--</option>';
 		$get_kode = $this->db->query("SELECT * FROM giat WHERE id_giat ='$kd_giat'")->result();
 		foreach ($get_kode as $kode) {
@@ -313,7 +313,7 @@ class Ajuan extends CI_Controller
 	function get_dt_jenis()
 	{
 		$jns_ajuan = $this->input->get('jns_ajuan');
-		echo '<label>Detail Jenis</label> <select class ="form-control" name="dtjenis_id">
+		echo '<label>Detail Jenis</label> <select class ="form-control" name="dtjenis_id" required>
 		<option value="">--Pilih--</option>';
 		$get_detail = $this->db->query("SELECT * FROM detjenis WHERE id_jenis ='$jns_ajuan'")->result();
 		foreach ($get_detail as $detail) {

@@ -486,6 +486,7 @@ foreach ($data_ajuan as $ajuan) :
                                             <tr>
                                                 <td>
                                                     <input type="hidden" name="idajuan" id="idajuan" value="<?php echo $ajuan['id_ajuan']; ?>">
+                                                    <input type="hidden" name="dari" id="dari" value="Staff PPSPM">
                                                     <label>No. SP2D </label>
                                                     <input type="text" class="form-control" placeholder="No. SP2D" name="no_sp2d" value="<?php echo $ajuan['no_sp2d']; ?>">
                                                     <label>Tanggal SP2D </label>

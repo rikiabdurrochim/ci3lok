@@ -35,6 +35,7 @@ class Bendahara extends CI_Controller
 
 	public function bayar()
 	{
+		$id_pegawai = $_SESSION['id_peg'];
 		$idajuan = $this->input->post('idajuan');
 		$mtd_byr_ben = $this->input->post('mtd_byr_ben');
 		$tgl_byr = $this->input->post('tgl_byr');
@@ -47,6 +48,12 @@ class Bendahara extends CI_Controller
 		jml_byr_ben = '$jml_byr_ben',
 		penerima = '$penerima'
 		WHERE id_ajuan = '$idajuan'");
+
+		$get_ajuan = $this->db->query("SELECT date_updated FROM ajuan WHERE id_ajuan='$idajuan'")->result();
+		foreach ($get_ajuan as $ajuan_data) :
+			$inputmonitoring = $this->db->query("INSERT INTO monitoring 
+	SET id_ajuan = '$idajuan', id_peg = '$id_pegawai', status = 'Selesai', tgl_monitor = '$ajuan_data->date_updated' ");
+		endforeach;
 
 		$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Selesai <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
 		redirect(site_url('Bendahara'));

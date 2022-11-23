@@ -36,16 +36,25 @@ class Ppk extends CI_Controller
 
 	public function ditolak()
 	{
+		$id_peg = $_SESSION['id_peg'];
+
 		$alasan = $this->input->post('alasan');
 		$idajuan = $this->input->post('idajuan');
 
 		$query_ditolak = $this->db->query("UPDATE ajuan SET `catatan` = '$alasan', `status` = 'Ditolak PPK' WHERE `id_ajuan` = '$idajuan'");
+		$get_ajuan = $this->db->query("SELECT date_updated FROM ajuan WHERE id_ajuan='$idajuan'")->result();
+		foreach ($get_ajuan as $ajuan_data) :
+			$inputmonitoring = $this->db->query("INSERT INTO monitoring 
+			SET id_ajuan = '$idajuan', id_peg = '$id_peg', status = 'Ditolak PPK', tgl_monitor = '$ajuan_data->date_updated' ");
+		endforeach;
+
 		$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Alasan Berhasil disimpan<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
 		redirect(site_url('ppk'));
 	}
 
 	public function setujui()
 	{
+		$id_pegawai = $_SESSION['id_peg'];
 		$idajuan = $this->input->post('idajuan');
 		$ppk_staff = $this->input->post('ppk_staff');
 		$metode = $this->input->post('metode');
@@ -56,12 +65,26 @@ class Ppk extends CI_Controller
 			$query_ditolak = $this->db->query("INSERT INTO pj (id_peg, id_ajuan) VALUES ('$id_peg','$idajuan')");
 		}
 		$query_ditolak = $this->db->query("UPDATE ajuan SET `mtd_byr` = '$metode', `status` = 'Proses SPP/SPBY' WHERE `id_ajuan` = '$idajuan'");
+
+		$get_ajuan = $this->db->query("SELECT date_updated FROM ajuan WHERE id_ajuan='$idajuan'")->result();
+		foreach ($get_ajuan as $ajuan_data) :
+			$inputmonitoring = $this->db->query("INSERT INTO monitoring 
+			SET id_ajuan = '$idajuan', id_peg = '$id_pegawai', status = 'Ajuan di PPK', tgl_monitor = '$ajuan_data->date_updated' ");
+		endforeach;
+
 		$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Berhasil disetujui<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
 		redirect(site_url('ppk'));
 	}
+
 	public function setuju($id)
 	{
+		$id_pegawai = $_SESSION['id_peg'];
 		$query_ditolak = $this->db->query("UPDATE ajuan SET `status` = 'Proses SPM' WHERE `id_ajuan` = '$id'");
+		$get_ajuan = $this->db->query("SELECT date_updated FROM ajuan WHERE id_ajuan='$id'")->result();
+		foreach ($get_ajuan as $ajuan_data) :
+			$inputmonitoring = $this->db->query("INSERT INTO monitoring 
+			SET id_ajuan = '$id', id_peg = '$id_pegawai', status = 'Proses SPM', tgl_monitor = '$ajuan_data->date_updated' ");
+		endforeach;
 		$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Berhasil disetujui<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
 		redirect(site_url('ppk'));
 	}

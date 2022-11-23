@@ -12,7 +12,7 @@
         <div class="card-body row">
             <div class="form-group col-6">
                 <label>No Ajuan </label>
-                <input type="text" class="form-control" placeholder="No Ajuan" name="no_ajuan" value="<?php echo kodeAjuanOtomatis() ?>" readonly>
+                <input type="text" class="form-control" placeholder="No Ajuan" name="no_ajuan" value="No ajuan didapat setelah data disimpan" style="color: red;" readonly>
             </div>
             <div class="form-group col-6">
                 <label>Tanggal Ajuan </label>
@@ -22,7 +22,7 @@
             <hr>
             <div class="form-group col-4">
                 <label>Jenis Ajuan </label>
-                <select class="form-control" name="jns_ajuan" id="jns_ajuan" onchange="get_dt_dukung()">
+                <select class="form-control" name="jns_ajuan" id="jns_ajuan" onchange="get_dt_dukung()" required>
                     <option value="">--Pilih--</option>
                     <?php $get_ajuan = $this->db->query("SELECT * FROM jenis")->result();
                     foreach ($get_ajuan as $ajuan) {
@@ -33,21 +33,22 @@
             </div>
             <div class="form-group col-4" id="dt_jenis">
                 <label>Detail Jenis </label>
-                <select class="form-control" name="dtjenis_id" id="dtjenis_id">
+                <select class="form-control" name="dtjenis_id" id="dtjenis_id" required>
                     <option value="">--Pilih--</option>
+                    <option value="">Pilih Jenis Terlebih Dahulu</option>
                 </select>
             </div>
             <div class="form-group col-4">
                 <label>No Dok </label>
-                <input type="text" class="form-control" id="no_dok" onkeydown="setTimeout(cek_dokumen, 500);" minlength="5" placeholder="No Dok" name="no_dok">
+                <input type="text" class="form-control" id="no_dok" onkeydown="setTimeout(cek_dokumen, 500);" minlength="5" placeholder="No Dok" name="no_dok" required>
             </div>
             <div class="form-group col-4">
                 <label>Tanggal Dok </label>
-                <input type="date" class="form-control" placeholder="tanggal dokumen" name="tgl_dok">
+                <input type="date" class="form-control" placeholder="tanggal dokumen" name="tgl_dok" required>
             </div>
             <div class="form-group col-12">
                 <label>Perihal </label>
-                <textarea class="form-control" name="perihal" id="perihal" placeholder="Perihal" rows="2"></textarea>
+                <textarea class="form-control" name="perihal" id="perihal" placeholder="Perihal" rows="2" required></textarea>
                 <!-- <input type="text" class="form-control" placeholder="Perihal" name="perihal"> -->
             </div>
             <div class="form-group col-5">
@@ -57,7 +58,7 @@
                 foreach ($check_pegawai as $peg) {
                     if ($peg->id == 0) {
                 ?>
-                        <select class="form-control" name="kd_giat" id="kd_giat" onchange="get_akun()">
+                        <select class="form-control" name="kd_giat" id="kd_giat" onchange="get_akun()" required>
                             <option value="">--Pilih--</option>
                             <?php
                             $check_giat = $this->db->query("SELECT * FROM pegawai WHERE id_peg='$username'")->result();
@@ -69,7 +70,7 @@
                             } ?>
                         </select>
                     <?php } else { ?>
-                        <select class="form-control" name="kd_giat" id="kd_giat" onchange="get_akun()">
+                        <select class="form-control" name="kd_giat" id="kd_giat" onchange="get_akun()" required>
                             <option value="">--Pilih--</option>
                             <?php
                             $get_giat = $this->db->query("SELECT * FROM giat")->result();
@@ -82,21 +83,22 @@
             </div>
             <div class="form-group col-7" id="akun">
                 <label>Kd Akun </label>
-                <select class="form-control" name="kd_akun">
+                <select class="form-control" name="kd_akun" required>
                     <option value="">--Pilih--</option>
+                    <option value="">Pilih Kegiatan Terlebih Dahulu</option>
                 </select>
             </div>
             <div class="form-group col-4">
                 <label> Kota</label>
-                <input type="text" class="form-control" placeholder="Kota" name="kota">
+                <input type="text" class="form-control" placeholder="Kota" name="kota" required>
             </div>
             <div class="form-group col-4">
                 <label> Tanggal Mulai</label>
-                <input type="date" class="form-control" name="tgl_jln">
+                <input type="date" class="form-control" name="tgl_jln" required>
             </div>
             <div class="form-group col-4">
                 <label> Tanggal Selesai</label>
-                <input type="date" class="form-control" name="tgl_plg">
+                <input type="date" class="form-control" name="tgl_plg" required>
             </div>
             <div class="form-group col-12" id="jenis">
                 <label> Data Dukung</label><br>
@@ -112,11 +114,11 @@
             <div class="form-group col-6">
                 <label> Jumlah Ajuan</label>/
                 <label id="format_rupiah"></label>
-                <input type="text" class="form-control" placeholder="Jumlah Ajuan" name="jml_ajuan" id="jml_ajuan" onkeyup="document.getElementById('format_rupiah').innerHTML = formatCurrency(this.value);">
+                <input type="text" class="form-control" placeholder="Jumlah Ajuan" name="jml_ajuan" id="jml_ajuan" onkeyup="document.getElementById('format_rupiah').innerHTML = formatCurrency(this.value);" required>
             </div>
             <div class="form-group col-6">
                 <label> Upload Data</label>
-                <input type="file" class="form-control" id="nama_file" name="nama_file[]" multiple accept=".pdf, .xls, .xlsx" onchange="check_file()">
+                <input type="file" class="form-control" id="nama_file" name="nama_file[]" multiple accept=".pdf, .xls, .xlsx" onchange="check_file()" required>
                 <small>File type : pdf, .xls, .xlsx<br>Max size : 2MB</small>
             </div>
         </div>
