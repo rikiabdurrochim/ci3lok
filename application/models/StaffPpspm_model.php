@@ -15,7 +15,7 @@ class StaffPpspm_model extends CI_Model
             if ($admin->id_role != "0") {
                 $query = $this->db->query("SELECT * FROM ajuan 
             INNER JOIN jenis on jenis.id_jenis = ajuan.jns_ajuan 
-            INNER JOIN detjenis on detjenis.id_dtjenis = ajuan.dtjenis_id
+            LEFT JOIN detjenis on detjenis.id_dtjenis = ajuan.dtjenis_id
             INNER JOIN giat on giat.id_giat = ajuan.kd_giat 
             INNER JOIN akun on akun.id_akun = ajuan.kd_akun 
             INNER JOIN pegawai on pegawai.id_peg = ajuan.peg_id 
@@ -31,7 +31,7 @@ class StaffPpspm_model extends CI_Model
                 $query = $this->db->query("SELECT * FROM pjspm INNER JOIN pegawai ON pegawai.id_peg=pjspm.id_peg
                         INNER JOIN ajuan ON ajuan.id_ajuan=pjspm.id_ajuan 
                         INNER JOIN jenis ON jenis.id_jenis = ajuan.jns_ajuan 
-                        INNER JOIN detjenis ON detjenis.id_dtjenis = ajuan.dtjenis_id
+                        LEFT JOIN detjenis ON detjenis.id_dtjenis = ajuan.dtjenis_id
                         INNER JOIN giat ON giat.id_giat = ajuan.kd_giat 
                         INNER JOIN akun ON akun.id_akun = ajuan.kd_akun 
                         WHERE pjspm.id_peg = '$username' 

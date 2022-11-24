@@ -313,7 +313,7 @@ class Ajuan extends CI_Controller
 	function get_dt_jenis()
 	{
 		$jns_ajuan = $this->input->get('jns_ajuan');
-		echo '<label>Detail Jenis</label> <select class ="form-control" name="dtjenis_id" required>
+		echo '<label>Detail Jenis</label> <select class ="form-control" name="dtjenis_id">
 		<option value="">--Pilih--</option>';
 		$get_detail = $this->db->query("SELECT * FROM detjenis WHERE id_jenis ='$jns_ajuan'")->result();
 		foreach ($get_detail as $detail) {

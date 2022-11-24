@@ -115,14 +115,33 @@ class Ppspm extends CI_Controller
 		$idajuan = $this->input->post('idajuan');
 		$no_spm = $this->input->post('no_spm');
 		$tgl_spm = $this->input->post('tgl_spm');
+		$status = $this->input->post('status');
 
-		$query_setuju = $this->db->query("UPDATE ajuan SET no_spm='$no_spm', tgl_spm='$tgl_spm', 
+		if ($status == "Ditolak PPSPM") {
+			$query_setuju = $this->db->query("UPDATE ajuan SET no_spm='$no_spm', tgl_spm='$tgl_spm', 
+			status = 'Proses SPM' WHERE id_ajuan = '$idajuan'");
+			$get_ajuan = $this->db->query("SELECT date_updated FROM ajuan WHERE id_ajuan='$idajuan'")->result();
+			foreach ($get_ajuan as $ajuan_data) :
+				$inputmonitoring = $this->db->query("INSERT INTO monitoring 
+SET id_ajuan = '$idajuan', id_peg = '$id_pegawai', status = 'Ajuan diperbaiki PPSPM', tgl_monitor = '$ajuan_data->date_updated' ");
+			endforeach;
+		} else {
+			$query_setuju = $this->db->query("UPDATE ajuan SET no_spm='$no_spm', tgl_spm='$tgl_spm', 
 										status = 'Proses SPM' WHERE id_ajuan = '$idajuan'");
-		$get_ajuan = $this->db->query("SELECT date_updated FROM ajuan WHERE id_ajuan='$idajuan'")->result();
-		foreach ($get_ajuan as $ajuan_data) :
-			$inputmonitoring = $this->db->query("INSERT INTO monitoring 
-	SET id_ajuan = '$idajuan', id_peg = '$id_pegawai', status = 'Ajuan diperbaiki PPSPM', tgl_monitor = '$ajuan_data->date_updated' ");
-		endforeach;
+			$get_ajuan = $this->db->query("SELECT date_updated FROM ajuan WHERE id_ajuan='$idajuan'")->result();
+			foreach ($get_ajuan as $ajuan_data) :
+				$inputmonitoring = $this->db->query("INSERT INTO monitoring 
+	SET id_ajuan = '$idajuan', id_peg = '$id_pegawai', status = 'Ajuan di PPSPM', tgl_monitor = '$ajuan_data->date_updated' ");
+			endforeach;
+		}
+		$get_pjspm = $this->db->query("SELECT COUNT(id_pjspm) AS ada_tidak FROM pjspm WHERE id_ajuan = '$idajuan'")->result_array();
+		foreach ($get_pjspm as $pjspm) {
+			if ($pjspm['ada_tidak'] == "0") {
+				$inputpjspm = $this->db->query("INSERT INTO pjspm 
+								SET id_peg='$id_pegawai',id_ajuan='$idajuan'");
+			} else {
+			}
+		}
 		$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Berhasil disetujui<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
 		redirect(site_url('ppspm'));
 	}

@@ -71,7 +71,7 @@
                         <th style=" text-align: center;  vertical-align: middle;">Kode Akun</th>
                         <th style=" text-align: center;  vertical-align: middle;">Jumlah </th>
                         <th style=" text-align: center;  vertical-align: middle;">Status </th>
-
+                        <th style=" text-align: center;  vertical-align: middle;">Monitoring </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -110,9 +110,8 @@
                             <td><?= $ajuan['kroakun']; ?></td>
                             <td style="text-align: right"><?= number_format($ajuan['jml_ajuan'], 0, ',', '.'); ?></td>
                             <td style="text-align: center"><?= $status_ajuan ?></td>
-
-
-
+                            <td style="text-align: center"><a href="#" data-toggle="modal" data-target="#modal-monitor<?php echo ($ajuan['id_ajuan']); ?>" data-popup="tooltip" data-placement="top" title="Monitoring"><i class="fa fa-history" style="color:blue;"></i></a>
+                            </td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>
@@ -120,3 +119,54 @@
         </div>
     </div>
 </div>
+
+<?php
+foreach ($data_ajuan as $ajuan) :
+    $idajuan = $ajuan['id_ajuan'];
+?>
+    <div class="modal fade" id="modal-monitor<?php echo ($ajuan['id_ajuan']); ?>">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-primary">
+                    <h4 class="modal-title">Monitoring Ajuan : <?php echo ($ajuan['no_ajuan']); ?></h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <table id="example1" class="table table-bordered table-striped" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>No.</th>
+                                <th>Tanggal</th>
+                                <th>Posisi</th>
+                                <th>Oleh</th>
+                            </tr>
+                        </thead>
+                        <?php
+                        $no = 0;
+                        $get_monitor = $this->db->query("SELECT monitoring.tgl_monitor, monitoring.status, pegawai.nm_peg FROM monitoring INNER JOIN ajuan ON ajuan.id_ajuan = monitoring.id_ajuan
+                        INNER JOIN pegawai ON pegawai.id_peg = monitoring.id_peg
+                        WHERE monitoring.id_ajuan='$idajuan' ORDER BY monitoring.id_monitoring ASC")->result();
+                        foreach ($get_monitor as $monitor) :
+                            $no++;
+                        ?>
+                            <tr>
+                                <td><?= $no ?></td>
+                                <td><?= date('d/M/Y H:i:s', strtotime($monitor->tgl_monitor)); ?></td>
+                                <td><?= $monitor->status ?></td>
+                                <td><?= $monitor->nm_peg ?></td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </table>
+                </div>
+                <div class="modal-footer justify-content-between">
+                </div>
+
+            </div>
+
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+<?php endforeach; ?>

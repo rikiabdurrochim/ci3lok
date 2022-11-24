@@ -400,7 +400,7 @@ foreach ($data_ajuan as $ajuan) :
             <form enctype="multipart/form-data" action="<?php echo site_url('Ppspm/ubahspm') ?>" method="post">
                 <div class="modal-content">
                     <div class="modal-header bg-primary">
-                        <h4 class="modal-title">Diterima</h4>
+                        <h4 class="modal-title">Input SPM</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -420,6 +420,7 @@ foreach ($data_ajuan as $ajuan) :
                                             <tr>
                                                 <td>
                                                     <input type="hidden" name="idajuan" id="idajuan" value="<?php echo $ajuan['id_ajuan']; ?>">
+                                                    <input type="hidden" name="status" id="status" value="<?php echo $ajuan['status']; ?>">
                                                     <label>No. SPM </label>
                                                     <input type="text" class="form-control" placeholder="No. SPM" name="no_spm" value="<?php echo $ajuan['no_spm']; ?>">
                                                     <label>Tanggal SPM </label>

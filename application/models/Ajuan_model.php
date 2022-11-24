@@ -15,7 +15,7 @@ class Ajuan_model extends CI_Model
                 if ($admin->id_role != "0") {
                     $query = $this->db->query("SELECT * FROM ajuan 
             INNER JOIN jenis on jenis.id_jenis = ajuan.jns_ajuan 
-            INNER JOIN detjenis on detjenis.id_dtjenis = ajuan.dtjenis_id 
+            LEFT JOIN detjenis on detjenis.id_dtjenis = ajuan.dtjenis_id 
             INNER JOIN giat on giat.id_giat = ajuan.kd_giat 
             INNER JOIN akun on akun.id_akun = ajuan.kd_akun 
             INNER JOIN pegawai on pegawai.id_peg = ajuan.peg_id 
@@ -28,7 +28,7 @@ INNER JOIN unitgiat ON unitgiat.id_unit=unit.id_unit
 INNER JOIN giat ON giat.id_giat=unitgiat.id_giat 
 INNER JOIN ajuan ON ajuan.kd_giat=giat.id_giat
 INNER JOIN jenis ON jenis.id_jenis = ajuan.jns_ajuan
-INNER JOIN detjenis on detjenis.id_dtjenis = ajuan.dtjenis_id 
+LEFT JOIN detjenis on detjenis.id_dtjenis = ajuan.dtjenis_id 
 INNER JOIN akun ON akun.id_akun = ajuan.kd_akun 
 WHERE pegawai.id_peg='$giat->id_peg' 
                     ORDER BY id_ajuan DESC");

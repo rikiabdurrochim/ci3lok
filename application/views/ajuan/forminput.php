@@ -33,7 +33,7 @@
             </div>
             <div class="form-group col-4" id="dt_jenis">
                 <label>Detail Jenis </label>
-                <select class="form-control" name="dtjenis_id" id="dtjenis_id" required>
+                <select class="form-control" name="dtjenis_id" id="dtjenis_id">
                     <option value="">--Pilih--</option>
                     <option value="">Pilih Jenis Terlebih Dahulu</option>
                 </select>
