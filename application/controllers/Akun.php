@@ -15,7 +15,6 @@ class Akun extends CI_Controller
 		if ($username != "") {
 			$data['title'] = 'Data Akun';
 			$data['data_akun'] = $this->Akun_model->select_akun();
-
 			$this->load->view('template/header', $data);
 			$this->load->view('template/sidebar', $data);
 			$this->load->view('akun/index', $data);
@@ -24,7 +23,7 @@ class Akun extends CI_Controller
 			redirect('log');
 		}
 	}
-	
+
 
 	public function prosesinput()
 	{
