@@ -109,7 +109,7 @@
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                         <li class="nav-item">
                             <a href="<?= BASEURL ?>Dashboard" class="nav-link">
-                                <i class="nav-icon fas fa-tachometer-alt"></i>
+                                <i class="nav-icon fas fa-fw fa-tachometer-alt"></i>
                                 <p>Dashboard</p>
                             </a>
                         </li>
@@ -123,7 +123,7 @@
                         foreach ($menu_tnp_tree as $tnp_tree) { ?>
                             <li class="nav-item">
                                 <a href="<?php echo $tnp_tree->link_akses ?>" class="nav-link">
-                                    <i class="<?php echo $tnp_tree->icon_menu ?>"></i>
+                                    <i class="nav-icon fas fa-fw <?php echo $tnp_tree->icon_menu ?>"></i>
                                     <p><?php echo $tnp_tree->nm_menu ?></p>
                                 </a>
                             </li>
@@ -153,7 +153,7 @@
                                     foreach ($mn_dgn_tree as $dgn_tree) { ?>
                                         <li class="nav-item">
                                             <a href="<?php echo $dgn_tree->link_akses ?>" class="nav-link">
-                                                <i class="<?php echo $dgn_tree->icon_menu ?>"></i>
+                                                <i class="nav-icon fas fa-fw <?php echo $dgn_tree->icon_menu ?>"></i>
                                                 <p><?php echo $dgn_tree->nm_menu ?></p>
                                             </a>
                                         </li>

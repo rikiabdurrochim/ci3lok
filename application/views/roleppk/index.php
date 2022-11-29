@@ -10,24 +10,24 @@
                 <thead>
                     <tr>
                         <th>No.</th>
-                        <th>Jenis</th>
-                        <th>ADK</th>
+                        <th>Role</th>
+                        <th>Kegiatan</th>
                         <th>Opsi</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php
                     $no = 0;
-                    foreach ($data_dtadk as $dt) :
+                    foreach ($data_roleppk as $rp) :
                         $no++;
                     ?>
                         <tr>
                             <td><?= $no; ?></td>
-                            <td><?= $dt['nm_jenis']; ?></td>
-                            <td><?= $dt['nm_adk']; ?></td>
+                            <td><?= $rp['nm_role']; ?></td>
+                            <td><?= $rp['kegiatan']; ?></td>
                             <td style="width: 70px;">
-                                <a href="#" data-toggle="modal" data-target="#modal-edit<?php echo ($dt['id_dtadk']); ?>" data-popup="tooltip" data-placement="top" title="Ubah Data"><i class="fa fa-edit" style="color:blue;"></i></a>
-                                <a href="<?= site_url('dtadk/delete/' . $dt['id_dtadk']) ?>"><i class="fa fa-trash" style="color:red;"></i></a>
+                                <a href="#" data-toggle="modal" data-target="#modal-edit<?php echo ($rp['id_roleppk']); ?>" data-popup="tooltip" data-placement="top" title="Ubah Data"><i class="fa fa-edit" style="color:blue;"></i></a>
+                                <a href="<?= site_url('roleppk/delete/' . $rp['id_roleppk']) ?>"><i class="fa fa-trash" style="color:red;"></i></a>
                             </td>
                         </tr>
                     <?php endforeach; ?>
@@ -40,7 +40,7 @@
 <!-- input modal -->
 <div class="modal fade" id="input">
     <div class="modal-dialog modal-lg">
-        <form enctype="multipart/form-data" action="<?php echo site_url('dtadk/prosesinput') ?>" method="post">
+        <form enctype="multipart/form-data" action="<?= site_url('roleppk/prosesinput') ?>" method="post">
             <div class="modal-content">
                 <div class="modal-header bg-primary">
                     <h4 class="modal-title">Tambah Data</h4>
@@ -50,26 +50,26 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <label>Jenis</label>
-                        <select style="width: 200px" name="id_jenis" class="form-control">
+                        <label>Role</label>
+                        <select style="width: 200px" name="id_role" class="form-control">
                             <option value="">--PILIH--</option>
                             <?php
-                            $list = $this->db->query("SELECT * FROM jenis ORDER BY id_jenis ASC");
-                            foreach ($list->result() as $t) {
+                            $list = $this->db->query("SELECT * FROM role ORDER BY id_role ASC");
+                            foreach ($list->result() as $r) {
                             ?>
-                                <option value="<?php echo $t->id_jenis ?>"><?php echo $t->nm_jenis ?></option>
+                                <option value="<?= $r->id_role ?>"><?= $r->nm_role ?></option>
                             <?php } ?>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label>ADK</label>
-                        <select style="width: 200px" name="id_detadk" class="form-control">
+                        <label>Kegiatan</label>
+                        <select style="width: 200px" name="id_giat" class="form-control">
                             <option value="">--PILIH--</option>
                             <?php
-                            $list = $this->db->query("SELECT * FROM detadk ORDER BY id_detadk ASC");
-                            foreach ($list->result() as $t) {
+                            $list = $this->db->query("SELECT * FROM giat ORDER BY id_giat ASC");
+                            foreach ($list->result() as $g) {
                             ?>
-                                <option value="<?php echo $t->id_detadk ?>"><?php echo $t->nm_adk ?></option>
+                                <option value="<?php echo $g->id_giat ?>"><?php echo $g->kegiatan ?></option>
                             <?php } ?>
                         </select>
                     </div>
@@ -87,12 +87,12 @@
 <!-- edit modal -->
 <?php
 $no = 0;
-foreach ($data_dtadk as $dt) :
+foreach ($data_roleppk as $dt) :
     $no++;
 ?>
-    <div class="modal fade" id="modal-edit<?php echo ($dt['id_dtadk']); ?>">
+    <div class="modal fade" id="modal-edit<?= ($dt['id_roleppk']); ?>">
         <div class="modal-dialog modal-lg">
-            <form enctype="multipart/form-data" action="<?php echo site_url('dtadk/prosesupdate') ?>" method="post">
+            <form enctype="multipart/form-data" action="<?= site_url('roleppk/prosesupdate') ?>" method="post">
                 <div class="modal-content">
                     <div class="modal-header bg-primary">
                         <h4 class="modal-title">Ubah Data</h4>
@@ -102,31 +102,31 @@ foreach ($data_dtadk as $dt) :
                     </div>
                     <div class="modal-body">
                         <div class="form-group">
-                            <input type="hidden" class="form-control" placeholder="id_dtadk" name="id_dtadk" value="<?php echo $dt['id_dtadk'] ?>">
-                            <label">Jenis </label>
-                                <select class="form-control" name="id_jenis" id="id_jenis">
-                                    <option value="">--Pilih--</option>
-                                    <?php
-                                    $list = $this->db->query("SELECT * FROM jenis ORDER BY id_jenis ASC");
-                                    foreach ($list->result() as $jns) {
-                                    ?>
-                                        <option value="<?= $jns->id_jenis ?>" <?php if ($dt["id_jenis"] == $jns->id_jenis) {
-                                                                                    echo 'selected';
-                                                                                } ?>><?= $jns->nm_jenis ?></option>
-                                    <?php } ?>
-                                </select>
-                        </div>
-                        <div class="form-group">
-                            <label>ADK </label>
-                            <select class="form-control" name="id_detadk" id="id_detadk">
+                            <input type="hidden" class="form-control" placeholder="id_roleppk" name="id_roleppk" value="<?= $dt['id_roleppk'] ?>">
+                            <label>Role </label>
+                            <select class="form-control" name="id_role" id="id_role">
                                 <option value="">--Pilih--</option>
                                 <?php
-                                $list = $this->db->query("SELECT * FROM detadk ORDER BY id_detadk ASC");
-                                foreach ($list->result() as $det) {
+                                $list = $this->db->query("SELECT * FROM role ORDER BY id_role ASC");
+                                foreach ($list->result() as $r) {
                                 ?>
-                                    <option value="<?= $det->id_detadk ?>" <?php if ($dt["id_detadk"] == $det->id_detadk) {
+                                    <option value="<?= $r->id_role ?>" <?php if ($dt["id_role"] == $r->id_role) {
+                                                                            echo 'selected';
+                                                                        } ?>><?= $r->nm_role ?></option>
+                                <?php } ?>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Kegiatan </label>
+                            <select class="form-control" name="id_giat" id="id_giat">
+                                <option value="">--Pilih--</option>
+                                <?php
+                                $list = $this->db->query("SELECT * FROM giat ORDER BY id_giat ASC");
+                                foreach ($list->result() as $giat) {
+                                ?>
+                                    <option value="<?= $giat->id_giat ?>" <?php if ($dt["id_giat"] == $giat->id_giat) {
                                                                                 echo 'selected';
-                                                                            } ?>><?= $det->nm_adk ?></option>
+                                                                            } ?>><?= $giat->kegiatan ?></option>
                                 <?php } ?>
                             </select>
                         </div>
