@@ -19,7 +19,7 @@ class Ppspm extends CI_Controller
 		AND menu.`id_menu`='26'")->result();
 		foreach ($cek_data as $ck_data) :
 			if ($username != "" && $ck_data->ada_tidak != "0") {
-				$data['title'] = 'Data Ajuan';
+				$data['title'] = 'PPSPM - Data Ajuan';
 				$data['data_ajuan'] = $this->Ppspm_model->select_ajuan();
 				$this->load->view('template/header', $data);
 				$this->load->view('template/sidebar', $data);
@@ -66,7 +66,9 @@ class Ppspm extends CI_Controller
 		$alasan = $this->input->post('alasan');
 		$idajuan = $this->input->post('idajuan');
 
-		$query_ditolak = $this->db->query("UPDATE ajuan SET `catatan` = '$alasan', `status` = 'Ditolak PPSPM' WHERE `id_ajuan` = '$idajuan'");
+		$query_update = $this->db->query("UPDATE ajuan SET `catatan` = '$alasan', `status` = 'Ditolak PPSPM' WHERE `id_ajuan` = '$idajuan'");
+		$query_ditolak = $this->db->query("INSERT INTO catatan SET id_ajuan = '$idajuan', oleh_role = 'PPSPM', isi_catatan = '$alasan'");
+
 		$get_ajuan = $this->db->query("SELECT date_updated FROM ajuan WHERE id_ajuan='$idajuan'")->result();
 		foreach ($get_ajuan as $ajuan_data) :
 			$inputmonitoring = $this->db->query("INSERT INTO monitoring 

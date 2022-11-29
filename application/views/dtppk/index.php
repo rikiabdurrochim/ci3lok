@@ -54,7 +54,10 @@
                         <select style="width: 200px" name="id_peg" class="form-control">
                             <option value="">--PILIH--</option>
                             <?php
-                            $list = $this->db->query("SELECT * FROM pegawai ORDER BY id_peg ASC");
+                            $list = $this->db->query("SELECT * FROM pegawai JOIN dtrole ON dtrole.id_peg = pegawai.id_peg
+                                                                            JOIN role ON role.id_role = dtrole.id_role 
+                                                                            WHERE role.`id_role`=9 OR role.`id_role`=10 OR role.`id_role`=11 OR role.`id_role`=12 OR role.`id_role`=13
+                                                                            ORDER BY pegawai.id_peg ASC");
                             foreach ($list->result() as $t) {
                             ?>
                                 <option value="<?php echo $t->id_peg ?>"><?php echo $t->nm_peg ?></option>
@@ -63,7 +66,7 @@
                     </div>
                     <div class="form-group">
                         <label>Kegiatan</label>
-                        <select style="width: 200px" name="id_giat" class="form-control">
+                        <select style="width: 700px" name="id_giat" class="form-control">
                             <option value="">--PILIH--</option>
                             <?php
                             $list = $this->db->query("SELECT * FROM giat ORDER BY id_giat ASC");
@@ -107,7 +110,9 @@ foreach ($data_dtppk as $dt) :
                                 <select class="form-control" name="id_peg" id="id_peg">
                                     <option value="">--Pilih--</option>
                                     <?php
-                                    $list = $this->db->query("SELECT * FROM pegawai ORDER BY id_peg ASC");
+                                    $list = $this->db->query("SELECT * FROM pegawai JOIN dtrole ON dtrole.id_peg = pegawai.id_peg
+                                    JOIN role ON role.id_role = dtrole.id_role 
+                                    WHERE role.`id_role`=9 OR role.`id_role`=10 OR role.`id_role`=11 OR role.`id_role`=12 OR role.`id_role`=13 ORDER BY pegawai.id_peg ASC");
                                     foreach ($list->result() as $peg) {
                                     ?>
                                         <option value="<?= $peg->id_peg ?>" <?php if ($dt["id_peg"] == $peg->id_peg) {

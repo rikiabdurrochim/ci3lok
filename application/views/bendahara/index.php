@@ -80,7 +80,6 @@
                                 <?php } else {
                                     }
                                 } ?>
-
                                 <br>
                                 <?php
                                 $check_admin = $this->db->query("SELECT COUNT(id_role) as id_role FROM dtrole WHERE id_peg='$username' AND id_role='1'")->result();
@@ -146,6 +145,12 @@ foreach ($data_ajuan as $ajuan) :
                                             } ?>
                                             <th>No. SPM</th>
                                             <th>Tanggal SPM</th>
+                                            <th>No. SP2D</th>
+                                            <th>Tanggal SP2D</th>
+                                            <th>Metode Bayar</th>
+                                            <th>Penerima</th>
+                                            <th>Tanggal Terima</th>
+                                            <th>Jumlah Bayar</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -169,6 +174,12 @@ foreach ($data_ajuan as $ajuan) :
                                             <?php } ?>
                                             <td><?= $ajuan['no_spm']; ?></td>
                                             <td><?= date('d/m/Y', strtotime($ajuan['tgl_spm'])); ?></td>
+                                            <td><?= $ajuan['no_sp2d']; ?></td>
+                                            <td><?= date('d/m/Y', strtotime($ajuan['tgl_sp2d'])); ?></td>
+                                            <td><?= $ajuan['mtd_byr_ben']; ?></td>
+                                            <td><?= $ajuan['penerima']; ?></td>
+                                            <td><?= date('d/m/Y', strtotime($ajuan['tgl_byr'])); ?></td>
+                                            <td><?= 'Rp ' . number_format($ajuan['jml_byr_ben'], 0, ',', '.'); ?></td>
                                         </tr>
                                     </tbody>
                                 </table>

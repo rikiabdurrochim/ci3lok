@@ -362,7 +362,7 @@ foreach ($data_ajuan as $ajuan) :
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header bg-primary">
-                    <h4 class="modal-title">Alasan Ditolak</h4>
+                    <h4 class="modal-title">Lihat Alasan</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -377,11 +377,18 @@ foreach ($data_ajuan as $ajuan) :
                                         <tr>
                                             <th>No Ajuan</th>
                                             <th><?php echo $ajuan['no_ajuan']; ?></th>
+                                            <th>Oleh</th>
                                         </tr>
-                                        <tr>
-                                            <th>Alasan Ditolak</th>
-                                            <th><?php echo $ajuan['catatan']; ?></th>
-                                        </tr>
+                                        <?php
+                                        $get_catatan = $this->db->query("SELECT * FROM catatan WHERE id_ajuan = '$id_ajuan'");
+                                        foreach ($get_catatan->result_array() as $cat) {
+                                        ?>
+                                            <tr>
+                                                <th>Alasan Ditolak</th>
+                                                <th><?= $cat['isi_catatan']; ?></th>
+                                                <th><?= $cat['oleh_role']; ?></th>
+                                            </tr>
+                                        <?php } ?>
                                     </thead>
                                 </table>
                             </div>

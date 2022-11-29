@@ -18,7 +18,7 @@ class Dtppk extends CI_Controller
 		AND menu.`id_menu`='31'")->result();
 		foreach ($cek_data as $ck_data) :
 			if ($username != "" && $ck_data->ada_tidak != "0") {
-				$data['title'] = 'PPK dan Staff PPK per Kegiatan';
+				$data['title'] = 'PPK per Kegiatan';
 				$data['data_dtppk'] = $this->Dtppk_model->select_dtppk();
 				$this->load->view('template/header', $data);
 				$this->load->view('template/sidebar', $data);
@@ -43,9 +43,18 @@ class Dtppk extends CI_Controller
 			'id_giat' => $id_giat,
 		];
 
-		$this->Dtppk_model->input($data);
-		$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Data Berhasil disimpan<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
-		redirect(site_url('dtppk'));
+		$get_dt = $this->db->query("SELECT COUNT(id_dtppk) AS ada_tidak FROM dtppk 
+		WHERE id_giat='$id_giat'");
+		foreach ($get_dt->result() as $dt) {
+			if ($dt->ada_tidak == '0') {
+				$this->Dtppk_model->input($data);
+				$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Data Berhasil Disimpan<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+				redirect(site_url('dtppk'));
+			} else {
+				$this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert"> Data Sudah Ada<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+				redirect(site_url('dtppk'));
+			}
+		}
 	}
 
 	//save data ke database
@@ -60,9 +69,18 @@ class Dtppk extends CI_Controller
 			'id_giat' => $id_giat,
 		];
 
-		$this->Dtppk_model->update($this->input->post('id_dtppk'), $data);
-		$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Data Berhasil diubah<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
-		redirect(site_url('dtppk'));
+		$get_dt = $this->db->query("SELECT COUNT(id_dtppk) AS ada_tidak FROM dtppk 
+		WHERE id_giat='$id_giat'");
+		foreach ($get_dt->result() as $dt) {
+			if ($dt->ada_tidak == '0') {
+				$this->Dtppk_model->update($this->input->post('id_dtppk'), $data);
+				$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Data Berhasil diubah<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+				redirect(site_url('dtppk'));
+			} else {
+				$this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert"> Data Sudah Ada<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+				redirect(site_url('dtppk'));
+			}
+		}
 	}
 
 	public function delete($id)

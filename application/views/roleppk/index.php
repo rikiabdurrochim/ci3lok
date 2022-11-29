@@ -51,10 +51,10 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label>Role</label>
-                        <select style="width: 200px" name="id_role" class="form-control">
+                        <select style="width: 400px" name="id_role" class="form-control">
                             <option value="">--PILIH--</option>
                             <?php
-                            $list = $this->db->query("SELECT * FROM role ORDER BY id_role ASC");
+                            $list = $this->db->query("SELECT * FROM role WHERE id_role = 3 OR id_role = 4 OR id_role = 5 OR id_role = 7 OR id_role = 8 ORDER BY id_role ASC");
                             foreach ($list->result() as $r) {
                             ?>
                                 <option value="<?= $r->id_role ?>"><?= $r->nm_role ?></option>
@@ -63,7 +63,7 @@
                     </div>
                     <div class="form-group">
                         <label>Kegiatan</label>
-                        <select style="width: 200px" name="id_giat" class="form-control">
+                        <select style="width: 700px" name="id_giat" class="form-control">
                             <option value="">--PILIH--</option>
                             <?php
                             $list = $this->db->query("SELECT * FROM giat ORDER BY id_giat ASC");
@@ -107,7 +107,7 @@ foreach ($data_roleppk as $dt) :
                             <select class="form-control" name="id_role" id="id_role">
                                 <option value="">--Pilih--</option>
                                 <?php
-                                $list = $this->db->query("SELECT * FROM role ORDER BY id_role ASC");
+                                $list = $this->db->query("SELECT * FROM role WHERE id_role = 3 OR id_role = 4 OR id_role = 5 OR id_role = 7 OR id_role = 8 ORDER BY id_role ASC");
                                 foreach ($list->result() as $r) {
                                 ?>
                                     <option value="<?= $r->id_role ?>" <?php if ($dt["id_role"] == $r->id_role) {

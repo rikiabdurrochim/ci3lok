@@ -19,7 +19,7 @@ class Bendahara extends CI_Controller
 		AND menu.`id_menu`='29'")->result();
 		foreach ($cek_data as $ck_data) :
 			if ($username != "" && $ck_data->ada_tidak != "0") {
-				$data['title'] = 'Data Ajuan';
+				$data['title'] = 'Bendahara - Data Ajuan';
 				$data['data_ajuan'] = $this->Bendahara_model->select_ajuan();
 				$this->load->view('template/header', $data);
 				$this->load->view('template/sidebar', $data);

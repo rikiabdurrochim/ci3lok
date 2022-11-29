@@ -18,7 +18,7 @@ class Roleppk extends CI_Controller
 		AND menu.`id_menu`='32'")->result();
 		foreach ($cek_data as $ck_data) :
 			if ($username != "" && $ck_data->ada_tidak != "0") {
-				$data['title'] = 'Role PPK per Kegiatan';
+				$data['title'] = 'Staff PPK per Kegiatan';
 				$data['data_roleppk'] = $this->Roleppk_model->select_roleppk();
 				$this->load->view('template/header', $data);
 				$this->load->view('template/sidebar', $data);
@@ -43,9 +43,19 @@ class Roleppk extends CI_Controller
 			'id_giat' => $id_giat,
 		];
 
-		$this->Roleppk_model->input($data);
-		$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Data Berhasil disimpan<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
-		redirect(site_url('roleppk'));
+
+		$get_dt = $this->db->query("SELECT COUNT(id_roleppk) AS ada_tidak FROM roleppk 
+		WHERE id_giat='$id_giat'");
+		foreach ($get_dt->result() as $dt) {
+			if ($dt->ada_tidak == '0') {
+				$this->Roleppk_model->input($data);
+				$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Data Berhasil Disimpan<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+				redirect(site_url('roleppk'));
+			} else {
+				$this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert"> Data Sudah Ada<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+				redirect(site_url('roleppk'));
+			}
+		}
 	}
 
 	//save data ke database
@@ -60,9 +70,18 @@ class Roleppk extends CI_Controller
 			'id_giat' => $id_giat,
 		];
 
-		$this->Roleppk_model->update($this->input->post('id_roleppk'), $data);
-		$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Data Berhasil diubah<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
-		redirect(site_url('roleppk'));
+		$get_dt = $this->db->query("SELECT COUNT(id_roleppk) AS ada_tidak FROM roleppk 
+		WHERE id_giat='$id_giat'");
+		foreach ($get_dt->result() as $dt) {
+			if ($dt->ada_tidak == '0') {
+				$this->Roleppk_model->update($this->input->post('id_roleppk'), $data);
+				$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Data Berhasil diubah<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+				redirect(site_url('roleppk'));
+			} else {
+				$this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert"> Data Sudah Ada<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+				redirect(site_url('roleppk'));
+			}
+		}
 	}
 
 	public function delete($id)
