@@ -131,6 +131,10 @@ foreach ($data_ajuan as $ajuan) :
                                                 <th>Hari</th>
                                                 <th>Data Dukung</th>
                                                 <th>Oleh </th>
+                                                <th>Metode Bayar</th>
+                                                <th>Penerima</th>
+                                                <th>Tanggal Terima</th>
+                                                <th>Jumlah Bayar</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -142,6 +146,10 @@ foreach ($data_ajuan as $ajuan) :
                                                 <td><?= $interval + 1 ?></td>
                                                 <td><?= $ajuan['data_dukung']; ?></td>
                                                 <td><?= $ajuan['nm_peg']; ?></td>
+                                                <td><?= $ajuan['mtd_byr_ben']; ?></td>
+                                                <td><?= $ajuan['penerima']; ?></td>
+                                                <td><?= date('d/m/Y', strtotime($ajuan['tgl_byr'])); ?></td>
+                                                <td><?= 'Rp ' . number_format($ajuan['jml_byr_ben'], 0, ',', '.'); ?></td>
                                             </tr>
                                         </tbody>
                                     </table>

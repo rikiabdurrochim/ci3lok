@@ -51,7 +51,7 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label>Unit</label>
-                        <select style="width: 200px" name="id_unit" class="form-control">
+                        <select style="width: 500px" name="id_unit" class="form-control">
                             <option value="">--PILIH--</option>
                             <?php
                             $list = $this->db->query("SELECT * FROM unit ORDER BY id_unit ASC");
@@ -63,7 +63,7 @@
                     </div>
                     <div class="form-group">
                         <label>Kegiatan</label>
-                        <select style="width: 200px" name="id_giat" class="form-control">
+                        <select style="width: 700px" name="id_giat" class="form-control">
                             <option value="">--PILIH--</option>
                             <?php
                             $list = $this->db->query("SELECT * FROM giat ORDER BY id_giat ASC");

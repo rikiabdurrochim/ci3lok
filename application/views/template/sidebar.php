@@ -28,18 +28,96 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link" data-toggle="dropdown" href="#">
                         <i class="far fa-bell"></i>
-                        <span class="badge badge-warning navbar-badge">15</span>
+                        <?php $username = $_SESSION['id_peg'];
+                        $get_rl = $this->db->query("SELECT * FROM pegawai 
+                    JOIN dtrole ON dtrole.id_peg = pegawai.id_peg
+                    JOIN role ON role.id_role =  dtrole.id_role
+                    WHERE pegawai.id_peg='$username'")->result();
+                        foreach ($get_rl as $rl) {
+                            if ($rl->nm_role == 'Loket') {
+                                $jml_notif = $this->db->query("SELECT COUNT(id_notif) AS total_notif FROM notif_ajuan 
+                        WHERE status_ajuan='Belum Diproses'")->result();
+                                foreach ($jml_notif as $jn) {
+                                    if ($jn->total_notif != "0") { ?>
+                                        <span class="badge badge-warning navbar-badge"><?= $jn->total_notif ?></span>
+                                    <?php } else {
+                                    }
+                                    ?>
+                                    <?php }
+                            } elseif ($rl->nm_role == 'User') {
+                                $jml_notif = $this->db->query("SELECT COUNT(id_notif) AS total_notif FROM notif_ajuan 
+                                WHERE (status_ajuan='Ditolak Loket' 
+                            OR status_ajuan='Ditolak Staff PPK' 
+                            OR status_ajuan='Ditolak PPK' 
+                            OR status_ajuan='Ditolak Staff PPSPM' 
+                            OR status_ajuan='Ditolak PPSPM' 
+                            OR status_ajuan='Selesai')
+                            AND status_notif='0'")->result();
+                                foreach ($jml_notif as $jn) {
+                                    if ($jn->total_notif != "0") { ?>
+                                        <span class="badge badge-warning navbar-badge"><?= $jn->total_notif ?></span>
+                                    <?php } else {
+                                    }
+                                    ?>
+                        <?php }
+                            }
+                        } ?>
                     </a>
-                    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                        <span class="dropdown-header">15 Notifications</span>
-                        <div class="dropdown-divider"></div>
-                        <a href="#" class="dropdown-item">
-                            <i class="fas fa-envelope mr-2"></i> 4 new messages
-                            <span class="float-right text-muted text-sm">3 mins</span>
-                        </a>
-                        <div class="dropdown-divider"></div>
-                        <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
-                    </div>
+                    <div class="dropdown-menu dropdown-menu-right" style="width: 400px;">
+                        <?php $username = $_SESSION['id_peg'];
+                        $get_rl = $this->db->query("SELECT * FROM pegawai 
+                    JOIN dtrole ON dtrole.id_peg = pegawai.id_peg
+                    JOIN role ON role.id_role =  dtrole.id_role
+                    WHERE pegawai.id_peg='$username'")->result();
+                        foreach ($get_rl as $rl) {
+                            if ($rl->nm_role == 'Loket') {
+                                $jml_notif = $this->db->query("SELECT COUNT(id_notif) AS total_notif FROM notif_ajuan 
+                    WHERE status_ajuan='Belum Diproses'")->result();
+                                foreach ($jml_notif as $jn) {
+                        ?>
+                                    <span class="dropdown-header"><?= $jn->total_notif ?> Notifications</span>
+                                    <div class="dropdown-divider"></div>
+                                    <?php $select_notif = $this->db->query("SELECT * FROM notif_ajuan 
+                                    JOIN ajuan ON ajuan.id_ajuan = notif_ajuan.id_ajuan 
+                    WHERE status_ajuan='Belum Diproses'")->result();
+                                    foreach ($select_notif as $sn) { ?>
+                                        <a href="<?= BASEURL ?>loket" class="dropdown-item">
+                                            <i class="fas fa-envelope mr-2"></i> <?= $sn->no_ajuan ?>, Harap Segera Diproses! <br>
+                                            <span class="text-muted text-sm"><?= $sn->tgl_notif ?></span>
+                                        </a>
+                                    <?php }
+                                }
+                            } elseif ($rl->nm_role == 'User') {
+                                $jml_notif = $this->db->query("SELECT COUNT(id_notif) AS total_notif FROM notif_ajuan 
+                            WHERE (status_ajuan='Ditolak Loket' 
+                            OR status_ajuan='Ditolak Staff PPK' 
+                            OR status_ajuan='Ditolak PPK' 
+                            OR status_ajuan='Ditolak Staff PPSPM' 
+                            OR status_ajuan='Ditolak PPSPM' 
+                            OR status_ajuan='Selesai')
+                            AND status_notif='0'")->result();
+                                foreach ($jml_notif as $jn) {
+                                    ?>
+                                    <span class="dropdown-header"><?= $jn->total_notif ?> Notifications</span>
+                                    <div class="dropdown-divider"></div>
+                                    <?php $select_notif = $this->db->query("SELECT * FROM notif_ajuan JOIN ajuan ON ajuan.id_ajuan = notif_ajuan.id_ajuan 
+                            WHERE (status_ajuan='Ditolak Loket' 
+                            OR status_ajuan='Ditolak Staff PPK' 
+                            OR status_ajuan='Ditolak PPK' 
+                            OR status_ajuan='Ditolak Staff PPSPM' 
+                            OR status_ajuan='Ditolak PPSPM' 
+                            OR status_ajuan='Selesai')
+                            AND status_notif='0'")->result();
+                                    foreach ($select_notif as $sn) { ?>
+                                        <a onclick="hapus_badge(<?= $sn->id_notif ?> )" class="dropdown-item">
+                                            <i class="fas fa-envelope mr-2"></i> <?= $sn->no_ajuan ?>, Status Diperbaharui <br>
+                                            <span class="text-muted text-sm"><?= $sn->tgl_notif ?></span>
+                                        </a>
+                        <?php }
+                                }
+                            }
+                        } ?>
+
                 </li>
                 <li class="nav-item nav-profile dropdown">
                     <?php $username = $_SESSION['id_peg'];
@@ -197,3 +275,14 @@
             <!-- Main content -->
             <div class="content">
                 <div class="container-fluid">
+                    <script>
+                        function hapus_badge(id_notif) {
+                            $.ajax({
+                                url: "<?= base_url() ?>index.php/notif/status_notif",
+                                data: "id_notif=" + id_notif,
+                                success: function(html) {
+                                    window.location.href = "ajuan";
+                                }
+                            });
+                        }
+                    </script>
