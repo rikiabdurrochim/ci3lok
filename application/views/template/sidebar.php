@@ -8,15 +8,22 @@
                 <li class="nav-item">
                     <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
                 </li>
+
                 <!-- <li class="nav-item d-none d-sm-inline-block">
-                    <a href="index3.html" class="nav-link">Home</a>
-                </li>
-                <li class="nav-item d-none d-sm-inline-block">
                     <a href="#" class="nav-link">Contact</a>
                 </li> -->
             </ul>
             <!-- Right navbar links -->
             <ul class="navbar-nav ml-auto">
+                <li class="nav-item d-none d-sm-inline-block">
+                    <?php $username = $_SESSION['id_peg'];
+                    $get_unit = $this->db->query("SELECT * FROM pegawai 
+                    JOIN unit ON unit.id_unit = pegawai.unit WHERE id_peg='$username'")->result();
+                    foreach ($get_unit as $unit) {
+                    ?>
+                        <h5 style="margin-top: 8px; color: gray;"><?= $unit->nm_unit; ?></h5>
+                    <?php } ?>
+                </li>
                 <!-- Notifications Dropdown Menu -->
                 <li class="nav-item dropdown">
                     <a class="nav-link" data-toggle="dropdown" href="#">
