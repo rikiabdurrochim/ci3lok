@@ -65,8 +65,8 @@ class Ppk extends CI_Controller
 
 			$query_ditolak = $this->db->query("INSERT INTO pj (id_peg, id_ajuan) VALUES ('$id_peg','$idajuan')");
 		}
-		$query_ditolak = $this->db->query("UPDATE ajuan SET `mtd_byr` = '$metode', `status` = 'Proses SPP/SPBY' WHERE `id_ajuan` = '$idajuan'");
-
+		$query_update = $this->db->query("UPDATE ajuan SET `mtd_byr` = '$metode', `status` = 'Proses SPP/SPBY' WHERE `id_ajuan` = '$idajuan'");
+		$query_notif = $this->db->query("UPDATE notif_ajuan SET status_ajuan = 'Diterima PPK', notif_penerima = '$id_peg' WHERE `id_ajuan` = '$idajuan'");
 		$get_ajuan = $this->db->query("SELECT date_updated FROM ajuan WHERE id_ajuan='$idajuan'")->result();
 		foreach ($get_ajuan as $ajuan_data) :
 			$inputmonitoring = $this->db->query("INSERT INTO monitoring 

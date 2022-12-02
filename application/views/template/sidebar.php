@@ -119,6 +119,20 @@
                                     <?php } else {
                                     }
                                     ?>
+                                    <?php }
+                            } elseif (
+                                $rl->nm_role == 'Staf PPK 1' or $rl->nm_role == 'Staf PPK 2'
+                                or $rl->nm_role == 'Staf PPK 3' or $rl->nm_role == 'Staf PPK 4'
+                                or $rl->nm_role == 'Staf PPK 5'
+                            ) {
+                                $jml_notif = $this->db->query("SELECT COUNT(id_notif) AS total_notif FROM notif_ajuan 
+                                WHERE status_ajuan='Diterima PPK' AND notif_penerima = '$username'")->result();
+                                foreach ($jml_notif as $jn) {
+                                    if ($jn->total_notif != "0") { ?>
+                                        <span class="badge badge-warning navbar-badge"><?= $jn->total_notif ?></span>
+                                    <?php } else {
+                                    }
+                                    ?>
                         <?php }
                             }
                         } ?>
@@ -266,6 +280,26 @@
                             WHERE status_ajuan='Proses SPP/SPBY' AND notif_penerima = 'PPK 5'")->result();
                                     foreach ($select_notif as $sn) { ?>
                                         <a href="<?= BASEURL ?>ppk" class="dropdown-item">
+                                            <i class="fas fa-envelope mr-2"></i> <?= $sn->no_ajuan ?>, Harap segera diproses<br>
+                                            <span class="text-muted text-sm"><?= $sn->tgl_notif ?></span>
+                                        </a>
+                                    <?php }
+                                }
+                            } elseif (
+                                $rl->nm_role == 'Staf PPK 1' or $rl->nm_role == 'Staf PPK 2'
+                                or $rl->nm_role == 'Staf PPK 3' or $rl->nm_role == 'Staf PPK 4'
+                                or $rl->nm_role == 'Staf PPK 5'
+                            ) {
+                                $jml_notif = $this->db->query("SELECT COUNT(id_notif) AS total_notif FROM notif_ajuan 
+                            WHERE status_ajuan='Diterima PPK' AND notif_penerima = '$username'")->result();
+                                foreach ($jml_notif as $jn) {
+                                    ?>
+                                    <span class="dropdown-header"><?= $jn->total_notif ?> Notifications</span>
+                                    <div class="dropdown-divider"></div>
+                                    <?php $select_notif = $this->db->query("SELECT * FROM notif_ajuan JOIN ajuan ON ajuan.id_ajuan = notif_ajuan.id_ajuan 
+                            WHERE status_ajuan='Diterima PPK' AND notif_penerima = '$username'")->result();
+                                    foreach ($select_notif as $sn) { ?>
+                                        <a href="<?= BASEURL ?>staffppk" class="dropdown-item">
                                             <i class="fas fa-envelope mr-2"></i> <?= $sn->no_ajuan ?>, Harap segera diproses<br>
                                             <span class="text-muted text-sm"><?= $sn->tgl_notif ?></span>
                                         </a>
