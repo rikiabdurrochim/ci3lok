@@ -1,4 +1,4 @@
-<body class="hold-transition sidebar-mini">
+<body class="hold-transition sidebar-mini" oncontextmenu="return false;">
     <div class="wrapper">
 
         <!-- Navbar -->
