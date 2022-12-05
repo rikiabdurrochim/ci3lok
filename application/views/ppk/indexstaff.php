@@ -66,7 +66,7 @@
                             <td><?= $ajuan['kegiatan']; ?></td>
                             <td><?= $ajuan['kroakun']; ?></td>
                             <td><?= 'Rp ' . number_format($ajuan['jml_ajuan'], 0, ',', '.'); ?></td>
-                            <td><?php echo $status_ajuan; ?></td>
+                            <td><?= $status_ajuan; ?></td>
                             <td>
                                 <a href="#" data-toggle="modal" data-target="#modal-lihat<?= ($ajuan['id_ajuan']); ?>" data-popup="tooltip" data-placement="top" title="Lihat Data"><i class="fa fa-eye" style="color:green"></i></a>
                                 <a href="#" data-toggle="modal" data-target="#modal-download<?= ($ajuan['id_ajuan']); ?>" data-popup="tooltip" data-placement="top" title="Download Data"><i class="fa fa-download" style="color:orange"></i></a>
@@ -274,7 +274,7 @@ foreach ($data_ajuan as $ajuan) :
                                         ?>
                                             <tr>
                                                 <td><?= $no_files++; ?></td>
-                                                <td><a href="<?= BASEURL ?>assets/file_dukung/<?php echo $a['nama_file']; ?>" target="_blank"><?php echo $a['nama_file']; ?></a></td>
+                                                <td><a href="<?= BASEURL ?>assets/file_dukung/<?= $a['nama_file']; ?>" target="_blank"><?= $a['nama_file']; ?></a></td>
                                                 <td><?= $a['status_file'] ?></td>
                                             </tr>
                                         <?php endforeach; ?>
@@ -302,7 +302,7 @@ foreach ($data_ajuan as $ajuan) :
 ?>
     <div class="modal fade" id="modal-ditolak<?= ($ajuan['id_ajuan']); ?>">
         <div class="modal-dialog modal-lg">
-            <form enctype="multipart/form-data" action="<?php echo site_url('staffppk/ditolak') ?>" method="post">
+            <form enctype="multipart/form-data" action="<?= site_url('staffppk/ditolak') ?>" method="post">
                 <div class="modal-content">
                     <div class="modal-header bg-primary">
                         <h4 class="modal-title">Masukan Alasan</h4>
@@ -325,7 +325,7 @@ foreach ($data_ajuan as $ajuan) :
                                         <tbody>
                                             <tr>
                                                 <td>Alasan</td>
-                                                <td><input type="hidden" name="idajuan" id="idajuan" value="<?php echo $ajuan['id_ajuan']; ?>">
+                                                <td><input type="hidden" name="idajuan" id="idajuan" value="<?= $ajuan['id_ajuan']; ?>">
                                                     <textarea id="alasan" name="alasan" class="form-control" placeholder="Berikan Alasan!" rows="4" required></textarea>
                                                 </td>
                                             </tr>
@@ -353,7 +353,7 @@ foreach ($data_ajuan as $ajuan) :
     $id_ajuan = $ajuan['id_ajuan'];
     $no++;
 ?>
-    <div class="modal fade" id="lihat-alasan<?php echo $id_ajuan; ?>">
+    <div class="modal fade" id="lihat-alasan<?= $id_ajuan; ?>">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header bg-primary">
@@ -371,7 +371,7 @@ foreach ($data_ajuan as $ajuan) :
                                     <thead>
                                         <tr>
                                             <th>No Ajuan</th>
-                                            <th><?php echo $ajuan['no_ajuan']; ?></th>
+                                            <th><?= $ajuan['no_ajuan']; ?></th>
                                             <th>Oleh</th>
                                         </tr>
                                         <?php

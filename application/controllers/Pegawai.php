@@ -46,21 +46,40 @@ class Pegawai extends CI_Controller
 		$unit = $this->input->post('unit');
 		$jk = $this->input->post('jk');
 		$foto = $this->upload_foto();
-		$data = [
-			'username' => $username,
-			'password' => $password,
-			'email' => $email,
-			'nm_peg' => $nm_peg,
-			'alamat_peg' => $alamat_peg,
-			'nik' => $nik,
-			'pangkat' => $pangkat,
-			'gol' => $gol,
-			'jabatan' => $jabatan,
-			'unit' => $unit,
-			'jk' => $jk,
-			'foto' => $foto['file_name'],
-		];
+		$images = $foto['file_name'];
+		$image = 'default.jpg';
 
+		if ($images == "") {
+			$data = [
+				'username' => $username,
+				'password' => $password,
+				'email' => $email,
+				'nm_peg' => $nm_peg,
+				'alamat_peg' => $alamat_peg,
+				'nik' => $nik,
+				'pangkat' => $pangkat,
+				'gol' => $gol,
+				'jabatan' => $jabatan,
+				'unit' => $unit,
+				'jk' => $jk,
+				'foto' => $image,
+			];
+		} else {
+			$data = [
+				'username' => $username,
+				'password' => $password,
+				'email' => $email,
+				'nm_peg' => $nm_peg,
+				'alamat_peg' => $alamat_peg,
+				'nik' => $nik,
+				'pangkat' => $pangkat,
+				'gol' => $gol,
+				'jabatan' => $jabatan,
+				'unit' => $unit,
+				'jk' => $jk,
+				'foto' => $foto['file_name'],
+			];
+		}
 		$this->Pegawai_model->input($data);
 		$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Data Berhasil disimpan<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
 		redirect(site_url('pegawai'));

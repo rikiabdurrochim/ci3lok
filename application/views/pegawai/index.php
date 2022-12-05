@@ -40,10 +40,10 @@
                             <td><?= $pegawai['nm_unit']; ?></td>
                             <td><?= $pegawai['alamat_peg']; ?></td>
                             <td><?= $pegawai['jk']; ?></td>
-                            <td><img src="<?php echo base_url() ?>assets/img/<?php echo ($pegawai['foto']); ?>" width="50" height="50" alt="<?php echo $pegawai['foto'] ?>"></td>
+                            <td><img src="<?= base_url() ?>assets/img/<?= ($pegawai['foto']); ?>" width="50" height="50" alt="<?= $pegawai['foto'] ?>"></td>
                             <td style="width: 70px;">
-                                <a href="#" data-toggle="modal" data-target="#modal-lihat<?php echo ($pegawai['id_peg']); ?>" data-popup="tooltip" data-placement="top" title="Lihat Data"><i class="fa fa-eye" style="color:green;"></i></a>
-                                <a href="#" data-toggle="modal" data-target="#modal-edit<?php echo ($pegawai['id_peg']); ?>" data-popup="tooltip" data-placement="top" title="Ubah Data"><i class="fa fa-edit" style="color:blue;"></i></a>
+                                <a href="#" data-toggle="modal" data-target="#modal-lihat<?= ($pegawai['id_peg']); ?>" data-popup="tooltip" data-placement="top" title="Lihat Data"><i class="fa fa-eye" style="color:green;"></i></a>
+                                <a href="#" data-toggle="modal" data-target="#modal-edit<?= ($pegawai['id_peg']); ?>" data-popup="tooltip" data-placement="top" title="Ubah Data"><i class="fa fa-edit" style="color:blue;"></i></a>
                                 <a href="<?= site_url('pegawai/delete/' . $pegawai['id_peg']) ?>" onclick="return confirm('Apakah Anda Ingin Menghapus Data ?');"><i class="fa fa-trash" style="color:red;"></i></a>
                             </td>
                         </tr>
@@ -57,7 +57,7 @@
 <!-- input modal -->
 <div class="modal fade" id="input">
     <div class="modal-dialog modal-lg">
-        <form enctype="multipart/form-data" action="<?php echo site_url('pegawai/prosesinput') ?>" method="post">
+        <form enctype="multipart/form-data" action="<?= site_url('pegawai/prosesinput') ?>" method="post">
             <div class="modal-content">
                 <div class="modal-header bg-primary">
                     <h4 class="modal-title">Tambah Data Pegawai</h4>
@@ -143,9 +143,9 @@ $no = 0;
 foreach ($data_pegawai as $pegawai) :
     $no++;
 ?>
-    <div class="modal fade" id="modal-edit<?php echo ($pegawai['id_peg']); ?>">
+    <div class="modal fade" id="modal-edit<?= ($pegawai['id_peg']); ?>">
         <div class="modal-dialog modal-lg">
-            <form enctype="multipart/form-data" action="<?php echo site_url('pegawai/prosesupdate') ?>" method="post">
+            <form enctype="multipart/form-data" action="<?= site_url('pegawai/prosesupdate') ?>" method="post">
                 <div class="modal-content">
                     <div class="modal-header bg-primary">
                         <h4 class="modal-title">Ubah Data Pegawai</h4>
@@ -155,41 +155,41 @@ foreach ($data_pegawai as $pegawai) :
                     </div>
                     <div class="modal-body">
                         <div class="form-group">
-                            <input type="hidden" class="form-control" placeholder="id_peg" name="id_peg" value="<?php echo $pegawai['id_peg'] ?>">
+                            <input type="hidden" class="form-control" placeholder="id_peg" name="id_peg" value="<?= $pegawai['id_peg'] ?>">
                             <label">Username </label>
-                                <input type="text" class="form-control" placeholder="username" name="username" value="<?php echo $pegawai['username'] ?>">
+                                <input type="text" class="form-control" placeholder="username" name="username" value="<?= $pegawai['username'] ?>">
                         </div>
                         <div class="form-group">
                             <label>Password </label>
-                            <input type="text" class="form-control" placeholder="password" name="password" value="<?php echo $pegawai['password'] ?>">
+                            <input type="text" class="form-control" placeholder="password" name="password" value="<?= $pegawai['password'] ?>">
                         </div>
                         <div class="form-group">
                             <label>Email </label>
-                            <input type="text" class="form-control" placeholder="email" name="email" value="<?php echo $pegawai['email'] ?>">
+                            <input type="text" class="form-control" placeholder="email" name="email" value="<?= $pegawai['email'] ?>">
                         </div>
                         <div class="form-group">
                             <label>Nama </label>
-                            <input type="text" class="form-control" placeholder="Nama" name="nm_peg" value="<?php echo $pegawai['nm_peg'] ?>">
+                            <input type="text" class="form-control" placeholder="Nama" name="nm_peg" value="<?= $pegawai['nm_peg'] ?>">
                         </div>
                         <div class="form-group">
                             <label>Alamat </label>
-                            <textarea class="form-control" rows="2" name="alamat_peg" placeholder="Alamat"><?php echo $pegawai['alamat_peg'] ?></textarea>
+                            <textarea class="form-control" rows="2" name="alamat_peg" placeholder="Alamat"><?= $pegawai['alamat_peg'] ?></textarea>
                         </div>
                         <div class="form-group">
                             <label>NIK </label>
-                            <input type="text" class="form-control" maxlength="8" placeholder="NIK" name="nik" value="<?php echo $pegawai['nik'] ?>">
+                            <input type="text" class="form-control" maxlength="8" placeholder="NIK" name="nik" value="<?= $pegawai['nik'] ?>">
                         </div>
                         <div class="form-group">
                             <label>Pangkat </label>
-                            <input type="text" class="form-control" placeholder="Pangkat" name="pangkat" value="<?php echo $pegawai['pangkat'] ?>">
+                            <input type="text" class="form-control" placeholder="Pangkat" name="pangkat" value="<?= $pegawai['pangkat'] ?>">
                         </div>
                         <div class="form-group">
                             <label>Gol </label>
-                            <input type="text" class="form-control" placeholder="Gol" name="gol" value="<?php echo $pegawai['gol'] ?>">
+                            <input type="text" class="form-control" placeholder="Gol" name="gol" value="<?= $pegawai['gol'] ?>">
                         </div>
                         <div class="form-group">
                             <label>Jabatan </label>
-                            <input type="text" class="form-control" placeholder="Jabatan" name="jabatan" value="<?php echo $pegawai['jabatan'] ?>">
+                            <input type="text" class="form-control" placeholder="Jabatan" name="jabatan" value="<?= $pegawai['jabatan'] ?>">
                         </div>
                         <div class="form-group">
                             <label>Unit </label>
@@ -240,9 +240,9 @@ $no = 0;
 foreach ($data_pegawai as $pegawai) :
     $no++;
 ?>
-    <div class="modal fade" id="modal-lihat<?php echo ($pegawai['id_peg']); ?>">
+    <div class="modal fade" id="modal-lihat<?= ($pegawai['id_peg']); ?>">
         <div class="modal-dialog modal-lg">
-            <form enctype="multipart/form-data" action="<?php echo site_url('pegawai/prosesinput') ?>" method="post">
+            <form enctype="multipart/form-data" action="<?= site_url('pegawai/prosesinput') ?>" method="post">
                 <div class="modal-content">
                     <div class="modal-header bg-primary">
                         <h4 class="modal-title">Lihat Data Pegawai</h4>

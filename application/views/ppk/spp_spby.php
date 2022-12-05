@@ -6,7 +6,7 @@ foreach ($get_ajuan as $ajuan) {
     <div class="body">
 
         <body onload="tampilkan_metode()"></body>
-        <form class="form-horizontal" enctype="multipart/form-data" action="<?php echo site_url('staffppk/setuju') ?>" method="post">
+        <form class="form-horizontal" enctype="multipart/form-data" action="<?= site_url('staffppk/setuju') ?>" method="post">
             <div class="card">
                 <!-- /.card-header -->
                 <div class="card-body">
@@ -21,9 +21,9 @@ foreach ($get_ajuan as $ajuan) {
                             <tbody>
                                 <tr>
                                     <td>Pilih Metode</td>
-                                    <td><input type="hidden" name="idajuan" id="idajuan" value="<?php echo $ajuan['id_ajuan']; ?>" readonly>
-                                        <input type="hidden" name="status" id="status" value="<?php echo $ajuan['status']; ?>" readonly>
-                                        <input type="hidden" name="dari" id="dari" value="<?php echo $dari; ?>" readonly>
+                                    <td><input type="hidden" name="idajuan" id="idajuan" value="<?= $ajuan['id_ajuan']; ?>" readonly>
+                                        <input type="hidden" name="status" id="status" value="<?= $ajuan['status']; ?>" readonly>
+                                        <input type="hidden" name="dari" id="dari" value="<?= $dari; ?>" readonly>
                                         <select class="form-control" name="metode" id="metode" onchange="tampilkan_metode()">
                                             <option value="">--Pilih--</option>
                                             <option value="SPP" <?php if ($ajuan['mtd_byr'] == "SPP") {
@@ -60,17 +60,17 @@ foreach ($get_ajuan as $ajuan) {
                             <div id="form-input" style="display: none">
                                 <p style="margin-left: 50px;">NO SPP</p>
                                 <p style="margin-left: 50px;">
-                                    <input type="text" class="form-control" minlength="6" maxlength="6" style="width: 250px" name="no_spp" id="no_spp" placeholder="NO SPP" value="<?php echo $ajuan['no_spp']; ?>" />
+                                    <input type="text" class="form-control" minlength="6" maxlength="6" style="width: 250px" name="no_spp" id="no_spp" placeholder="NO SPP" value="<?= $ajuan['no_spp']; ?>" />
                                 </p>
                                 <br>
                                 <p style="margin-left: 50px;">TGL SPP</p>
                                 <p style="margin-left: 50px;">
-                                    <input type="date" class="form-control" style="width: 250px" name="tgl_spp" id="tgl_spp" placeholder="TGL SPP" value="<?php echo $ajuan['tgl_spp']; ?>" />
+                                    <input type="date" class="form-control" style="width: 250px" name="tgl_spp" id="tgl_spp" placeholder="TGL SPP" value="<?= $ajuan['tgl_spp']; ?>" />
                                 </p>
                                 <br>
                                 <p style="margin-left: 50px;">Jumlah SPP</p>
                                 <p style="margin-left: 50px;">
-                                    <span id="spp"></span><input type="text" class="form-control" style="width: 250px" name="jml_spp" id="jml_spp" value="<?php echo $ajuan['jml_spp']; ?>" placeholder="Jumlah SPP" onkeyup="document.getElementById('spp').innerHTML = formatCurrency(this.value);" />
+                                    <span id="spp"></span><input type="text" class="form-control" style="width: 250px" name="jml_spp" id="jml_spp" value="<?= $ajuan['jml_spp']; ?>" placeholder="Jumlah SPP" onkeyup="document.getElementById('spp').innerHTML = formatCurrency(this.value);" />
                                 </p>
                                 <br>
                             </div>
@@ -78,17 +78,17 @@ foreach ($get_ajuan as $ajuan) {
                             <div id="form-input1" style="display: none">
                                 <p style="margin-left: 50px;">NO SPBY</p>
                                 <p style="margin-left: 50px;">
-                                    <input type="text" class="form-control" minlength="6" maxlength="6" style="width: 250px" name="no_spby" id="no_spby" placeholder="NO SPBY" value="<?php echo $ajuan['no_spby']; ?>" />
+                                    <input type="text" class="form-control" minlength="6" maxlength="6" style="width: 250px" name="no_spby" id="no_spby" placeholder="NO SPBY" value="<?= $ajuan['no_spby']; ?>" />
                                 </p>
                                 <br>
                                 <p style="margin-left: 50px;">TGL SPBY</p>
                                 <p style="margin-left: 50px;">
-                                    <span id="pajak"></span><input type="date" class="form-control" style="width: 250px" name="tgl_spby" id="tgl_spby" placeholder="TGL SPBY" value="<?php echo $ajuan['tgl_spby']; ?>" />
+                                    <span id="pajak"></span><input type="date" class="form-control" style="width: 250px" name="tgl_spby" id="tgl_spby" placeholder="TGL SPBY" value="<?= $ajuan['tgl_spby']; ?>" />
                                 </p>
                                 <br>
                                 <p style="margin-left: 50px;">Jumlah SPBY</p>
                                 <p style="margin-left: 50px;">
-                                    <span id="spm"></span><input type="text" class="form-control" style="width: 250px" name="jml_spby" id="jml_spby" placeholder="Jumlah SPBY" onkeyup="document.getElementById('spm').innerHTML = formatCurrency(this.value);" value="<?php echo $ajuan['jml_spby']; ?>" />
+                                    <span id="spm"></span><input type="text" class="form-control" style="width: 250px" name="jml_spby" id="jml_spby" placeholder="Jumlah SPBY" onkeyup="document.getElementById('spm').innerHTML = formatCurrency(this.value);" value="<?= $ajuan['jml_spby']; ?>" />
                                 </p>
                             </div>
 
@@ -99,10 +99,10 @@ foreach ($get_ajuan as $ajuan) {
                     <button type="submit" class="btn btn-info">Simpan</button>
                     <?php if ($dari == "staffppk") {
                     ?>
-                        <a class="btn btn-danger" href="<?php echo site_url('staffPpk') ?>">Close</a>
+                        <a class="btn btn-danger" href="<?= site_url('staffPpk') ?>">Close</a>
                     <?php } else if ($dari == "ppk") {
                     ?>
-                        <a class="btn btn-danger" href="<?php echo site_url('Ppk') ?>">Close</a>
+                        <a class="btn btn-danger" href="<?= site_url('Ppk') ?>">Close</a>
                     <?php } else {
                     } ?>
                 </div>

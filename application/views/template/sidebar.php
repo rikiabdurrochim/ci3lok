@@ -314,9 +314,10 @@
                     $get_foto = $this->db->query("SELECT * FROM pegawai WHERE id_peg='$username'")->result();
                     foreach ($get_foto as $foto) {
                     ?>
-                        <a class="nav-link dropdown-toggle" href="#" title="<?php echo $foto->nm_peg ?>" data-toggle="dropdown" id="profileDropdown">
-                            <img src="<?php echo base_url() ?>assets/img/<?php echo $foto->foto ?>" style="width:30px; height:30px; border-radius: 50px;" />
-                            <b> <?php echo $foto->nm_peg; ?></b>
+                        <a class="nav-link dropdown-toggle" href="#" title="<?= $foto->nm_peg ?>" data-toggle="dropdown" id="profileDropdown">
+                            <!-- <img src="<?= base_url() ?>assets/img/<?= $foto->foto ?>" style="width:30px; height:30px; border-radius: 50px;" /> -->
+                            <img class="img-profile rounded-circle" src="<?= base_url() ?>assets/img/<?= $foto->foto ?>" style="width:30px; height:30px; border-radius: 50px;" />
+                            <b> <?= $foto->nm_peg; ?></b>
                         <?php } ?>
                         </a>
                         <!--  dropdown-menu-right navbar-dropdown preview-list card card-primary  -->
@@ -327,12 +328,12 @@
                                 foreach ($get_foto as $foto) {
                                 ?>
                                     <div class="text-center">
-                                        <img class="profile-user-img img-fluid img-circle" src="<?php echo base_url() ?>assets/img/<?php echo $foto->foto ?>" alt="User profile picture">
+                                        <img class="profile-user-img img-fluid img-circle" src="<?= base_url() ?>assets/img/<?= $foto->foto ?>" alt="User profile picture">
                                     </div>
                                     <h3 class="profile-username text-center">
-                                        <?php echo $foto->nm_peg ?></h3>
+                                        <?= $foto->nm_peg ?></h3>
                                     <p class="text-center">
-                                        NIK : <?php echo $foto->nik; ?>
+                                        NIK : <?= $foto->nik; ?>
                                         <br>
                                         Role :
                                         <?php $username = $_SESSION['id_peg'];
@@ -343,8 +344,8 @@
                                     WHERE pegawai.id_peg='$username'")->result();
                                         foreach ($get_role as $role) {
                                         ?>
-                                            <br> <?php echo $koma++ . ". " ?>
-                                            <?php echo $role->nm_role  ?>
+                                            <br> <?= $koma++ . ". " ?>
+                                            <?= $role->nm_role  ?>
                                         <?php } ?>
                                     </p>
                                     <!-- <p class="text-muted text-center"></p> -->
@@ -397,9 +398,9 @@
                         WHERE pegawai.id_peg='$username' AND treeview.`id_treeview`='1' AND menu.status_mn = 'sidebar'")->result();
                         foreach ($menu_tnp_tree as $tnp_tree) { ?>
                             <li class="nav-item">
-                                <a href="<?php echo $tnp_tree->link_akses ?>" class="nav-link">
-                                    <i class="nav-icon fas fa-fw <?php echo $tnp_tree->icon_menu ?>"></i>
-                                    <p><?php echo $tnp_tree->nm_menu ?></p>
+                                <a href="<?= $tnp_tree->link_akses ?>" class="nav-link">
+                                    <i class="nav-icon fas fa-fw <?= $tnp_tree->icon_menu ?>"></i>
+                                    <p><?= $tnp_tree->nm_menu ?></p>
                                 </a>
                             </li>
                         <?php } ?>
@@ -412,9 +413,9 @@
                         foreach ($get_treeview as $tree) { ?>
                             <li class="nav-item">
                                 <a href="#" class="nav-link">
-                                    <i class="<?php echo $tree->treeview_icon ?>"></i>
+                                    <i class="<?= $tree->treeview_icon ?>"></i>
                                     <p>
-                                        <?php echo $tree->nama_treeview ?>
+                                        <?= $tree->nama_treeview ?>
                                         <i class="right fas fa-angle-left"></i>
                                     </p>
                                 </a>
@@ -427,9 +428,9 @@
                                     WHERE pegawai.id_peg='$username' AND treeview.`id_treeview`='$tree->id_treeview' AND menu.status_mn = 'sidebar'")->result();
                                     foreach ($mn_dgn_tree as $dgn_tree) { ?>
                                         <li class="nav-item">
-                                            <a href="<?php echo $dgn_tree->link_akses ?>" class="nav-link">
-                                                <i class="nav-icon fas fa-fw <?php echo $dgn_tree->icon_menu ?>"></i>
-                                                <p><?php echo $dgn_tree->nm_menu ?></p>
+                                            <a href="<?= $dgn_tree->link_akses ?>" class="nav-link">
+                                                <i class="nav-icon fas fa-fw <?= $dgn_tree->icon_menu ?>"></i>
+                                                <p><?= $dgn_tree->nm_menu ?></p>
                                             </a>
                                         </li>
                                     <?php } ?>

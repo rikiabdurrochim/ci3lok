@@ -8,7 +8,7 @@ class Aksesmn_model extends CI_Model
 
     public function select_aksesmn()
     {
-        $query = $this->db->query("SELECT * FROM pegawai");
+        $query = $this->db->query("SELECT * FROM pegawai ORDER BY pegawai.id_peg DESC");
 
         return $query->result_array();
     }

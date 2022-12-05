@@ -106,7 +106,7 @@ class Ppk extends CI_Controller
 				$data['sql'] = "SELECT * FROM ajuan WHERE id_ajuan='$id'";
 				$this->load->view('template/header', $data);
 				$this->load->view('template/sidebar', $data);
-				$this->load->view('ppk/pilih_ppk', $data);
+				$this->load->view('ppk/pilih_staff', $data);
 				$this->load->view('template/footer');
 			} else if ($username != "" && $ck_data->ada_tidak == "0") {
 				$this->load->view('errors/error_404');

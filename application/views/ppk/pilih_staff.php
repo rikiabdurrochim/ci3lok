@@ -4,7 +4,7 @@ foreach ($get_ajuan as $ajuan) {
     $id_giat = $ajuan['kd_giat'];
 ?>
     <div class="body">
-        <form class="form-horizontal" enctype="multipart/form-data" action="<?php echo site_url('ppk/setujui') ?>" method="post">
+        <form class="form-horizontal" enctype="multipart/form-data" action="<?= site_url('ppk/setujui') ?>" method="post">
             <div class="card">
                 <!-- /.card-header -->
                 <div class="card-body">
@@ -19,9 +19,9 @@ foreach ($get_ajuan as $ajuan) {
                             <tbody>
                                 <tr>
                                     <td>Staff PPK</td>
-                                    <td><input type="hidden" name="idajuan" id="idajuan" value="<?php echo $ajuan['id_ajuan']; ?>">
+                                    <td><input type="hidden" name="idajuan" id="idajuan" value="<?= $ajuan['id_ajuan']; ?>">
                                         <div class="input-group">
-                                            <select class="form-control" name="id_staffppk" id="id_staffppk<?php echo $ajuan['id_ajuan']; ?>" onchange="add_data(<?php echo $ajuan['id_ajuan']; ?>)">
+                                            <select class="form-control" name="id_staffppk" id="id_staffppk<?= $ajuan['id_ajuan']; ?>" onchange="add_data(<?= $ajuan['id_ajuan']; ?>)">
                                                 <option value="">--Pilih--</option>
                                                 <?php $get_ppk = $this->db->query("SELECT * FROM pegawai INNER JOIN dtrole ON dtrole.`id_peg`=pegawai.`id_peg` INNER JOIN roleppk ON roleppk.`id_role`=dtrole.`id_role` INNER JOIN giat ON giat.`id_giat`=roleppk.`id_giat` WHERE giat.`id_giat`='$id_giat'")->result();
                                                 foreach ($get_ppk as $ppk) {
@@ -71,7 +71,7 @@ foreach ($get_ajuan as $ajuan) {
                 </div>
                 <div class="modal-footer justify-content-between">
                     <button type="submit" class="btn btn-info">Simpan</button>
-                    <a class="btn btn-danger" href="<?php echo site_url('loket') ?>">Close</a>
+                    <a class="btn btn-danger" href="<?= site_url('ppk') ?>">Close</a>
                 </div>
             </div>
         </form>
@@ -84,7 +84,7 @@ foreach ($get_ajuan as $ajuan) {
         var id_staffppk = $("#id_staffppk" + idajuan).val();
         var no = $("#nomor").val();
         $.ajax({
-            url: "<?php echo base_url() ?>index.php/ppk/tampilkan_ppk",
+            url: "<?= base_url() ?>index.php/ppk/tampilkan_ppk",
             data: "&id_staffppk=" + id_staffppk + "&no=" + no,
             success: function(html) {
                 $("#data_ppk").append(html);

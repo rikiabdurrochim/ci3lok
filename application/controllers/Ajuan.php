@@ -124,7 +124,7 @@ class Ajuan extends CI_Controller
 				$this->db->insert('file_dukung', $data_berkas);
 			}
 		endforeach;
-		$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Data Berhasil disimpan, No Ajuan anda adalah <label style="color: red;">' . $no_ajuan . '</label><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+		$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Data berhasil disimpan, No Ajuan anda adalah  | <label style="color: blue;">' . $no_ajuan . '</label><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
 		redirect(site_url('ajuan'));
 	}
 
@@ -259,7 +259,7 @@ class Ajuan extends CI_Controller
 				$hapus_tb_dukung = $this->db->query("DELETE FROM file_dukung WHERE nama_file = ''");
 			}
 		endforeach;
-		$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Data Berhasil disimpan<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+		$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Data berhasil disimpan<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
 		redirect(site_url('ajuan'));
 	}
 
