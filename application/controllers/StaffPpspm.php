@@ -71,6 +71,7 @@ class StaffPpspm extends CI_Controller
 			endforeach;
 		} else {
 			$query_setuju = $this->db->query("UPDATE ajuan SET no_spm='$no_spm', tgl_spm='$tgl_spm' WHERE id_ajuan = '$idajuan'");
+			$query_notif = $this->db->query("UPDATE notif_ajuan SET status_ajuan='Proses SPM', notif_penerima='PPSPM' WHERE id_ajuan = '$idajuan'");
 			$get_ajuan = $this->db->query("SELECT date_updated FROM ajuan WHERE id_ajuan='$idajuan'")->result();
 			foreach ($get_ajuan as $ajuan_data) :
 				$inputmonitoring = $this->db->query("INSERT INTO monitoring 
@@ -92,6 +93,7 @@ class StaffPpspm extends CI_Controller
 		$dari = $this->input->post('dari');
 
 		$query_setuju = $this->db->query("UPDATE ajuan SET no_sp2d='$no_sp2d', tgl_sp2d='$tgl_sp2d', status='Proses Bendahara' WHERE id_ajuan = '$idajuan'");
+		$query_notif = $this->db->query("UPDATE notif_ajuan SET status_ajuan='Proses Bendahara' WHERE id_ajuan = '$idajuan'");
 
 		$get_ajuan = $this->db->query("SELECT date_updated FROM ajuan WHERE id_ajuan='$idajuan'")->result();
 		foreach ($get_ajuan as $ajuan_data) :

@@ -133,6 +133,30 @@
                                     <?php } else {
                                     }
                                     ?>
+                                    <?php }
+                            } elseif (
+                                $rl->nm_role == 'PPSPM'
+                            ) {
+                                $jml_notif = $this->db->query("SELECT COUNT(id_notif) AS total_notif FROM notif_ajuan 
+                                WHERE status_ajuan='Proses SPM' AND notif_penerima = 'PPSPM'")->result();
+                                foreach ($jml_notif as $jn) {
+                                    if ($jn->total_notif != "0") { ?>
+                                        <span class="badge badge-warning navbar-badge"><?= $jn->total_notif ?></span>
+                                    <?php } else {
+                                    }
+                                    ?>
+                                    <?php }
+                            } elseif (
+                                $rl->nm_role == 'Staf PPSPM'
+                            ) {
+                                $jml_notif = $this->db->query("SELECT COUNT(id_notif) AS total_notif FROM notif_ajuan 
+                                WHERE status_ajuan='Diterima PPSPM' AND notif_penerima = '$username'")->result();
+                                foreach ($jml_notif as $jn) {
+                                    if ($jn->total_notif != "0") { ?>
+                                        <span class="badge badge-warning navbar-badge"><?= $jn->total_notif ?></span>
+                                    <?php } else {
+                                    }
+                                    ?>
                         <?php }
                             }
                         } ?>
@@ -155,7 +179,7 @@
                                     JOIN ajuan ON ajuan.id_ajuan = notif_ajuan.id_ajuan 
                     WHERE status_ajuan='Belum Diproses'")->result();
                                     foreach ($select_notif as $sn) { ?>
-                                        <a href="<?= BASEURL ?>loket" class="dropdown-item">
+                                        <a href="<?= site_url('loket') ?>" class="dropdown-item">
                                             <i class="fas fa-envelope mr-2"></i> <?= $sn->no_ajuan ?>, Harap Segera Diproses! <br>
                                             <span class="text-muted text-sm"><?= $sn->tgl_notif ?></span>
                                         </a>
@@ -199,7 +223,7 @@
                                     <?php $select_notif = $this->db->query("SELECT * FROM notif_ajuan JOIN ajuan ON ajuan.id_ajuan = notif_ajuan.id_ajuan 
                             WHERE status_ajuan='Proses Bendahara'")->result();
                                     foreach ($select_notif as $sn) { ?>
-                                        <a href="<?= BASEURL ?>bendahara" class="dropdown-item">
+                                        <a href="<?= site_url('bendahara') ?>" class="dropdown-item">
                                             <i class="fas fa-envelope mr-2"></i> <?= $sn->no_ajuan ?>, Harap segera diproses<br>
                                             <span class="text-muted text-sm"><?= $sn->tgl_notif ?></span>
                                         </a>
@@ -215,7 +239,7 @@
                                     <?php $select_notif = $this->db->query("SELECT * FROM notif_ajuan JOIN ajuan ON ajuan.id_ajuan = notif_ajuan.id_ajuan 
                             WHERE status_ajuan='Proses SPP/SPBY' AND notif_penerima = 'PPK 1'")->result();
                                     foreach ($select_notif as $sn) { ?>
-                                        <a href="<?= BASEURL ?>ppk" class="dropdown-item">
+                                        <a href="<?= site_url('ppk') ?>" class="dropdown-item">
                                             <i class="fas fa-envelope mr-2"></i> <?= $sn->no_ajuan ?>, Harap segera diproses<br>
                                             <span class="text-muted text-sm"><?= $sn->tgl_notif ?></span>
                                         </a>
@@ -231,7 +255,7 @@
                                     <?php $select_notif = $this->db->query("SELECT * FROM notif_ajuan JOIN ajuan ON ajuan.id_ajuan = notif_ajuan.id_ajuan 
                             WHERE status_ajuan='Proses SPP/SPBY' AND notif_penerima = 'PPK 2'")->result();
                                     foreach ($select_notif as $sn) { ?>
-                                        <a href="<?= BASEURL ?>ppk" class="dropdown-item">
+                                        <a href="<?= site_url('ppk') ?>" class="dropdown-item">
                                             <i class="fas fa-envelope mr-2"></i> <?= $sn->no_ajuan ?>, Harap segera diproses<br>
                                             <span class="text-muted text-sm"><?= $sn->tgl_notif ?></span>
                                         </a>
@@ -247,7 +271,7 @@
                                     <?php $select_notif = $this->db->query("SELECT * FROM notif_ajuan JOIN ajuan ON ajuan.id_ajuan = notif_ajuan.id_ajuan 
                             WHERE status_ajuan='Proses SPP/SPBY' AND notif_penerima = 'PPK 3'")->result();
                                     foreach ($select_notif as $sn) { ?>
-                                        <a href="<?= BASEURL ?>ppk" class="dropdown-item">
+                                        <a href="<?= site_url('ppk') ?>" class="dropdown-item">
                                             <i class="fas fa-envelope mr-2"></i> <?= $sn->no_ajuan ?>, Harap segera diproses<br>
                                             <span class="text-muted text-sm"><?= $sn->tgl_notif ?></span>
                                         </a>
@@ -263,7 +287,7 @@
                                     <?php $select_notif = $this->db->query("SELECT * FROM notif_ajuan JOIN ajuan ON ajuan.id_ajuan = notif_ajuan.id_ajuan 
                             WHERE status_ajuan='Proses SPP/SPBY' AND notif_penerima = 'PPK 4'")->result();
                                     foreach ($select_notif as $sn) { ?>
-                                        <a href="<?= BASEURL ?>ppk" class="dropdown-item">
+                                        <a href="<?= site_url('ppk') ?>" class="dropdown-item">
                                             <i class="fas fa-envelope mr-2"></i> <?= $sn->no_ajuan ?>, Harap segera diproses<br>
                                             <span class="text-muted text-sm"><?= $sn->tgl_notif ?></span>
                                         </a>
@@ -279,7 +303,7 @@
                                     <?php $select_notif = $this->db->query("SELECT * FROM notif_ajuan JOIN ajuan ON ajuan.id_ajuan = notif_ajuan.id_ajuan 
                             WHERE status_ajuan='Proses SPP/SPBY' AND notif_penerima = 'PPK 5'")->result();
                                     foreach ($select_notif as $sn) { ?>
-                                        <a href="<?= BASEURL ?>ppk" class="dropdown-item">
+                                        <a href="<?= site_url('ppk') ?>" class="dropdown-item">
                                             <i class="fas fa-envelope mr-2"></i> <?= $sn->no_ajuan ?>, Harap segera diproses<br>
                                             <span class="text-muted text-sm"><?= $sn->tgl_notif ?></span>
                                         </a>
@@ -299,7 +323,43 @@
                                     <?php $select_notif = $this->db->query("SELECT * FROM notif_ajuan JOIN ajuan ON ajuan.id_ajuan = notif_ajuan.id_ajuan 
                             WHERE status_ajuan='Diterima PPK' AND notif_penerima = '$username'")->result();
                                     foreach ($select_notif as $sn) { ?>
-                                        <a href="<?= BASEURL ?>staffppk" class="dropdown-item">
+                                        <a href="<?= site_url('staffppk') ?>" class="dropdown-item">
+                                            <i class="fas fa-envelope mr-2"></i> <?= $sn->no_ajuan ?>, Harap segera diproses<br>
+                                            <span class="text-muted text-sm"><?= $sn->tgl_notif ?></span>
+                                        </a>
+                                    <?php }
+                                }
+                            } elseif (
+                                $rl->nm_role == 'PPSPM'
+                            ) {
+                                $jml_notif = $this->db->query("SELECT COUNT(id_notif) AS total_notif FROM notif_ajuan 
+                            WHERE status_ajuan='Proses SPM' AND notif_penerima = 'PPSPM'")->result();
+                                foreach ($jml_notif as $jn) {
+                                    ?>
+                                    <span class="dropdown-header"><?= $jn->total_notif ?> Notifications</span>
+                                    <div class="dropdown-divider"></div>
+                                    <?php $select_notif = $this->db->query("SELECT * FROM notif_ajuan JOIN ajuan ON ajuan.id_ajuan = notif_ajuan.id_ajuan 
+                            WHERE status_ajuan='Proses SPM' AND notif_penerima = 'PPSPM'")->result();
+                                    foreach ($select_notif as $sn) { ?>
+                                        <a href="<?= site_url('ppspm') ?>" class="dropdown-item">
+                                            <i class="fas fa-envelope mr-2"></i> <?= $sn->no_ajuan ?>, Harap segera diproses<br>
+                                            <span class="text-muted text-sm"><?= $sn->tgl_notif ?></span>
+                                        </a>
+                                    <?php }
+                                }
+                            } elseif (
+                                $rl->nm_role == 'Staf PPSPM'
+                            ) {
+                                $jml_notif = $this->db->query("SELECT COUNT(id_notif) AS total_notif FROM notif_ajuan 
+                            WHERE status_ajuan='Diterima PPSPM' AND notif_penerima = '$username'")->result();
+                                foreach ($jml_notif as $jn) {
+                                    ?>
+                                    <span class="dropdown-header"><?= $jn->total_notif ?> Notifications</span>
+                                    <div class="dropdown-divider"></div>
+                                    <?php $select_notif = $this->db->query("SELECT * FROM notif_ajuan JOIN ajuan ON ajuan.id_ajuan = notif_ajuan.id_ajuan 
+                            WHERE status_ajuan='Diterima PPSPM' AND notif_penerima = '$username'")->result();
+                                    foreach ($select_notif as $sn) { ?>
+                                        <a href="<?= site_url('staffppspm') ?>" class="dropdown-item">
                                             <i class="fas fa-envelope mr-2"></i> <?= $sn->no_ajuan ?>, Harap segera diproses<br>
                                             <span class="text-muted text-sm"><?= $sn->tgl_notif ?></span>
                                         </a>

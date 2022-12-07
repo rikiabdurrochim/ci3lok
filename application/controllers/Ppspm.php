@@ -88,6 +88,8 @@ class Ppspm extends CI_Controller
 			$id_peg = $this->input->post('ppspm_staff[' . $i . ']');
 
 			$query_setujui = $this->db->query("INSERT INTO pjspm (id_peg, id_ajuan) VALUES ('$id_peg','$idajuan')");
+			$query_notif = $this->db->query("UPDATE notif_ajuan SET status_ajuan = 'Diterima PPSPM', notif_penerima = '$id_peg' 
+			WHERE id_ajuan = '$idajuan'");
 		}
 		$get_ajuan = $this->db->query("SELECT date_updated FROM ajuan WHERE id_ajuan='$idajuan'")->result();
 		foreach ($get_ajuan as $ajuan_data) :
@@ -107,6 +109,10 @@ class Ppspm extends CI_Controller
 			$inputmonitoring = $this->db->query("INSERT INTO monitoring 
 			SET id_ajuan = '$id', id_peg = '$id_pegawai', status = 'Kirim KPPN', tgl_monitor = '$ajuan_data->date_updated' ");
 		endforeach;
+		$get_pjspm = $this->db->query("SELECT id_peg FROM pjspm WHERE id_ajuan = '$id'")->result();
+		foreach ($get_pjspm as $pjspm) {
+			$query_notif = $this->db->query("UPDATE notif_ajuan SET status_ajuan = 'Diterima PPSPM', notif_penerima='$pjspm->id_peg' WHERE id_ajuan = '$id'");
+		}
 		$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Berhasil disetujui<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
 		redirect(site_url('Ppspm'));
 	}
@@ -141,6 +147,8 @@ SET id_ajuan = '$idajuan', id_peg = '$id_pegawai', status = 'Ajuan diperbaiki PP
 			if ($pjspm['ada_tidak'] == "0") {
 				$inputpjspm = $this->db->query("INSERT INTO pjspm 
 								SET id_peg='$id_pegawai',id_ajuan='$idajuan'");
+				$query_notif = $this->db->query("UPDATE notif_ajuan SET status_ajuan = 'Diterima PPSPM', notif_penerima = '$id_pegawai' 
+								WHERE id_ajuan = '$idajuan'");
 			} else {
 			}
 		}

@@ -81,6 +81,7 @@ class Ppk extends CI_Controller
 	{
 		$id_pegawai = $_SESSION['id_peg'];
 		$query_ditolak = $this->db->query("UPDATE ajuan SET `status` = 'Proses SPM' WHERE `id_ajuan` = '$id'");
+		$query_notif = $this->db->query("UPDATE notif_ajuan SET `status_ajuan` = 'Proses SPM', notif_penerima = 'PPSPM' WHERE `id_ajuan` = '$id'");
 		$get_ajuan = $this->db->query("SELECT date_updated FROM ajuan WHERE id_ajuan='$id'")->result();
 		foreach ($get_ajuan as $ajuan_data) :
 			$inputmonitoring = $this->db->query("INSERT INTO monitoring 

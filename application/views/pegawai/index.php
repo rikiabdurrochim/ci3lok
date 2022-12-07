@@ -17,7 +17,6 @@
                         <th>Gol</th>
                         <th>Jabatan</th>
                         <th>Unit</th>
-                        <th>Alamat</th>
                         <th>Jenis Kelamin</th>
                         <th>Foto</th>
                         <th>Opsi</th>
@@ -38,7 +37,6 @@
                             <td><?= $pegawai['gol']; ?></td>
                             <td><?= $pegawai['jabatan']; ?></td>
                             <td><?= $pegawai['nm_unit']; ?></td>
-                            <td><?= $pegawai['alamat_peg']; ?></td>
                             <td><?= $pegawai['jk']; ?></td>
                             <td><img src="<?= base_url() ?>assets/img/<?= ($pegawai['foto']); ?>" width="50" height="50" alt="<?= $pegawai['foto'] ?>"></td>
                             <td style="width: 70px;">
@@ -81,10 +79,6 @@
                     <div class="form-group">
                         <label>Nama </label>
                         <input type="text" class="form-control" placeholder="Nama" name="nm_peg">
-                    </div>
-                    <div class="form-group">
-                        <label>Alamat </label>
-                        <textarea class="form-control" rows="2" name="alamat_peg" placeholder="Alamat"></textarea>
                     </div>
                     <div class="form-group">
                         <label>NIK </label>
@@ -170,10 +164,6 @@ foreach ($data_pegawai as $pegawai) :
                         <div class="form-group">
                             <label>Nama </label>
                             <input type="text" class="form-control" placeholder="Nama" name="nm_peg" value="<?= $pegawai['nm_peg'] ?>">
-                        </div>
-                        <div class="form-group">
-                            <label>Alamat </label>
-                            <textarea class="form-control" rows="2" name="alamat_peg" placeholder="Alamat"><?= $pegawai['alamat_peg'] ?></textarea>
                         </div>
                         <div class="form-group">
                             <label>NIK </label>
