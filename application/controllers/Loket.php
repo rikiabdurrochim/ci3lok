@@ -56,10 +56,20 @@ class Loket extends CI_Controller
 		$id_peg = $_SESSION['id_peg'];
 
 		$query_ditolak = $this->db->query("UPDATE ajuan SET `status` = 'Proses SPP/SPBY' WHERE `id_ajuan` = '$id'");
-		$get_ajuan = $this->db->query("SELECT date_updated FROM ajuan WHERE id_ajuan='$id'")->result();
+		$get_ajuan = $this->db->query("SELECT date_updated, kd_giat FROM ajuan WHERE id_ajuan='$id'")->result();
 		foreach ($get_ajuan as $ajuan_data) :
 			$inputmonitoring = $this->db->query("INSERT INTO monitoring 
 			SET id_ajuan = '$id', id_peg = '$id_peg', status = 'Proses SPP/SPBY', tgl_monitor = '$ajuan_data->date_updated' ");
+			$get_ppk = $this->db->query("SELECT role.`nm_role` FROM dtrole 
+	INNER JOIN role ON role.`id_role`=dtrole.`id_role` 
+	INNER JOIN dtppk ON dtppk.`id_peg`=dtrole.`id_peg` 
+	WHERE dtppk.`id_giat` = '$ajuan_data->kd_giat' AND (role.`nm_role` = 'PPK 1' 
+	OR role.`nm_role` = 'PPK 2' OR role.`nm_role` = 'PPK 3'
+	OR role.`nm_role` = 'PPK 4' OR role.`nm_role` = 'PPK 5')")->result();
+			foreach ($get_ppk as $gp) :
+				$query_notif = $this->db->query("UPDATE notif_ajuan SET `status_ajuan` = 'Proses SPP/SPBY', notif_penerima='$gp->nm_role' 
+				WHERE `id_ajuan` = '$id'");
+			endforeach;
 		endforeach;
 
 		$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Berhasil disetujui<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');

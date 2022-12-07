@@ -72,15 +72,15 @@ class StaffPpk extends CI_Controller
 		OR role.`nm_role`='Staf PPK 3' OR role.`nm_role`='Staf PPK 3' OR role.`nm_role`='Staf PPK 5')")->result();
 		foreach ($get_ppk as $datappk) :
 			if ($datappk->nm_role == 'Staf PPK 1') {
-				$query_notif = $this->db->query("UPDATE notif_ajuan SET status_ajuan='Proses SPP/SPBY', notif_penerima='PPK 1' Where id_ajuan='$idajuan'");
+				$query_notif = $this->db->query("UPDATE notif_ajuan SET status_ajuan='SPP/SPBY selesai', notif_penerima='PPK 1' Where id_ajuan='$idajuan'");
 			} elseif ($datappk->nm_role == 'Staf PPK 2') {
-				$query_notif = $this->db->query("UPDATE notif_ajuan SET status_ajuan='Proses SPP/SPBY', notif_penerima='PPK 2' Where id_ajuan='$idajuan'");
+				$query_notif = $this->db->query("UPDATE notif_ajuan SET status_ajuan='SPP/SPBY selesai', notif_penerima='PPK 2' Where id_ajuan='$idajuan'");
 			} elseif ($datappk->nm_role == 'Staf PPK 3') {
-				$query_notif = $this->db->query("UPDATE notif_ajuan SET status_ajuan='Proses SPP/SPBY', notif_penerima='PPK 3' Where id_ajuan='$idajuan'");
+				$query_notif = $this->db->query("UPDATE notif_ajuan SET status_ajuan='SPP/SPBY selesai', notif_penerima='PPK 3' Where id_ajuan='$idajuan'");
 			} elseif ($datappk->nm_role == 'Staf PPK 4') {
-				$query_notif = $this->db->query("UPDATE notif_ajuan SET status_ajuan='Proses SPP/SPBY', notif_penerima='PPK 4' Where id_ajuan='$idajuan'");
+				$query_notif = $this->db->query("UPDATE notif_ajuan SET status_ajuan='SPP/SPBY selesai', notif_penerima='PPK 4' Where id_ajuan='$idajuan'");
 			} else {
-				$query_notif = $this->db->query("UPDATE notif_ajuan SET status_ajuan='Proses SPP/SPBY', notif_penerima='PPK 5' Where id_ajuan='$idajuan'");
+				$query_notif = $this->db->query("UPDATE notif_ajuan SET status_ajuan='SPP/SPBY selesai', notif_penerima='PPK 5' Where id_ajuan='$idajuan'");
 			}
 		endforeach;
 		if ($status == "Proses SPP/SPBY") {

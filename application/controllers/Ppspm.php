@@ -57,9 +57,6 @@ class Ppspm extends CI_Controller
 		endforeach;
 	}
 
-
-
-
 	public function ditolak()
 	{
 		$id_pegawai = $_SESSION['id_peg'];
@@ -111,7 +108,7 @@ class Ppspm extends CI_Controller
 		endforeach;
 		$get_pjspm = $this->db->query("SELECT id_peg FROM pjspm WHERE id_ajuan = '$id'")->result();
 		foreach ($get_pjspm as $pjspm) {
-			$query_notif = $this->db->query("UPDATE notif_ajuan SET status_ajuan = 'Diterima PPSPM', notif_penerima='$pjspm->id_peg' WHERE id_ajuan = '$id'");
+			$query_notif = $this->db->query("UPDATE notif_ajuan SET status_ajuan = 'Kirim KPPN', notif_penerima='$pjspm->id_peg' WHERE id_ajuan = '$id'");
 		}
 		$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Berhasil disetujui<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
 		redirect(site_url('Ppspm'));
