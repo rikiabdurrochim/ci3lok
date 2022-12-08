@@ -300,22 +300,19 @@ class Ajuan extends CI_Controller
 		$kd_giat = $this->input->get('kd_giat');
 		echo '<label>Kd Akun</label> <select class ="form-control" name="kd_akun" required>
 		<option value="">--Pilih--</option>';
-		$get_kode = $this->db->query("SELECT * FROM giat WHERE id_giat ='$kd_giat'")->result();
-		foreach ($get_kode as $kode) {
-			$data_akun = $this->db->query("SELECT * FROM akun WHERE kd_giat ='$kode->kd_giat'")->result();
-			foreach ($data_akun as $akun) {
-				echo "<option value='" . $akun->id_akun . "'>" . $akun->kroakun . "</option>";
-			}
-			echo "</select>";
+		$data_akun = $this->db->query("SELECT * FROM akun WHERE kd_giat ='$kd_giat'")->result();
+		foreach ($data_akun as $akun) {
+			echo "<option value='" . $akun->id_akun . "'>" . $akun->kroakun . "</option>";
 		}
+		echo "</select>";
 	}
 
 	function get_dt_jenis()
 	{
 		$jns_ajuan = $this->input->get('jns_ajuan');
 		echo '<label>Detail Jenis</label> <select class ="form-control" name="dtjenis_id">
-		<option value="">--Pilih--</option>';
-		$get_detail = $this->db->query("SELECT * FROM detjenis WHERE id_jenis ='$jns_ajuan'")->result();
+		<option value="1">--Pilih--</option>';
+		$get_detail = $this->db->query("SELECT * FROM detjenis WHERE id_jenis ='$jns_ajuan' AND id_dtjenis != '1' ")->result();
 		foreach ($get_detail as $detail) {
 			echo "<option value='" . $detail->id_dtjenis . "'>" . $detail->detail_jns . "</option>";
 		}
@@ -327,9 +324,9 @@ class Ajuan extends CI_Controller
 		$jns_ajuan = $this->input->get('jns_ajuan');
 		echo '<div class="checkbox">
 				<label>Data Dukung</label><br>';
-		$get_dukung = $this->db->query("SELECT * FROM dt_dukung WHERE jenis_id='$jns_ajuan'");
+		$get_dukung = $this->db->query("SELECT * FROM dt_dukung JOIN detadk ON detadk.id_detadk = dt_dukung.nm_dt WHERE jenis_id='$jns_ajuan'");
 		foreach ($get_dukung->result() as $dt_dukung) {
-			echo "<label><input type='checkbox' name='data_dukung[]' value='" . $dt_dukung->nm_dt . "'>" . $dt_dukung->nm_dt . " | </label>";
+			echo "<label><input type='checkbox' name='data_dukung[]' value='" . $dt_dukung->nm_adk . "'>" . $dt_dukung->nm_adk . " | </label>";
 		}
 		echo "</div>";
 	}

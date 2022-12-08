@@ -8,7 +8,7 @@ class Akun_model extends CI_Model
 
     public function select_akun()
     {
-        $query = $this->db->query("SELECT * FROM akun");
+        $query = $this->db->query("SELECT * FROM akun ORDER BY id_akun DESC");
         return $query->result_array();
     }
 

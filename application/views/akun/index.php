@@ -55,7 +55,14 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label>Kode Kegiatan </label>
-                        <input type="text" class="form-control" placeholder="Kode Kegiatan" name="kd_giat">
+                        <select class="form-control" name="kd_giat" id="kd_giat" required>
+                            <option value="">--Pilih--</option>
+                            <?php
+                            $get_giat = $this->db->query("SELECT * FROM giat")->result();
+                            foreach ($get_giat as $giat) {
+                            ?> <option value="<?= $giat->id_giat ?>"><?= $giat->kegiatan ?></option>
+                            <?php } ?>
+                        </select>
                     </div>
                     <div class="form-group">
                         <label>Kode Akun </label>
@@ -97,7 +104,7 @@ foreach ($data_akun as $akun) :
             <form enctype="multipart/form-data" action="<?php echo site_url('akun/prosesupdate') ?>" method="post">
                 <div class="modal-content">
                     <div class="modal-header bg-primary">
-                        <h4 class="modal-title">Tambah Data Akun</h4>
+                        <h4 class="modal-title">Edit Data Akun</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -106,7 +113,16 @@ foreach ($data_akun as $akun) :
                         <div class="form-group">
                             <input type="hidden" class="form-control" placeholder="id_akun" name="id_akun" value="<?php echo $akun['id_akun'] ?>">
                             <label">Kode Kegiatan </label>
-                                <input type="text" class="form-control" placeholder="Kode Kegiatan" name="kd_giat" value="<?php echo $akun['kd_giat'] ?>">
+                                <select class="form-control" name="kd_giat" id="kd_giat" required>
+                                    <option value="">--Pilih--</option>
+                                    <?php
+                                    $get_giat = $this->db->query("SELECT * FROM giat")->result();
+                                    foreach ($get_giat as $giat) {
+                                    ?> <option value="<?= $giat->id_giat ?>" <?php if ($giat->id_giat == $akun['kd_giat']) {
+                                                                                    echo 'selected';
+                                                                                } ?>><?= $giat->kegiatan ?></option>
+                                    <?php } ?>
+                                </select>
                         </div>
                         <div class="form-group">
                             <label>Kode Akun </label>
