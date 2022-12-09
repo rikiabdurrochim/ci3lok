@@ -58,4 +58,15 @@ class Bendahara extends CI_Controller
 		$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Selesai <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
 		redirect(site_url('Bendahara'));
 	}
+
+	function get_rupiah()
+	{
+		$jml_byr_ben = $this->input->get('jml_byr_ben');
+		$format = number_format($jml_byr_ben);
+		if ($jml_byr_ben != '0') {
+			echo $format;
+		} else {
+			echo "";
+		}
+	}
 }

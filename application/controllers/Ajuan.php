@@ -270,7 +270,6 @@ class Ajuan extends CI_Controller
 		echo json_encode($get_dok);
 	}
 
-
 	public function delete($id)
 	{
 		$username = $_SESSION['id_peg'];
@@ -283,8 +282,8 @@ class Ajuan extends CI_Controller
 		foreach ($cek_data as $ck_data) :
 
 			if ($username != "" && $ck_data->ada_tidak != "0") {
-
-				$this->Ajuan_model->delete_data($id);
+				$this->db->query("UPDATE ajuan SET status_aktif = '0' Where id_ajuan = '$id'");
+				// $this->Ajuan_model->delete_data($id);
 				$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Data Berhasil dihapus<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
 				redirect(site_url('ajuan'));
 			} else if ($username != "" && $ck_data->ada_tidak == "0") {

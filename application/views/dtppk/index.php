@@ -23,7 +23,7 @@
                     ?>
                         <tr>
                             <td><?= $no; ?></td>
-                            <td><?= $dt['nm_peg']; ?></td>
+                            <td><?= $dt['nm_peg']; ?> - <?= $dt['nm_role'] ?></td>
                             <td><?= $dt['kegiatan']; ?></td>
                             <td style="width: 70px;">
                                 <a href="#" data-toggle="modal" data-target="#modal-edit<?php echo ($dt['id_dtppk']); ?>" data-popup="tooltip" data-placement="top" title="Ubah Data"><i class="fa fa-edit" style="color:blue;"></i></a>
@@ -56,11 +56,14 @@
                             <?php
                             $list = $this->db->query("SELECT * FROM pegawai JOIN dtrole ON dtrole.id_peg = pegawai.id_peg
                                                                             JOIN role ON role.id_role = dtrole.id_role 
-                                                                            WHERE role.`id_role`=9 OR role.`id_role`=10 OR role.`id_role`=11 OR role.`id_role`=12 OR role.`id_role`=13
+                                                                            WHERE role.`id_role`=9 OR role.`id_role`=10 
+                                                                            OR role.`id_role`=11 OR role.`id_role`=12 OR role.`id_role`=13
+                                                                            OR role.`id_role`=17 OR role.`id_role`=18 
+                                                                            OR role.`id_role`=19 OR role.`id_role`=20
                                                                             ORDER BY pegawai.id_peg ASC");
                             foreach ($list->result() as $t) {
                             ?>
-                                <option value="<?php echo $t->id_peg ?>"><?php echo $t->nm_peg ?></option>
+                                <option value="<?php echo $t->id_peg ?>"><?= $t->nm_peg ?> - <?= $t->nm_role ?> </option>
                             <?php } ?>
                         </select>
                     </div>
@@ -112,7 +115,10 @@ foreach ($data_dtppk as $dt) :
                                     <?php
                                     $list = $this->db->query("SELECT * FROM pegawai JOIN dtrole ON dtrole.id_peg = pegawai.id_peg
                                     JOIN role ON role.id_role = dtrole.id_role 
-                                    WHERE role.`id_role`=9 OR role.`id_role`=10 OR role.`id_role`=11 OR role.`id_role`=12 OR role.`id_role`=13 ORDER BY pegawai.id_peg ASC");
+                                    WHERE role.`id_role`=9 OR role.`id_role`=10 
+                                                                            OR role.`id_role`=11 OR role.`id_role`=12 OR role.`id_role`=13
+                                                                            OR role.`id_role`=17 OR role.`id_role`=18 
+                                                                            OR role.`id_role`=19 OR role.`id_role`=20 ORDER BY pegawai.id_peg ASC");
                                     foreach ($list->result() as $peg) {
                                     ?>
                                         <option value="<?= $peg->id_peg ?>" <?php if ($dt["id_peg"] == $peg->id_peg) {

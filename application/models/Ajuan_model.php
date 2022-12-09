@@ -47,7 +47,8 @@ WHERE pegawai.id_peg='$giat->id_peg'
 
     function delete_data($id)
     {
-        $this->db->where('id_ajuan', $id);
-        $this->db->delete('ajuan');
+        // $this->db->where('id_ajuan', $id);
+        // $this->db->delete('ajuan');
+
     }
 }

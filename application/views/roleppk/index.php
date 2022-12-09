@@ -54,7 +54,12 @@
                         <select style="width: 400px" name="id_role" class="form-control">
                             <option value="">--PILIH--</option>
                             <?php
-                            $list = $this->db->query("SELECT * FROM role WHERE id_role = 3 OR id_role = 4 OR id_role = 5 OR id_role = 7 OR id_role = 8 ORDER BY id_role ASC");
+                            $list = $this->db->query("SELECT * FROM role 
+                            WHERE id_role = 3 OR id_role = 4 
+                            OR id_role = 5 OR id_role = 7 OR id_role = 8
+                            OR id_role = 21 OR id_role = 22 OR id_role = 23
+                            OR id_role = 24  
+                            ORDER BY id_role ASC");
                             foreach ($list->result() as $r) {
                             ?>
                                 <option value="<?= $r->id_role ?>"><?= $r->nm_role ?></option>
@@ -107,7 +112,12 @@ foreach ($data_roleppk as $dt) :
                             <select class="form-control" name="id_role" id="id_role">
                                 <option value="">--Pilih--</option>
                                 <?php
-                                $list = $this->db->query("SELECT * FROM role WHERE id_role = 3 OR id_role = 4 OR id_role = 5 OR id_role = 7 OR id_role = 8 ORDER BY id_role ASC");
+                                $list = $this->db->query("SELECT * FROM role 
+                                WHERE id_role = 3 OR id_role = 4 OR id_role = 5 
+                                OR id_role = 7 OR id_role = 8 
+                                OR id_role = 21 OR id_role = 22 OR id_role = 23
+                                OR id_role = 24 
+                                ORDER BY id_role ASC");
                                 foreach ($list->result() as $r) {
                                 ?>
                                     <option value="<?= $r->id_role ?>" <?php if ($dt["id_role"] == $r->id_role) {

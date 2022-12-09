@@ -73,11 +73,14 @@
                             } elseif (
                                 $rl->nm_role == 'PPK 1' or $rl->nm_role == 'PPK 2'
                                 or $rl->nm_role == 'PPK 3' or $rl->nm_role == 'PPK 4'
-                                or $rl->nm_role == 'PPK 5'
+                                or $rl->nm_role == 'PPK 5' or $rl->nm_role == 'PPK 6'
+                                or $rl->nm_role == 'PPK 7' or $rl->nm_role == 'PPK 8'
+                                or $rl->nm_role == 'PPK 9'
                             ) {
                                 $jml_notif = $this->db->query("SELECT COUNT(id_notif) AS total_notif FROM notif_ajuan 
-                                WHERE (status_ajuan='Proses SPP/SPBY' OR status_ajuan='SPP/SPBY selesai') AND (notif_penerima = 'PPK 1' OR notif_penerima = 'PPK 2' 
-                            OR notif_penerima = 'PPK 3' OR notif_penerima = 'PPK 4' OR notif_penerima = 'PPK 5' )")->result();
+                                WHERE (status_ajuan='Proses SPP/SPBY' OR status_ajuan='SPP/SPBY selesai') AND (notif_penerima = 'PPK 1' 
+                                OR notif_penerima = 'PPK 2' OR notif_penerima = 'PPK 3' OR notif_penerima = 'PPK 4' OR notif_penerima = 'PPK 5'
+                                OR notif_penerima = 'PPK 6' OR notif_penerima = 'PPK 7' OR notif_penerima = 'PPK 8' OR notif_penerima = 'PPK 9' )")->result();
                                 foreach ($jml_notif as $jn) {
                                     if ($jn->total_notif != "0") { ?>
                                         <span class="badge badge-warning navbar-badge"><?= $jn->total_notif ?></span>
@@ -88,7 +91,9 @@
                             } elseif (
                                 $rl->nm_role == 'Staf PPK 1' or $rl->nm_role == 'Staf PPK 2'
                                 or $rl->nm_role == 'Staf PPK 3' or $rl->nm_role == 'Staf PPK 4'
-                                or $rl->nm_role == 'Staf PPK 5'
+                                or $rl->nm_role == 'Staf PPK 5' or $rl->nm_role == 'Staf PPK 6'
+                                or $rl->nm_role == 'Staf PPK 7' or $rl->nm_role == 'Staf PPK 8'
+                                or $rl->nm_role == 'Staf PPK 9'
                             ) {
                                 $jml_notif = $this->db->query("SELECT COUNT(id_notif) AS total_notif FROM notif_ajuan 
                                 WHERE status_ajuan='Diterima PPK' AND notif_penerima = '$username'")->result();
@@ -197,11 +202,14 @@
                             } elseif (
                                 $rl->nm_role == 'PPK 1' or $rl->nm_role == 'PPK 2'
                                 or $rl->nm_role == 'PPK 3' or $rl->nm_role == 'PPK 4'
-                                or $rl->nm_role == 'PPK 5'
+                                or $rl->nm_role == 'PPK 5' or $rl->nm_role == 'PPK 6'
+                                or $rl->nm_role == 'PPK 7' or $rl->nm_role == 'PPK 8'
+                                or $rl->nm_role == 'PPK 9'
                             ) {
                                 $jml_notif = $this->db->query("SELECT COUNT(id_notif) AS total_notif FROM notif_ajuan 
                             WHERE status_ajuan='Proses SPP/SPBY' AND (notif_penerima = 'PPK 1' OR notif_penerima = 'PPK 2' 
-                            OR notif_penerima = 'PPK 3' OR notif_penerima = 'PPK 4' OR notif_penerima = 'PPK 5' )")->result();
+                            OR notif_penerima = 'PPK 3' OR notif_penerima = 'PPK 4' OR notif_penerima = 'PPK 5' 
+                            OR notif_penerima = 'PPK 6' OR notif_penerima = 'PPK 7' OR notif_penerima = 'PPK 8' OR notif_penerima = 'PPK 9' )")->result();
                                 foreach ($jml_notif as $jn) {
                                     if ($jn->total_notif != '0') {
                                     ?>
@@ -212,7 +220,8 @@
                                     <div class="dropdown-divider"></div>
                                     <?php $select_notif = $this->db->query("SELECT * FROM notif_ajuan JOIN ajuan ON ajuan.id_ajuan = notif_ajuan.id_ajuan 
                             WHERE status_ajuan='Proses SPP/SPBY' AND (notif_penerima = 'PPK 1' OR notif_penerima = 'PPK 2' 
-                            OR notif_penerima = 'PPK 3' OR notif_penerima = 'PPK 4' OR notif_penerima = 'PPK 5' ) ")->result();
+                            OR notif_penerima = 'PPK 3' OR notif_penerima = 'PPK 4' OR notif_penerima = 'PPK 5'
+                            OR notif_penerima = 'PPK 6' OR notif_penerima = 'PPK 7' OR notif_penerima = 'PPK 8' OR notif_penerima = 'PPK 9' )")->result();
                                     foreach ($select_notif as $sn) { ?>
                                         <a href="<?= site_url('ppk') ?>" class="dropdown-item">
                                             <i class="fas fa-envelope mr-2"></i> <?= $sn->no_ajuan ?>, Segera pilih staff PPK<br>
@@ -222,7 +231,8 @@
                                 }
                                 $jml_notif = $this->db->query("SELECT COUNT(id_notif) AS total_notif FROM notif_ajuan 
                                 WHERE status_ajuan='SPP/SPBY selesai' AND (notif_penerima = 'PPK 1' OR notif_penerima = 'PPK 2' 
-                                OR notif_penerima = 'PPK 3' OR notif_penerima = 'PPK 4' OR notif_penerima = 'PPK 5' )")->result();
+                                OR notif_penerima = 'PPK 3' OR notif_penerima = 'PPK 4' OR notif_penerima = 'PPK 5' 
+                                OR notif_penerima = 'PPK 6' OR notif_penerima = 'PPK 7' OR notif_penerima = 'PPK 8' OR notif_penerima = 'PPK 9' )")->result();
                                 foreach ($jml_notif as $jn) {
                                     if ($jn->total_notif != '0') {
                                     ?>
@@ -232,7 +242,8 @@
                                     <div class="dropdown-divider"></div>
                                     <?php $select_notif = $this->db->query("SELECT * FROM notif_ajuan JOIN ajuan ON ajuan.id_ajuan = notif_ajuan.id_ajuan 
                                 WHERE status_ajuan='SPP/SPBY selesai' AND (notif_penerima = 'PPK 1' OR notif_penerima = 'PPK 2' 
-                                OR notif_penerima = 'PPK 3' OR notif_penerima = 'PPK 4' OR notif_penerima = 'PPK 5' ) ")->result();
+                                OR notif_penerima = 'PPK 3' OR notif_penerima = 'PPK 4' OR notif_penerima = 'PPK 5'
+                                OR notif_penerima = 'PPK 6' OR notif_penerima = 'PPK 7' OR notif_penerima = 'PPK 8' OR notif_penerima = 'PPK 9' ) ")->result();
                                     foreach ($select_notif as $sn) { ?>
                                         <a href="<?= site_url('ppk') ?>" class="dropdown-item">
                                             <i class="fas fa-envelope mr-2"></i> <?= $sn->no_ajuan ?>, Kirim SPP/SPBY<br>
@@ -243,7 +254,9 @@
                             } elseif (
                                 $rl->nm_role == 'Staf PPK 1' or $rl->nm_role == 'Staf PPK 2'
                                 or $rl->nm_role == 'Staf PPK 3' or $rl->nm_role == 'Staf PPK 4'
-                                or $rl->nm_role == 'Staf PPK 5'
+                                or $rl->nm_role == 'Staf PPK 5' or $rl->nm_role == 'Staf PPK 6'
+                                or $rl->nm_role == 'Staf PPK 7' or $rl->nm_role == 'Staf PPK 8'
+                                or $rl->nm_role == 'Staf PPK 9'
                             ) {
                                 $jml_notif = $this->db->query("SELECT COUNT(id_notif) AS total_notif FROM notif_ajuan 
                             WHERE status_ajuan='Diterima PPK' AND notif_penerima = '$username'")->result();

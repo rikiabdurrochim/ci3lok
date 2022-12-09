@@ -291,9 +291,9 @@ foreach ($data_ajuan as $ajuan) :
                                                     </select>
                                                     <label>Tanggal Bayar </label>
                                                     <input type="date" class="form-control" placeholder="Tanggal Bayar" name="tgl_byr" value="<?php echo $ajuan['tgl_byr']; ?>">
-                                                    <label>Jumlah Bayar </label>/
-                                                    <label id="byr"></label>
-                                                    <input type="text" class="form-control" placeholder="Jumlah Bayar" name="jml_byr_ben" id="jml_byr_ben" onkeyup="document.getElementById('byr').innerHTML = formatCurrency(this.value);">
+                                                    <label>Jumlah Bayar </label>
+                                                    <div id="byr<?php echo $ajuan['id_ajuan'] ?>"></div>
+                                                    <input type="text" class="form-control" placeholder="Jumlah Bayar" name="jml_byr_ben" id="jml_byr_ben<?php echo $ajuan['id_ajuan'] ?>" onkeyup="ubah_rupiah(<?php echo $ajuan['id_ajuan'] ?>)">
                                                     <label>Penerima </label>
                                                     <input type="text" class="form-control" placeholder="Penerima" name="penerima" value="<?php echo $ajuan['penerima']; ?>">
                                                 </td>
@@ -316,19 +316,24 @@ foreach ($data_ajuan as $ajuan) :
 <?php endforeach; ?>
 
 <script>
-    function formatCurrency(jml_byr_ben) {
-        jml_byr_ben = jml_byr_ben.toString().replace(/\$|\,/g, '');
-        if (isNaN(jml_byr_ben))
-            jml_byr_ben = "0";
-        sign = (jml_byr_ben == (jml_byr_ben = Math.abs(jml_byr_ben)));
-        jml_byr_ben = Math.floor(jml_byr_ben * 100 + 0.50000000001);
-        cents = jml_byr_ben % 100;
-        jml_byr_ben = Math.floor(jml_byr_ben / 100).toString();
-        if (cents < 10)
-            cents = "0" + cents;
-        for (var i = 0; i < Math.floor((jml_byr_ben.length - (1 + i)) / 3); i++)
-            jml_byr_ben = jml_byr_ben.substring(0, jml_byr_ben.length - (4 * i + 3)) + '.' +
-            jml_byr_ben.substring(jml_byr_ben.length - (4 * i + 3));
-        return (((sign) ? '' : '-') + 'Rp.' + jml_byr_ben);
+    function ubah_rupiah(id_ajuan) {
+        var jml_byr_ben = $("#jml_byr_ben" + id_ajuan).val();
+        if (jml_byr_ben != "") {
+            $.ajax({
+                url: "<?= base_url() ?>index.php/bendahara/get_rupiah",
+                data: "jml_byr_ben=" + jml_byr_ben,
+                success: function(html) {
+                    $("#byr" + id_ajuan).html(html);
+                }
+            });
+        } else {
+            $.ajax({
+                url: "<?= base_url() ?>index.php/bendahara/get_rupiah",
+                data: "jml_byr_ben=" + 0,
+                success: function(html) {
+                    $("#byr" + id_ajuan).html(html);
+                }
+            });
+        }
     }
 </script>
