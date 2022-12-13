@@ -1,13 +1,21 @@
 <div class="row">
     <div class="col-12 col-sm-6 col-md-3">
         <div class="info-box">
-            <span class="info-box-icon bg-info elevation-1"><i class="fas fa-cog"></i></span>
+            <span class="info-box-icon bg-info elevation-1"><i class="fas fa-inbox"></i></span>
             <div class="info-box-content">
-                <span class="info-box-text">Pengajuan</span>
+                <?php $get_ajuan=$this->db->query("SELECT COUNT(id_ajuan) as total_ajuan FROM ajuan WHERE status_aktif='1' ")->result(); 
+                    foreach($get_ajuan as $dtajuan){
+                        ?>
+                <span class="info-box-text">Jumlah Pengajuan</span>
                 <span class="info-box-number">
-                    10
-                    <small>%</small>
+                    <a href="<?= BASEURL ?>ajuan" class="close" title="lihat ajuan" aria-label="Close">
+                    <?php 
+                    echo $dtajuan->total_ajuan;
+                    ?> 
+                    </a>
                 </span>
+                <?php
+                    } ?> 
             </div>
             <!-- /.info-box-content -->
         </div>
@@ -16,10 +24,22 @@
     <!-- /.col -->
     <div class="col-12 col-sm-6 col-md-3">
         <div class="info-box mb-3">
-            <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-thumbs-up"></i></span>
+            <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-ban"></i></span>
             <div class="info-box-content">
-                <span class="info-box-text">SPP</span>
-                <span class="info-box-number">41,410</span>
+                <?php $get_ajuan=$this->db->query("SELECT COUNT(id_ajuan) as total_ajuan FROM ajuan WHERE status_aktif='1'
+                AND (status = 'Ditolak Loket' OR status = 'Ditolak PPK' OR status = 'Ditolak Staff PPK' OR status = 'Ditolak PPSPM' OR status = 'Ditolak Staff PPSPM')")->result(); 
+                    foreach($get_ajuan as $dtajuan){
+                        ?>
+                <span class="info-box-text">Pengajuan Ditolak</span>
+                <span class="info-box-number">
+                    <a href="<?= BASEURL ?>ajuan" class="close" title="lihat ajuan" aria-label="Close">
+                    <?php 
+                    echo $dtajuan->total_ajuan;
+                    ?> 
+                    </a>
+                </span>
+                <?php
+                    } ?>
             </div>
             <!-- /.info-box-content -->
         </div>
@@ -30,10 +50,22 @@
     <div class="clearfix hidden-md-up"></div>
     <div class="col-12 col-sm-6 col-md-3">
         <div class="info-box mb-3">
-            <span class="info-box-icon bg-success elevation-1"><i class="fas fa-shopping-cart"></i></span>
+            <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-spinner"></i></span>
             <div class="info-box-content">
-                <span class="info-box-text">SPBY</span>
-                <span class="info-box-number">760</span>
+               <?php $get_ajuan=$this->db->query("SELECT COUNT(id_ajuan) as total_ajuan FROM ajuan WHERE status_aktif='1'
+                AND (status = 'Belum Diproses' OR status = 'Proses SPP/SPBY' OR status = 'Proses SPM' OR status = 'Kirim KPPN' OR status = 'Proses Bendahara')")->result(); 
+                    foreach($get_ajuan as $dtajuan){
+                        ?>
+                <span class="info-box-text">Pengajuan Diproses</span>
+                <span class="info-box-number">
+                    <a href="<?= BASEURL ?>ajuan" class="close" title="lihat ajuan" aria-label="Close">
+                    <?php 
+                    echo $dtajuan->total_ajuan;
+                    ?> 
+                    </a>
+                </span>
+                <?php
+                    } ?>
             </div>
             <!-- /.info-box-content -->
         </div>
@@ -42,10 +74,22 @@
     <!-- /.col -->
     <div class="col-12 col-sm-6 col-md-3">
         <div class="info-box mb-3">
-            <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-users"></i></span>
+            <span class="info-box-icon bg-success elevation-1"><i class="fas fa-clipboard-check"></i></span>
             <div class="info-box-content">
-                <span class="info-box-text">Ditolak</span>
-                <span class="info-box-number">2,000</span>
+                <?php $get_ajuan=$this->db->query("SELECT COUNT(id_ajuan) as total_ajuan FROM ajuan WHERE status_aktif='1'
+                AND (status = 'Selesai')")->result(); 
+                    foreach($get_ajuan as $dtajuan){
+                        ?>
+                <span class="info-box-text">Pengajuan Selesai</span>
+                <span class="info-box-number">
+                    <a href="<?= BASEURL ?>ajuan" class="close" title="lihat ajuan" aria-label="Close">
+                    <?php 
+                    echo $dtajuan->total_ajuan;
+                    ?> 
+                    </a>
+                </span>
+                <?php
+                    } ?>
             </div>
             <!-- /.info-box-content -->
         </div>

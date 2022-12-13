@@ -91,15 +91,15 @@
                     <?php } ?>
                 </select>
             </div>
-            <div class="form-group col-4">
+            <div class="form-group col-4" id="hide_kota">
                 <label> Kota</label>
                 <input type="text" class="form-control" placeholder="Kota" name="kota" value="<?php echo $kota ?>" readonly>
             </div>
-            <div class="form-group col-4">
+            <div class="form-group col-4" id="hide_tglmulai">
                 <label> Tanggal Mulai</label>
                 <input type="date" class="form-control" name="tgl_jln" value="<?php echo $tgl_jln ?>" readonly>
             </div>
-            <div class="form-group col-4">
+            <div class="form-group col-4" id="hide_tglselesai">
                 <label> Tanggal Selesai</label>
                 <input type="date" class="form-control" name="tgl_plg" value="<?php echo $tgl_plg ?>" readonly>
             </div>
@@ -108,12 +108,12 @@
                 <hr>
                 <div class="checkbox">
                     <?php
-                    $get_dukung = $this->db->query("SELECT * FROM dt_dukung WHERE jenis_id = '$jns_ajuan' ");
+                    $get_dukung = $this->db->query("SELECT * FROM dt_dukung JOIN detadk ON detadk.id_detadk = dt_dukung.nm_dt");
                     foreach ($get_dukung->result() as $dt_dukung) {
                     ?>
                         <label>
                             <input type="checkbox" name="data_dukung[]" value="<?=
-                                                                                $dt_dukung->nm_dt ?>" <?php if (in_array($dt_dukung->nm_dt, $data_dukung)) echo 'checked="checked"'; ?>> <?= $dt_dukung->nm_dt ?> | </label>
+                                                                                $dt_dukung->nm_adk ?>" <?php if (in_array($dt_dukung->nm_adk, $data_dukung)) echo 'checked="checked"'; ?>> <?= $dt_dukung->nm_adk ?> | </label>
                     <?php } ?>
                 </div>
             </div>
@@ -206,6 +206,15 @@
 
     function get_dt_dukung() {
         var jns_ajuan = $("#jns_ajuan").val();
+         if (jns_ajuan=='4') {
+            $("#hide_kota").css("display","none");
+            $("#hide_tglmulai").css("display","none");
+            $("#hide_tglselesai").css("display","none");
+        } else {
+            $("#hide_kota").css("display","block");
+            $("#hide_tglmulai").css("display","block");
+            $("#hide_tglselesai").css("display","block");
+        }
         $.ajax({
             url: "<?= base_url() ?>index.php/ajuan/get_dt_dukung",
             data: "jns_ajuan=" + jns_ajuan,

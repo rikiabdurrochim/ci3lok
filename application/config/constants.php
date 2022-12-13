@@ -84,7 +84,7 @@ defined('EXIT_DATABASE')       or define('EXIT_DATABASE', 8); // database error
 defined('EXIT__AUTO_MIN')      or define('EXIT__AUTO_MIN', 9); // lowest automatically-assigned error code
 defined('EXIT__AUTO_MAX')      or define('EXIT__AUTO_MAX', 125); // highest automatically-assigned error code
 
-defined('BASEURL')      or define('BASEURL', 'http://localhost/ci3Lok/'); // highest automatically-assigned error code
+defined('BASEURL')      or define('BASEURL', 'http://localhost/ci3lok/'); // highest automatically-assigned error code
 
 $url = $_SERVER['REQUEST_URI'];
 
@@ -92,4 +92,4 @@ $par = explode('/', $url);
 
 
 defined('PAR1')      or define('PAR1', $par[1]);
-defined('PAR2')      or define('PAR2', $par[2]);
+//defined('PAR2')      or define('PAR2', $par[2]);

@@ -88,26 +88,26 @@
                     <option value="">Pilih Kegiatan Terlebih Dahulu</option>
                 </select>
             </div>
-            <div class="form-group col-4">
+            <div class="form-group col-4" id="hide_kota">
                 <label> Kota</label>
-                <input type="text" class="form-control" placeholder="Kota" name="kota" required>
+                <input type="text" class="form-control" placeholder="Kota" name="kota">
             </div>
-            <div class="form-group col-4">
+            <div class="form-group col-4" id="hide_tglmulai">
                 <label> Tanggal Mulai</label>
-                <input type="date" class="form-control" name="tgl_jln" required>
+                <input type="date" class="form-control" name="tgl_jln">
             </div>
-            <div class="form-group col-4">
+            <div class="form-group col-4" id="hide_tglselesai">
                 <label> Tanggal Selesai</label>
-                <input type="date" class="form-control" name="tgl_plg" required>
+                <input type="date" class="form-control" name="tgl_plg">
             </div>
             <div class="form-group col-12" id="jenis">
                 <label> Data Dukung</label><br>
                 <div class="checkbox">
                     <?php
-                    $get_dukung = $this->db->query("SELECT * FROM dt_dukung");
+                    $get_dukung = $this->db->query("SELECT * FROM dt_dukung JOIN detadk ON detadk.id_detadk = dt_dukung.nm_dt");
                     foreach ($get_dukung->result() as $dt_dukung) {
                     ?>
-                        <label><input type="checkbox" name="data_dukung[]" value="<?= $dt_dukung->nm_dt ?>" disabled> <?= $dt_dukung->nm_dt ?> | </label>
+                        <label><input type="checkbox" name="data_dukung[]" value="<?= $dt_dukung->nm_adk ?>" disabled> <?= $dt_dukung->nm_adk ?> | </label>
                     <?php } ?>
                 </div>
             </div>
@@ -144,6 +144,15 @@
 
     function get_dt_dukung() {
         var jns_ajuan = $("#jns_ajuan").val();
+        if (jns_ajuan=='4') {
+            $("#hide_kota").css("display","none");
+            $("#hide_tglmulai").css("display","none");
+            $("#hide_tglselesai").css("display","none");
+        } else {
+            $("#hide_kota").css("display","block");
+            $("#hide_tglmulai").css("display","block");
+            $("#hide_tglselesai").css("display","block");
+        }
         get_dt_jenis();
         $.ajax({
             url: "<?= base_url() ?>index.php/ajuan/get_dt_dukung",

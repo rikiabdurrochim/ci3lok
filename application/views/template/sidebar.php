@@ -430,7 +430,7 @@
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                         <li class="nav-item">
-                            <a href="<?= BASEURL ?>Dashboard" class="nav-link">
+                            <a href="<?= BASEURL ?>index.php/Dashboard" class="nav-link">
                                 <i class="nav-icon fas fa-fw fa-tachometer-alt"></i>
                                 <p>Dashboard</p>
                             </a>
@@ -444,9 +444,9 @@
                         WHERE pegawai.id_peg='$username' AND treeview.`id_treeview`='1' AND menu.status_mn = 'sidebar'")->result();
                         foreach ($menu_tnp_tree as $tnp_tree) { ?>
                             <li class="nav-item">
-                                <a href="<?= $tnp_tree->link_akses ?>" class="nav-link">
-                                    <i class="nav-icon fas fa-fw <?= $tnp_tree->icon_menu ?>"></i>
-                                    <p><?= $tnp_tree->nm_menu ?></p>
+                                <a href="<?= base_url($tnp_tree->link_akses); ?>" class="nav-link">
+                                    <i class="nav-icon fas fa-fw <?= $tnp_tree->icon_menu; ?>"></i>
+                                    <p><?= $tnp_tree->nm_menu; ?></p>
                                 </a>
                             </li>
                         <?php } ?>
@@ -459,9 +459,9 @@
                         foreach ($get_treeview as $tree) { ?>
                             <li class="nav-item">
                                 <a href="#" class="nav-link">
-                                    <i class="<?= $tree->treeview_icon ?>"></i>
+                                    <i class="<?= $tree->treeview_icon; ?>"></i>
                                     <p>
-                                        <?= $tree->nama_treeview ?>
+                                        <?= $tree->nama_treeview; ?>
                                         <i class="right fas fa-angle-left"></i>
                                     </p>
                                 </a>
@@ -474,9 +474,9 @@
                                     WHERE pegawai.id_peg='$username' AND treeview.`id_treeview`='$tree->id_treeview' AND menu.status_mn = 'sidebar'")->result();
                                     foreach ($mn_dgn_tree as $dgn_tree) { ?>
                                         <li class="nav-item">
-                                            <a href="<?= $dgn_tree->link_akses ?>" class="nav-link">
-                                                <i class="nav-icon fas fa-fw <?= $dgn_tree->icon_menu ?>"></i>
-                                                <p><?= $dgn_tree->nm_menu ?></p>
+                                            <a href="<?= base_url($dgn_tree->link_akses); ?>" class="nav-link">
+                                                <i class="nav-icon <?= $dgn_tree->icon_menu; ?>"></i>
+                                                <p><?= $dgn_tree->nm_menu; ?></p>
                                             </a>
                                         </li>
                                     <?php } ?>

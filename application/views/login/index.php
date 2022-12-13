@@ -12,13 +12,13 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="<?= BASEURL ?>assets/plugins/fontawesome-free/css/all.min.css">
     <!-- Ionicons -->
-    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link rel="stylesheet" href="<?= BASEURL ?>assets/css/ionicon.css">
     <!-- icheck bootstrap -->
     <link rel="stylesheet" href="<?= BASEURL ?>assets/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="<?= BASEURL ?>assets/dist/css/adminlte.min.css">
     <!-- Google Font: Source Sans Pro -->
-    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+    <link href="<?= BASEURL ?>assets/css/font.css" rel="stylesheet">
 
 </head>
 
@@ -37,7 +37,7 @@
                         <input type="text" class="form-control" placeholder="Username" name="username" id="username">
                         <div class="input-group-append">
                             <div class="input-group-text">
-                                <span class="fas fa-user"></span>
+                                <span class="nav-icon fas fa-user"></span>
                             </div>
                         </div>
                     </div>
@@ -45,7 +45,7 @@
                         <input type="password" class="form-control" placeholder="Password" name="password" id="password">
                         <div class="input-group-append">
                             <div class="input-group-text">
-                                <span class="fas fa-lock"></span>
+                                <span class="nav-icon fas fa-lock"></span>
                             </div>
                         </div>
                     </div>

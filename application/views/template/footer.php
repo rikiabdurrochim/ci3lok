@@ -26,9 +26,12 @@
 <script src="<?= BASEURL ?>assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 <!-- DataTables id=example-->
-<link rel="stylesheet" href="https://code.jquery.com/jquery-3.5.1.js">
-<link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js">
-<link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap4.min.js">
+<link rel="stylesheet" href="<?= BASEURL ?>assets/js/jquery35.js">
+<!-- <link rel="stylesheet" href="https://code.jquery.com/jquery-3.5.1.js"> -->
+<link rel="stylesheet" href="<?= BASEURL ?>assets/js/dataTables.min.js">
+<!-- <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"> -->
+<link rel="stylesheet" href="<?= BASEURL ?>assets/js/dataTables.bootstrap4.min.js">
+<!-- <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap4.min.js"> -->
 
 <!-- DataTables -->
 <script src="<?= BASEURL ?>assets/plugins/datatables/jquery.dataTables.min.js"></script>
