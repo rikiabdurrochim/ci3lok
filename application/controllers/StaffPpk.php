@@ -1,13 +1,13 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class StaffPpk extends CI_Controller
+class Staffppk extends CI_Controller
 {
 
 	function __construct()
 	{
 		parent::__construct();
-		$this->load->model('StaffPpk_model');
+		$this->load->model('Staffppk_model');
 	}
 
 	public function index()
@@ -20,7 +20,7 @@ class StaffPpk extends CI_Controller
 		foreach ($cek_data as $ck_data) :
 			if ($username != "" && $ck_data->ada_tidak != "0") {
 				$data['title'] = 'Staff PPK - Data Ajuan';
-				$data['data_ajuan'] = $this->StaffPpk_model->select_ajuan();
+				$data['data_ajuan'] = $this->Staffppk_model->select_ajuan();
 				$this->load->view('template/header', $data);
 				$this->load->view('template/sidebar', $data);
 				$this->load->view('ppk/indexstaff', $data);

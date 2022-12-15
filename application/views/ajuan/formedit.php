@@ -8,7 +8,7 @@
                 <span aria-hidden="true">&times;</span>
             </a>
         <?php } else if ($dari == "staffppk") { ?>
-            <a href="<?= BASEURL ?>StaffPpk" class="close" aria-label="Close">
+            <a href="<?= BASEURL ?>staffppk" class="close" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </a>
         <?php } else if ($dari == "ppk") {
@@ -206,14 +206,14 @@
 
     function get_dt_dukung() {
         var jns_ajuan = $("#jns_ajuan").val();
-         if (jns_ajuan=='4') {
-            $("#hide_kota").css("display","none");
-            $("#hide_tglmulai").css("display","none");
-            $("#hide_tglselesai").css("display","none");
+        if (jns_ajuan == '4') {
+            $("#hide_kota").css("display", "none");
+            $("#hide_tglmulai").css("display", "none");
+            $("#hide_tglselesai").css("display", "none");
         } else {
-            $("#hide_kota").css("display","block");
-            $("#hide_tglmulai").css("display","block");
-            $("#hide_tglselesai").css("display","block");
+            $("#hide_kota").css("display", "block");
+            $("#hide_tglmulai").css("display", "block");
+            $("#hide_tglselesai").css("display", "block");
         }
         $.ajax({
             url: "<?= base_url() ?>index.php/ajuan/get_dt_dukung",

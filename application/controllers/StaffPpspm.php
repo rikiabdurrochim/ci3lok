@@ -1,13 +1,13 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class StaffPpspm extends CI_Controller
+class Staffppspm extends CI_Controller
 {
 
 	function __construct()
 	{
 		parent::__construct();
-		$this->load->model('StaffPpspm_model');
+		$this->load->model('Staffppspm_model');
 	}
 
 	public function index()
@@ -20,7 +20,7 @@ class StaffPpspm extends CI_Controller
 		foreach ($cek_data as $ck_data) :
 			if ($username != "" && $ck_data->ada_tidak != "0") {
 				$data['title'] = 'Staff PPSPM - Data Ajuan';
-				$data['data_ajuan'] = $this->StaffPpspm_model->select_ajuan();
+				$data['data_ajuan'] = $this->Staffppspm_model->select_ajuan();
 				$this->load->view('template/header', $data);
 				$this->load->view('template/sidebar', $data);
 				$this->load->view('ppspm/indexstaff', $data);
@@ -51,7 +51,7 @@ class StaffPpspm extends CI_Controller
 	SET id_ajuan = '$idajuan', id_peg = '$id_pegawai', status = 'Ditolak PPSPM', tgl_monitor = '$ajuan_data->date_updated' ");
 		endforeach;
 		$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Alasan Berhasil disimpan<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
-		redirect(site_url('staffPpspm'));
+		redirect(site_url('staffppspm'));
 	}
 
 	public function terima()

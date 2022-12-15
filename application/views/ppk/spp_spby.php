@@ -99,7 +99,7 @@ foreach ($get_ajuan as $ajuan) {
                     <button type="submit" class="btn btn-info">Simpan</button>
                     <?php if ($dari == "staffppk") {
                     ?>
-                        <a class="btn btn-danger" href="<?= site_url('staffPpk') ?>">Close</a>
+                        <a class="btn btn-danger" href="<?= site_url('staffppk') ?>">Close</a>
                     <?php } else if ($dari == "ppk") {
                     ?>
                         <a class="btn btn-danger" href="<?= site_url('Ppk') ?>">Close</a>

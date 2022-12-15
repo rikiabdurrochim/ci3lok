@@ -1,5 +1,5 @@
 <?php
-class StaffPpk_model extends CI_Model
+class Staffppk_model extends CI_Model
 {
     public function input($data)
     {

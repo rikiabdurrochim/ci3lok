@@ -459,7 +459,7 @@ foreach ($data_ajuan as $ajuan) :
 ?>
     <div class="modal fade" id="modal-sp2d<?= ($ajuan['id_ajuan']); ?>">
         <div class="modal-dialog modal-lg">
-            <form enctype="multipart/form-data" action="<?php echo site_url('staffPpspm/sp2d') ?>" method="post">
+            <form enctype="multipart/form-data" action="<?php echo site_url('staffppspm/sp2d') ?>" method="post">
                 <div class="modal-content">
                     <div class="modal-header bg-primary">
                         <h4 class="modal-title">SP2D</h4>
